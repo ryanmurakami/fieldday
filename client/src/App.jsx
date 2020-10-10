@@ -5,10 +5,10 @@ import {
     Route,
     Link
   } from "react-router-dom";
-import Sample2Layout from './Sample2Layout.jsx';
-import SampleLayout from './SampleLayout.jsx';
+import Sample2Layout from './layout/Sample2Layout.jsx';
+import SampleLayout from './layout/SampleLayout.jsx';
 
-function HomeLayout() {
+function App() {
     return (
         <Router>
             <div>
@@ -28,4 +28,4 @@ function HomeLayout() {
     );
 }
 
-export default HomeLayout;
+export default App;
