@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const v1 = require('./routes/routes');
 
 // start app
 const app = express();
@@ -13,11 +14,7 @@ app.use(cors());
 // Serve static client files
 app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
-app.get('/api/', (req, res) => {
-    return res.status(200).json({
-        status: "success"
-    });
-});
+app.use('/api', v1.router)
 
 // Default if no match
 app.get("*", (req, res) => {
