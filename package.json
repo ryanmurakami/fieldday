@@ -4,6 +4,8 @@
   "description": "This demo app is for the EC2 Field Day course. The app is called _Field Day_ and simulates field day events for a group of characters representing AWS Services.",
   "main": "index.js",
   "scripts": {
+    "install-all": "npm install && cd client && npm install",
+    "start-all": "cd client && npm run build && cd .. && npm run start",
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

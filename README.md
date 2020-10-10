@@ -18,3 +18,30 @@ The learners will be doing things like:
 - Configuring the CloudWatch agent to send logs to CloudWatch
 
 The app should be able to run all alone in EC2 without connecting to any outside services. Once the learner's have configured the correct permissions for the app, it should connect to DynamoDB to push data. This will be done in a fallback pattern when the app starts (eg. Try to connect to DynamoDB, on failure, set a flag and save locally).
+
+## Development
+Install dependencies with
+
+```
+npm run install-all
+```
+
+### server development
+
+```
+npm run start-all
+```
+Access in `localhost:5000`
+
+### client development
+for client development with active API, the Express server needs to be activated separately. Using two terminal run
+
+```
+npm run start
+```
+on both the `root` folder and the `client` folder. Any new dependencies needed for the client will need to be installed from the `client` folder.
+
+server will be `localhost:5000`
+
+
+client will be `localhost:8080`
