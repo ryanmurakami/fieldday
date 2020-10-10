@@ -1,0 +1,28 @@
+{
+  "name": "ec2fieldday",
+  "version": "1.0.0",
+  "description": "This demo app is for the EC2 Field Day course. The app is called _Field Day_ and simulates field day events for a group of characters representing AWS Services.",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm install && cd client && npm install",
+    "start-all": "cd client && npm run build && cd .. && npm run start",
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanmurakami/ec2fieldday.git"
+  },
+  "author": "Nabil S",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanmurakami/ec2fieldday/issues"
+  },
+  "homepage": "https://github.com/ryanmurakami/ec2fieldday#readme",
+  "dependencies": {
+    "aws-sdk": "^2.771.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
