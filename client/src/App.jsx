@@ -5,22 +5,35 @@ import {
     Route,
     Link
   } from "react-router-dom";
-import Sample2Layout from './layout/Sample2Layout.jsx';
 import SampleLayout from './layout/SampleLayout.jsx';
+import EventContainer from './containers/EventsContainer.jsx';
+import CompetitorsContainer from './containers/CompetitorsContainer.jsx';
+import SettingsContainer from './containers/SettingsContainer.jsx';
 
 function App() {
     return (
         <Router>
             <div>
                 <Link to="/">Home</Link>
-                <Link to="/sample">Sample</Link>
+                <br />
+                <Link to="/events">Events</Link>
+                <br />
+                <Link to="/competitors">Competitors</Link>
+                <br />
+                <Link to="/settings">Settings</Link>
 
                 <Switch>
                     <Route exact path="/">
-                        <Sample2Layout />
-                    </Route>
-                    <Route path="/sample">
                         <SampleLayout />
+                    </Route>
+                    <Route path="/events/:events_id?">
+                        <EventContainer />
+                    </Route>
+                    <Route path="/competitors/:competitor_id?">
+                        <CompetitorsContainer />
+                    </Route>
+                    <Route path="/settings">
+                        <SettingsContainer />
                     </Route>
                 </Switch>
             </div>

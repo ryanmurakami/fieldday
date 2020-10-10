@@ -7,8 +7,12 @@ module.exports = function (router) {
 //APIs
 function events(req, res) {    
     if (req.params.event_id) {
-        res.send(`get ${req.params.event_id}`);
+        return res.status(200).json({
+            status: `get ${req.params.event_id}`
+        });
     }
 
-    res.send("Get all events.");
+    return res.status(200).json({
+        status: "Get all events."
+    });
 }

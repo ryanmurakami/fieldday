@@ -4,6 +4,8 @@ module.exports = function (router) {
 }
 
 //APIs
-function status (req, res) {    
-    res.send("Get all status.");
+function status (req, res) {   
+    return res.status(200).json({
+        status: "Get all status."
+    }); 
 }

@@ -4,6 +4,8 @@ module.exports = function (router) {
 }
 
 //APIs
-function command(req, res) {    
-    res.send(`get ${req.params.commands}`);
+function command(req, res) {
+    return res.status(200).json({
+        status: `get ${req.params.commands}`
+    });
 }
