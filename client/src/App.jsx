@@ -8,6 +8,7 @@ import {
     Link
   } from "react-router-dom";
 import Header from './component/Header/index.jsx';
+import HomeContainer from './containers/Home/index.jsx';
 import SampleLayout from './layout/SampleLayout.jsx';
 import EventContainer from './containers/EventsContainer.jsx';
 import CompetitorsContainer from './containers/CompetitorsContainer.jsx';
@@ -20,7 +21,7 @@ function App() {
             <div className='container'>
                 <Switch>
                     <Route exact path="/">
-                        <SampleLayout />
+                        <HomeContainer />
                     </Route>
                     <Route path="/events/:events_id?">
                         <EventContainer />

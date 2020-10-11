@@ -1,0 +1,20 @@
+.divider {
+    padding: 4em 0 4em 0;
+    
+    h3 {
+        font-style: italic;
+        font-weight: 900;
+        font-size: 32px;
+        line-height: 49px;
+        /* identical to box height */
+
+        color: #364F6B;
+    }
+
+    hr {
+        border: none;
+        width: 50%;
+        height: 3px;
+        background-color: #364F6B;
+    }
+}
