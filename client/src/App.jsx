@@ -1,3 +1,5 @@
+import 'grd';
+import './base.css';
 import React from 'react';
 import {
     BrowserRouter as Router,
@@ -5,6 +7,7 @@ import {
     Route,
     Link
   } from "react-router-dom";
+import Header from './component/Header/index.jsx';
 import SampleLayout from './layout/SampleLayout.jsx';
 import EventContainer from './containers/EventsContainer.jsx';
 import CompetitorsContainer from './containers/CompetitorsContainer.jsx';
@@ -13,15 +16,8 @@ import SettingsContainer from './containers/SettingsContainer.jsx';
 function App() {
     return (
         <Router>
-            <div>
-                <Link to="/">Home</Link>
-                <br />
-                <Link to="/events">Events</Link>
-                <br />
-                <Link to="/competitors">Competitors</Link>
-                <br />
-                <Link to="/settings">Settings</Link>
-
+            <Header />
+            <div className='container'>
                 <Switch>
                     <Route exact path="/">
                         <SampleLayout />
