@@ -4,15 +4,14 @@ import React from 'react';
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
   } from "react-router-dom";
 import Header from './component/Header/index.jsx';
 import HomeContainer from './containers/Home/index.jsx';
-import SampleLayout from './layout/SampleLayout.jsx';
-import EventContainer from './containers/EventsContainer.jsx';
-import CompetitorsContainer from './containers/CompetitorsContainer.jsx';
-import SettingsContainer from './containers/SettingsContainer.jsx';
+import EventContainer from './containers/Events/index.jsx';
+import EventTemplateContainer from './containers/EventTemplate/index.jsx';
+import CompetitorsContainer from './containers/Competitor/index.jsx';
+import SettingsContainer from './containers/Settings/index.jsx';
 
 function App() {
     return (
@@ -23,13 +22,16 @@ function App() {
                     <Route exact path="/">
                         <HomeContainer />
                     </Route>
-                    <Route path="/events/:events_id?">
+                    <Route exact path="/events/:event_id">
+                        <EventTemplateContainer />
+                    </Route>
+                    <Route exact path="/events/">
                         <EventContainer />
                     </Route>
-                    <Route path="/competitors/:competitor_id?">
+                    <Route exact path="/competitors/:competitor_id?">
                         <CompetitorsContainer />
                     </Route>
-                    <Route path="/settings">
+                    <Route exact path="/settings">
                         <SettingsContainer />
                     </Route>
                 </Switch>

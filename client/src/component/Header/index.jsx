@@ -11,7 +11,8 @@ function Header(props) {
             <div className='container Grid -middle'>
                 <div className="Cell -3of12">
                     <Link to="/">
-                        <Logo />
+                        {/*<Logo />*/}
+                        LOGO HERE
                     </Link>
                 </div>
                 <div className="Cell -3of12">
