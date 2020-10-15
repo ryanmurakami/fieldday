@@ -6,10 +6,10 @@ export default async function checkAPIRoute(endpoint, setResponse) {
         )
         if (response.status === 200) {
             const res = await response.json();
-            setResponse(JSON.stringify(res));
+            setResponse(res);
         }
     } catch (err) {
         console.log(err)
-        setResponse("Oops, something went wrong...")
+        setResponse({"message": "Oops, something went wrong..."})
     }
 }

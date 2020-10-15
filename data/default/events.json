@@ -1,0 +1,14 @@
+[
+    {
+        "id": "1234",
+        "name": "This Event",
+        "image": "https://via.placeholder.com/150",
+        "results": [
+            {
+                "rank": 0,
+                "name": "first guy",
+                "time": "1:00"
+            }
+        ]
+    }
+]

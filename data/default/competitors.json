@@ -1,0 +1,32 @@
+[
+    {
+        "id": "1234",
+        "name": "First Guy",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 0
+            },
+            {
+                "key": "Speed",
+                "value": 0
+            },
+            {
+                "key": "Agility",
+                "value": 0
+            },
+            {
+                "key": "Endurance",
+                "value": 0
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }
+]

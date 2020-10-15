@@ -6,7 +6,7 @@
   "scripts": {
     "install-all": "npm install && cd client && npm install",
     "start-all": "cd client && npm run build && cd .. && npm run start",
-    "start": "nodemon app.js",
+    "start": "node mock.js && nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +23,10 @@
     "aws-sdk": "^2.771.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "ncp": "^2.0.0",
     "nodemon": "^2.0.4"
+  },
+  "nodemonConfig": {
+    "ignore": ["data/*"]
   }
 }
