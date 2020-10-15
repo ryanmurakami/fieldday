@@ -11,6 +11,7 @@ import HomeContainer from './containers/Home/index.jsx';
 import EventContainer from './containers/Events/index.jsx';
 import EventTemplateContainer from './containers/EventTemplate/index.jsx';
 import CompetitorsContainer from './containers/Competitor/index.jsx';
+import CompetitorsTemplateContainer from './containers/CompetitorTemplate/index.jsx';
 import SettingsContainer from './containers/Settings/index.jsx';
 
 function App() {
@@ -28,7 +29,10 @@ function App() {
                     <Route exact path="/events/">
                         <EventContainer />
                     </Route>
-                    <Route exact path="/competitors/:competitor_id?">
+                    <Route exact path="/competitors/:competitor_id">
+                        <CompetitorsTemplateContainer />
+                    </Route>
+                    <Route exact path="/competitors/">
                         <CompetitorsContainer />
                     </Route>
                     <Route exact path="/settings">
