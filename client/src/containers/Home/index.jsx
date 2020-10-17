@@ -16,7 +16,7 @@ function HomeContainer(props) {
     const url = 'events';
     useEffect(() =>{
         checkAPIRoute(url, setResponse)
-    }, []);
+    }, [event.current.in_progress]);
 
     const events = response.body || [];
     const unfininshedEvent = events.filter(event => event.completed == false);

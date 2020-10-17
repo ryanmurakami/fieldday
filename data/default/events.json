@@ -5,12 +5,14 @@
         "image": "https://via.placeholder.com/150",
         "completed": false,
         "progress": 0,
-        "results": [
-            {
-                "rank": 0,
-                "name": "first guy",
-                "time": "1:00"
-            }
-        ]
+        "results": []
+    },
+    {
+        "id": "5678",
+        "name": "This Second Event",
+        "image": "https://via.placeholder.com/150",
+        "completed": false,
+        "progress": 0,
+        "results": []
     }
 ]

@@ -1,11 +1,12 @@
 import 'grd';
 import './base.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
     Route
   } from "react-router-dom";
+import checkAPIRoute from './helper.js';
 import Header from './component/Header/index.jsx';
 import HomeContainer from './containers/Home/index.jsx';
 import EventContainer from './containers/Events/index.jsx';
@@ -33,18 +34,34 @@ function App() {
         newEvent.current.id = event.id;
         newEvent.current.name = event.name;
         newEvent.current.progress = event.progress;
-        newEvent.current.in_progress = true;
 
         setFieldDay(newEvent);
     }
 
     // Update in the background
-    if (!fieldDay.current.in_progress) {
-        setInterval(() => {
+    if (fieldDay.current.id && !fieldDay.current.in_progress) {
+        let interval = setInterval(() => {
             let newEvent = {...fieldDay};
-            newEvent.current.progress = fieldDay.current.progress + 10
-            setFieldDay(newEvent)
-        }, 10000);
+            newEvent.current.progress = fieldDay.current.progress + 10;
+            newEvent.current.in_progress = true;
+            
+            if (newEvent.current.progress > 100) {
+                clearInterval(interval);
+                checkAPIRoute(`commands/update?eventId=${fieldDay.current.id}`, (res) => {
+                    newEvent.current.id = "";
+                    newEvent.current.name = "";
+                    newEvent.current.progress = 0;
+                    newEvent.current.in_progress = false;
+
+                    newEvent.last.name = res.body.event_name;
+                    newEvent.last.image_url = res.body.competitor_image;
+
+                    setFieldDay(newEvent)
+                });
+            } else {
+                setFieldDay(newEvent)
+            }
+        }, 1000);
     }
 
     return (
