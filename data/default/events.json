@@ -3,6 +3,8 @@
         "id": "1234",
         "name": "This Event",
         "image": "https://via.placeholder.com/150",
+        "completed": false,
+        "progress": 0,
         "results": [
             {
                 "rank": 0,

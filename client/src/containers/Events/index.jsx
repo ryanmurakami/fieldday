@@ -20,6 +20,7 @@ function EventsContainer() {
         return (
             <div key={index} className="Cell -3of12">
                 <Image
+                    image={event.image}
                     link={`/events/${event.id}`}
                     subtitle={event.name}/>
             </div>

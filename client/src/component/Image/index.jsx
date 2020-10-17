@@ -7,7 +7,7 @@ function Image(props) {
     return (
         <div className={styles['wrapper']}>
             <Link to={props.link}>
-                <img src="https://via.placeholder.com/150" />
+                <img src={props.image} />
                 <p className={styles['subtitle']}>{props.subtitle}</p>
             </Link>
         </div>

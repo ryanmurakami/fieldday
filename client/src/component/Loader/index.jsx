@@ -5,13 +5,14 @@ import '../../static/loading-bar.min.js';
 import './overwrite.css';
 import styles from './index.scss';
 
-function Loader(props) {
+function Loader({ progress }) {
     return (
         <div>
             <div 
                 className="ldBar" 
-                data-value="0"
+                data-value={progress}
                 style={{width: '75%', height: '36px'}}></div>
+            <div>{progress}</div>
         </div>
     );
 }

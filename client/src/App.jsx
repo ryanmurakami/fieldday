@@ -1,6 +1,6 @@
 import 'grd';
 import './base.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -15,13 +15,47 @@ import CompetitorsTemplateContainer from './containers/CompetitorTemplate/index.
 import SettingsContainer from './containers/Settings/index.jsx';
 
 function App() {
+    let [fieldDay, setFieldDay] = useState({
+        "current": {
+            "id": "",
+            "name": "",
+            "progress": 0,
+            "in_progress": false
+        },
+        "last": {
+            "name": "",
+            "image_url":""
+        }
+    })
+
+    const updateFieldDay = function(event) {
+        let newEvent = {...fieldDay};
+        newEvent.current.id = event.id;
+        newEvent.current.name = event.name;
+        newEvent.current.progress = event.progress;
+        newEvent.current.in_progress = true;
+
+        setFieldDay(newEvent);
+    }
+
+    // Update in the background
+    if (!fieldDay.current.in_progress) {
+        setInterval(() => {
+            let newEvent = {...fieldDay};
+            newEvent.current.progress = fieldDay.current.progress + 10
+            setFieldDay(newEvent)
+        }, 10000);
+    }
+
     return (
         <Router>
             <Header />
             <div className='container'>
                 <Switch>
                     <Route exact path="/">
-                        <HomeContainer />
+                        <HomeContainer
+                            updateFieldDay={updateFieldDay}
+                            event={fieldDay}/>
                     </Route>
                     <Route exact path="/events/:event_id">
                         <EventTemplateContainer />
