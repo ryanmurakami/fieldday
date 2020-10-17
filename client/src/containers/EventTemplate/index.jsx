@@ -19,7 +19,7 @@ function EventTemplate(props) {
     const event = response.body || {};
 
     return (
-        <div className='container'>
+        <div className={`container ${styles['wrapper']}`}>
             <Heading 
                 text={event.name}/>
             <img src={event.image} />

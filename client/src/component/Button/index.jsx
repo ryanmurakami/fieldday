@@ -3,7 +3,7 @@ import styles from './index.scss';
 
 function Heading(props) {
     return (
-        <div>
+        <div className={styles['wrapper']}>
             <button className={styles['button']}>CSS Button</button>
         </div>
     );

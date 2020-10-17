@@ -19,7 +19,7 @@ function CompetitorTemplate(props) {
     const competitor = response.body || {};
 
     return (
-        <div className='container'>
+        <div className={`container ${styles['wrapper']}`}>
             <Heading 
                 text={competitor.name}
             />

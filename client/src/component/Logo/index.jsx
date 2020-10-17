@@ -11,7 +11,7 @@ function Header(props) {
                 src={logo}
                 beforeInjection={(svg) => {
                     svg.classList.add('svg-logo')
-                    svg.setAttribute('style', 'height: 125px;')
+                    svg.setAttribute('style', 'height: 125px; width: 250px')
                   }}/>
         </div>
     );
