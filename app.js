@@ -10,6 +10,7 @@ const app = express();
 // port
 const port = process.env.PORT || 5000;
 
+app.use(express.json());
 app.use(cors());
 
 // Serve static client files

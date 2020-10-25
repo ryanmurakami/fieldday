@@ -21,13 +21,7 @@
                 "value": 2
             }
         ],
-        "events": [
-            {
-                "name": "Event Name",
-                "rank": "1st place",
-                "time": "5:30"
-            }
-        ]
+        "events": []
     }, {
         "id": "2",
         "name": "S3",
@@ -50,13 +44,7 @@
                 "value": 5
             }
         ],
-        "events": [
-            {
-                "name": "Event Name",
-                "rank": "1st place",
-                "time": "5:30"
-            }
-        ]
+        "events": []
     }, {
         "id": "3",
         "name": "Cloudy",
@@ -79,13 +67,7 @@
                 "value": 6
             }
         ],
-        "events": [
-            {
-                "name": "Event Name",
-                "rank": "1st place",
-                "time": "5:30"
-            }
-        ]
+        "events": []
     }, {
         "id": "4",
         "name": "DynamoDB",
@@ -108,13 +90,7 @@
                 "value": 7
             }
         ],
-        "events": [
-            {
-                "name": "Event Name",
-                "rank": "1st place",
-                "time": "5:30"
-            }
-        ]
+        "events": []
     }, {
         "id": "5",
         "name": "CloudWatch",
@@ -137,13 +113,7 @@
                 "value": 3
             }
         ],
-        "events": [
-            {
-                "name": "Event Name",
-                "rank": "1st place",
-                "time": "5:30"
-            }
-        ]
+        "events": []
     }, {
         "id": "6",
         "name": "Elasticache",
@@ -166,13 +136,7 @@
                 "value": 9
             }
         ],
-        "events": [
-            {
-                "name": "Event Name",
-                "rank": "1st place",
-                "time": "5:30"
-            }
-        ]
+        "events": []
     }, {
         "id": "7",
         "name": "IAM",
@@ -195,13 +159,7 @@
                 "value": 6
             }
         ],
-        "events": [
-            {
-                "name": "Event Name",
-                "rank": "1st place",
-                "time": "5:30"
-            }
-        ]
+        "events": []
     }, {
         "id": "8",
         "name": "ECR",
@@ -224,12 +182,6 @@
                 "value": 4
             }
         ],
-        "events": [
-            {
-                "name": "Event Name",
-                "rank": "1st place",
-                "time": "5:30"
-            }
-        ]
+        "events": []
     }
 ]

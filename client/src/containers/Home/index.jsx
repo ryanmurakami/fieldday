@@ -35,13 +35,8 @@ function HomeContainer(props) {
     // Pick a random event from list
     if (!_.get(event, 'current.id') && unfinishedEvent.length > 0) {
         let onGoingEvent = unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
+        // TODO: API call to update last event
         _updateFieldDay(event, onGoingEvent, props.setFieldDay);
-
-        // props.updateFieldDay({
-        //     "id": currentEvent.id,
-        //     "name": currentEvent.name,
-        //     "progress": currentEvent.progress
-        // });
     }
 
     return (
