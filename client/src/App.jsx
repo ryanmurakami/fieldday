@@ -1,12 +1,14 @@
 import 'grd';
-import './base.css';
+import _ from 'lodash';
 import React, { useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
     Route
   } from "react-router-dom";
+
 import checkAPIRoute from './helper.js';
+
 import Header from './component/Header/index.jsx';
 import HomeContainer from './containers/Home/index.jsx';
 import EventContainer from './containers/Events/index.jsx';
@@ -15,35 +17,28 @@ import CompetitorsContainer from './containers/Competitor/index.jsx';
 import CompetitorsTemplateContainer from './containers/CompetitorTemplate/index.jsx';
 import SettingsContainer from './containers/Settings/index.jsx';
 
+import './base.css';
+
 function App() {
-    let [fieldDay, setFieldDay] = useState({
+    const [fieldDay, setFieldDay] = useState({
         "current": {
             "id": "",
             "name": "",
             "progress": 0,
-            "in_progress": false
+            "inProgress": false
         },
         "last": {
             "name": "",
-            "image_url":""
+            "imageUrl":""
         }
     })
 
-    const updateFieldDay = function(event) {
-        let newEvent = {...fieldDay};
-        newEvent.current.id = event.id;
-        newEvent.current.name = event.name;
-        newEvent.current.progress = event.progress;
-
-        setFieldDay(newEvent);
-    }
-
     // Update in the background
-    if (fieldDay.current.id && !fieldDay.current.in_progress) {
-        let interval = setInterval(() => {
-            let newEvent = {...fieldDay};
+    if (_.get(fieldDay, 'current.id') && !_.get(fieldDay, 'current.inProgress')) {
+        const interval = setInterval(() => {
+            const newEvent = {...fieldDay};
             newEvent.current.progress = fieldDay.current.progress + 10;
-            newEvent.current.in_progress = true;
+            newEvent.current.inProgress = true;
             
             if (newEvent.current.progress > 100) {
                 clearInterval(interval);
@@ -51,17 +46,17 @@ function App() {
                     newEvent.current.id = "";
                     newEvent.current.name = "";
                     newEvent.current.progress = 0;
-                    newEvent.current.in_progress = false;
+                    newEvent.current.inProgress = false;
 
                     newEvent.last.name = res.body.event_name;
-                    newEvent.last.image_url = res.body.competitor_image;
+                    newEvent.last.imageUrl = res.body.competitor_image;
 
                     setFieldDay(newEvent)
                 });
             } else {
                 setFieldDay(newEvent)
             }
-        }, 1000);
+        }, 5000);
     }
 
     return (
@@ -71,7 +66,7 @@ function App() {
                 <Switch>
                     <Route exact path="/">
                         <HomeContainer
-                            updateFieldDay={updateFieldDay}
+                            setFieldDay={setFieldDay}
                             event={fieldDay}/>
                     </Route>
                     <Route exact path="/events/:event_id">

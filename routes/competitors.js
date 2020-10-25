@@ -9,8 +9,8 @@ module.exports = function (router) {
 
 //APIs
 function get_all_competitor(req, res) {
-    let rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
-    let competitors = JSON.parse(rawdata);
+    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
+    const competitors = JSON.parse(rawdata);
 
     return res.status(200).json({
         body: competitors
@@ -18,9 +18,9 @@ function get_all_competitor(req, res) {
 }
 
 function get_competitor(req, res) {
-    let rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
-    let competitors = JSON.parse(rawdata);
-    let competitor = competitors.find(comp => comp.id == req.params.competitor_id);
+    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
+    const competitors = JSON.parse(rawdata);
+    const competitor = competitors.find(comp => comp.id == req.params.competitor_id);
 
     if (competitor) {
         return res.status(200).json({
