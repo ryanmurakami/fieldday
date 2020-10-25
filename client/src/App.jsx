@@ -34,30 +34,30 @@ function App() {
     })
 
     // Update in the background
-    if (_.get(fieldDay, 'current.id') && !_.get(fieldDay, 'current.inProgress')) {
-        const interval = setInterval(() => {
-            const newEvent = {...fieldDay};
-            newEvent.current.progress = fieldDay.current.progress + 10;
-            newEvent.current.inProgress = true;
+    // if (_.get(fieldDay, 'current.id') && !_.get(fieldDay, 'current.inProgress')) {
+    //     const interval = setInterval(() => {
+    //         const newEvent = {...fieldDay};
+    //         newEvent.current.progress = fieldDay.current.progress + 10;
+    //         newEvent.current.inProgress = true;
             
-            if (newEvent.current.progress > 100) {
-                clearInterval(interval);
-                checkAPIRoute(`commands/update?eventId=${fieldDay.current.id}`, (res) => {
-                    newEvent.current.id = "";
-                    newEvent.current.name = "";
-                    newEvent.current.progress = 0;
-                    newEvent.current.inProgress = false;
+    //         if (newEvent.current.progress > 100) {
+    //             clearInterval(interval);
+    //             checkAPIRoute(`commands/update?eventId=${fieldDay.current.id}`, (res) => {
+    //                 newEvent.current.id = "";
+    //                 newEvent.current.name = "";
+    //                 newEvent.current.progress = 0;
+    //                 newEvent.current.inProgress = false;
 
-                    newEvent.last.name = res.body.event_name;
-                    newEvent.last.imageUrl = res.body.competitor_image;
+    //                 newEvent.last.name = res.body.event_name;
+    //                 newEvent.last.imageUrl = res.body.competitor_image;
 
-                    setFieldDay(newEvent)
-                });
-            } else {
-                setFieldDay(newEvent)
-            }
-        }, 5000);
-    }
+    //                 setFieldDay(newEvent)
+    //             });
+    //         } else {
+    //             setFieldDay(newEvent)
+    //         }
+    //     }, 5000);
+    // }
 
     return (
         <Router>

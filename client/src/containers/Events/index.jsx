@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import 'grd';
+import _ from 'lodash';
 import styles from './index.scss';
 
-import checkAPIRoute from '../../helper.js';
+import { getAPI } from '../../helper.js';
 
 import Image from '../../component/Image/index.jsx';
 import Divider from '../../component/Divider/index.jsx';
@@ -12,10 +13,10 @@ function EventsContainer() {
 
     const url = 'events';
     useEffect(() =>{
-        checkAPIRoute(url, setResponse)
+        getAPI(url, setResponse)
     }, []);
 
-    const events = response.body || [];
+    const events = _.get(response, 'body.allEvents') || [];
     const renderevents = events.map(function(event, index){
         return (
             <div key={index} className="Cell -3of12">

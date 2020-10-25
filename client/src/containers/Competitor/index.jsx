@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'grd';
 
-import checkAPIRoute from '../../helper.js';
+import { getAPI } from '../../helper.js';
 
 import Image from '../../component/Image/index.jsx';
 import Divider from '../../component/Divider/index.jsx';
@@ -13,7 +13,7 @@ function CompetitorContainer() {
 
     const url = 'competitors';
     useEffect(() =>{
-        checkAPIRoute(url, setResponse)
+        getAPI(url, setResponse)
     }, []);
 
     const competitors = response.body || [];

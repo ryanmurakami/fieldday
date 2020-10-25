@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import checkAPIRoute from '../../helper.js';
+import { getAPI } from '../../helper.js';
 
 import Heading from '../../component/Heading/index.jsx';
 import Divider from '../../component/Divider/index.jsx';
@@ -14,7 +14,7 @@ function CompetitorTemplate(props) {
 
     const url = `competitors/${competitor_id}`;
     useEffect(() =>{
-        checkAPIRoute(url, setResponse)
+        getAPI(url, setResponse)
     }, []);
 
     const competitor = response.body || {};

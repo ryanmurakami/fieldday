@@ -68,7 +68,7 @@ function _update_inprogress_event(result) {
 
     if (event) {
         event.completed = true;
-        event.result = result;
+        event.results = result;
 
         fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'events.json'), JSON.stringify(events), (error) => { 
             // In case of a error throw err exception. 
@@ -79,6 +79,14 @@ function _update_inprogress_event(result) {
             Object.assign(LAST_EVENT, {
                 "name": event.name,
                 "imageUrl": result[0].image
+            });
+
+            // Reset state
+            Object.assign(IN_PROGRESS_EVENT, {
+                "id": "",
+                "name": "",
+                "progress": 0,
+                "inProgress": false
             });
         });
     }
