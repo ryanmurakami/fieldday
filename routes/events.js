@@ -9,8 +9,8 @@ module.exports = function (router) {
 
 //APIs
 function get_all_events(req, res) {
-    let rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
-    let competitors = JSON.parse(rawdata);
+    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
+    const competitors = JSON.parse(rawdata);
 
     return res.status(200).json({
         body: competitors
@@ -18,9 +18,9 @@ function get_all_events(req, res) {
 }
 
 function get_events(req, res) {
-    let rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
-    let events = JSON.parse(rawdata);
-    let event = events.find(event => event.id == req.params.event_id);
+    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
+    const events = JSON.parse(rawdata);
+    const event = events.find(event => event.id == req.params.event_id);
 
     if (event) {
         return res.status(200).json({

@@ -8,7 +8,7 @@ module.exports = function (router) {
 
 //APIs
 function command(req, res) {
-    if (req.params.commands == 'update') {
+    if (req.params.commands === 'update') {
         return completeEvent(req, res);
     }
     return res.status(200).json({
@@ -26,14 +26,14 @@ function completeEvent(req, res) {
     let rawdata 
     
     rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
-    let competitors = JSON.parse(rawdata);
+    const competitors = JSON.parse(rawdata);
 
     rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
-    let events = JSON.parse(rawdata);
+    const events = JSON.parse(rawdata);
 
     // get event, marked as completed, generated random competitor time
-    let event = events.find(event => event.id == eventId);
-    let pos = events.map(function(e) { return e.id; }).indexOf('eventId');
+    const event = events.find(e => e.id === eventId) || {};
+    const pos = events.map(function(e) { return e.id; }).indexOf('eventId');
 
     event.completed = true;
     event.result = _randomCompetitorsFinisher(competitors);

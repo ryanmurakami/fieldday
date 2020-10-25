@@ -28,7 +28,7 @@ function EventsContainer() {
     });
 
     return (
-        <div className={styles['container']}>
+        <div className={styles.container}>
             <Divider text="Today's Event" />
             <div className="Grid -middle">
                 {renderevents}

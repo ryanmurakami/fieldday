@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import 'grd';
-import styles from './index.scss';
 
 import checkAPIRoute from '../../helper.js';
 
 import Image from '../../component/Image/index.jsx';
 import Divider from '../../component/Divider/index.jsx';
+
+import styles from './index.scss';
 
 function CompetitorContainer() {
     const [response, setResponse] = useState({"message": "Oops, something went wrong..."})
@@ -29,7 +30,7 @@ function CompetitorContainer() {
 
 
     return (
-        <div className={styles['container']}>
+        <div className={styles.container}>
             <Divider text="Competitors" />
             <div className="Grid -middle">
                 {renderCompetitors}

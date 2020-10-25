@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import styles from './index.scss';
-
 import { useParams } from "react-router-dom";
+
 import checkAPIRoute from '../../helper.js';
 
 import Heading from '../../component/Heading/index.jsx';
 import Divider from '../../component/Divider/index.jsx';
+
+import styles from './index.scss';
 
 function CompetitorTemplate(props) {
     const [response, setResponse] = useState({"message": "Oops, something went wrong..."})
@@ -19,7 +20,7 @@ function CompetitorTemplate(props) {
     const competitor = response.body || {};
 
     return (
-        <div className={`container ${styles['wrapper']}`}>
+        <div className={`container ${styles.wrapper}`}>
             <Heading 
                 text={competitor.name}
             />
@@ -32,7 +33,7 @@ function CompetitorTemplate(props) {
             <ol className={styles['number-list']}>
                 {competitor.events && 
                 competitor.events.map(function(result, index){
-                    return <li key={ index }>
+                    return <li key={index}>
                             {result.name} - {result.rank} - {result.time}
                         </li>;
                 })}

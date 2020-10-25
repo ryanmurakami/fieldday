@@ -4,7 +4,7 @@ import styles from './index.scss';
 function Heading(props) {
     return (
         <div>
-            <h1 className={styles['heading']}>{props.text}</h1>
+            <h1 className={styles.heading}>{props.text}</h1>
         </div>
     );
 }
