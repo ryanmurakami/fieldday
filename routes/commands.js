@@ -12,3 +12,13 @@ function command(req, res) {
         status: `get ${req.params.commands}`
     });
 }
+
+function reset(res) {
+    return res.status(200).json({
+        status: `State has been reset`
+    });
+}
+
+// TODO: RESET
+// TODO: START
+// TODO: STOP

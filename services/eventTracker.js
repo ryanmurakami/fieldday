@@ -1,25 +1,25 @@
-const fs = require('fs');
-const path = require('path');
+const eventsDTO = require('../model/event.js');
+const competitorsDTO = require('../model/competitors.js');
 const IN_PROGRESS_EVENT = {}
 const LAST_EVENT = {}
 
-function get_inprogress_event() {
+function getInProgressEvent() {
     return IN_PROGRESS_EVENT;
 }
 
-function get_last_event() {
+function getLastEvent() {
     return LAST_EVENT;
 }
 
-function set_inprogress_event(event) {
+function setInProgressEvent(event) {
     Object.assign(IN_PROGRESS_EVENT, event);
 }
 
-function set_last_event(event) {
+function setLastEvent(event) {
     Object.assign(LAST_EVENT, event);
 }
 
-function run_inprogress_event(event) {
+function runInProgressEvent(event) {
     set_inprogress_event(event);
 
     const modifier = IN_PROGRESS_EVENT.simulationTime/100;
@@ -29,21 +29,20 @@ function run_inprogress_event(event) {
         if (IN_PROGRESS_EVENT.progress >= 100) {
             clearInterval(interval);
 
-            const competitorResult = _generate_competitors_finisher();
-            _update_competitor_result(competitorResult);
-            _update_inprogress_event(competitorResult);
+            const competitorResult = _generateCompetitorsFinisher();
+            _updateCompetitorsResult(competitorResult);
+            _updateInProgressEvent(competitorResult);
         }
     }, 1000);
 }
 
-function reset_event() {}
+function resetEvent() {}
 
-function _generate_competitors_finisher() {
+function _generateCompetitorsFinisher() {
     const minFinishedTime = IN_PROGRESS_EVENT.minFinishedTime;
     const maxFinishedTime = IN_PROGRESS_EVENT.maxFinishedTime;
 
-    let rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
-    const competitors = JSON.parse(rawdata);
+    const competitors = competitorsDTO.getCompetitors()
     const competitorsResult = [];
 
     for (const i in competitors) {
@@ -61,21 +60,15 @@ function _generate_competitors_finisher() {
     return competitorsResult;
 }
 
-function _update_inprogress_event(result) {
-    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
-    const events = JSON.parse(rawdata);
+function _updateInProgressEvent(result) {
+    const events = eventsDTO.getEvents();
     const event = events.find(e => e.id === IN_PROGRESS_EVENT.id);
 
     if (event) {
         event.completed = true;
         event.results = result;
 
-        fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'events.json'), JSON.stringify(events), (error) => { 
-            // In case of a error throw err exception. 
-            if (error) {
-                throw 'error saving event';
-            };
-
+        eventsDTO.saveEvents(events, () => {
             Object.assign(LAST_EVENT, {
                 "name": event.name,
                 "imageUrl": result[0].image
@@ -92,9 +85,8 @@ function _update_inprogress_event(result) {
     }
 }
 
-function _update_competitor_result(result) {
-    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
-    const competitors = JSON.parse(rawdata);
+function _updateCompetitorsResult(result) {
+    const competitors = competitorsDTO.getCompetitors();
 
     for (const i in result) {
         const competitor = competitors.find(c => c.name === result[i].name);
@@ -105,19 +97,14 @@ function _update_competitor_result(result) {
         });
     }
 
-    fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'), JSON.stringify(competitors), (error) => { 
-        // In case of a error throw err exception. 
-        if (error) {
-            throw 'error saving event';
-        };
-    });
+    competitorsDTO.saveCompetitors(competitors, () => {});
 }
 
 module.exports = {
-    get_inprogress_event,
-    get_last_event,
-    set_inprogress_event,
-    set_last_event,
-    run_inprogress_event,
-    reset_event
+    getInProgressEvent,
+    getLastEvent,
+    setInProgressEvent,
+    setLastEvent,
+    runInProgressEvent,
+    resetEvent
 }

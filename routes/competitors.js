@@ -1,26 +1,23 @@
-const fs = require('fs');
-const path = require('path');
+const competitorsDTO = require('../model/competitors.js');
 
 //initialize
 module.exports = function (router) {
-    router.get('/competitors', get_all_competitor);
-    router.get('/competitors/:competitor_id', get_competitor);
+    router.get('/competitors', getAllCompetitors);
+    router.get('/competitors/:competitor_id', getCompetitors);
 }
 
 //APIs
-function get_all_competitor(req, res) {
-    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
-    const competitors = JSON.parse(rawdata);
+function getAllCompetitors(req, res) {
+    const competitors = competitorsDTO.getCompetitors();
 
     return res.status(200).json({
         body: competitors
     });
 }
 
-function get_competitor(req, res) {
-    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
-    const competitors = JSON.parse(rawdata);
-    const competitor = competitors.find(comp => comp.id == req.params.competitor_id);
+function getCompetitors(req, res) {
+    const competitors = competitorsDTO.getCompetitors();
+    const competitor = competitors.find(comp => comp.id === req.params.competitor_id);
 
     if (competitor) {
         return res.status(200).json({

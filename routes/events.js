@@ -1,26 +1,24 @@
-const fs = require('fs');
-const path = require('path');
+const eventsDTO = require('../model/event.js');
 const {
-    get_inprogress_event,
-    get_last_event,
-    run_inprogress_event
-} = require('../controller/eventTracker.js');
+    getInProgressEvent,
+    getLastEvent,
+    runInProgressEvent
+} = require('../services/eventTracker.js');
 
 //initialize
 module.exports = function (router) {
-    router.get('/events', get_all_events);
-    router.get('/events/:event_id', get_events);
-    router.post('/events', start_event);
+    router.get('/events', getAllEvents);
+    router.get('/events/:event_id', getEvents);
+    router.post('/events', startEvent);
 }
 
 //APIs
-function get_all_events(req, res) {
-    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
-    const events = JSON.parse(rawdata);
+function getAllEvents(req, res) {
+    const events = eventsDTO.getEvents();
     const result = {
         "allEvents": events,
-        "inProgress": get_inprogress_event(),
-        "lastEvent": get_last_event()
+        "inProgress": getInProgressEvent(),
+        "lastEvent": getLastEvent()
     }
 
     return res.status(200).json({
@@ -28,10 +26,9 @@ function get_all_events(req, res) {
     });
 }
 
-function get_events(req, res) {
-    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
-    const events = JSON.parse(rawdata);
-    const event = events.find(e => e.id == req.params.event_id);
+function getEvents(req, res) {
+    const events = eventsDTO.getEvents();
+    const event = events.find(e => e.id === req.params.event_id);
 
     if (event) {
         return res.status(200).json({
@@ -45,8 +42,8 @@ function get_events(req, res) {
     
 }
 
-function start_event(req, res) {
-    run_inprogress_event(req.body);
+function startEvent(req, res) {
+    runInProgressEvent(req.body);
 
     return res.status(200).json({
         message: `${req.body.name} has started`
