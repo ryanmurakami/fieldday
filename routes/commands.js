@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+const { 
+    resetEvent,
+    stopEvent,
+    startEvent
+} = require('../services/eventTracker');
+const fileLoader = require('../loaders/mock');
 
 //initialize
 module.exports = function (router) {
@@ -8,17 +12,40 @@ module.exports = function (router) {
 
 //APIs
 function command(req, res) {
-    return res.status(200).json({
-        status: `get ${req.params.commands}`
+    if (req.params.commands === 'reset') {
+        return reset(res);
+    } else if (req.params.commands === 'stop') {
+        return stop(res);
+    } else if (req.params.commands === 'start') {
+        return start(res);
+    }
+
+    return res.status(404).json({
+        status: 'invalid command triggered'
     });
 }
 
 function reset(res) {
+    resetEvent();
+    fileLoader();
+
     return res.status(200).json({
         status: `State has been reset`
     });
 }
 
-// TODO: RESET
-// TODO: START
-// TODO: STOP
+function stop(res) {
+    stopEvent();
+
+    return res.status(200).json({
+        status: `State has been stopped`
+    });
+}
+
+function start(res) {
+    startEvent();
+
+    return res.status(200).json({
+        status: `State has been stopped`
+    });
+}

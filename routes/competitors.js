@@ -1,4 +1,4 @@
-const competitorsDTO = require('../model/competitors.js');
+const competitorsDTO = require('../model/competitors');
 
 //initialize
 module.exports = function (router) {

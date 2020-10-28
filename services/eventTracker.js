@@ -1,33 +1,41 @@
-const eventsDTO = require('../model/event.js');
-const competitorsDTO = require('../model/competitors.js');
-const IN_PROGRESS_EVENT = {}
-const LAST_EVENT = {}
+var _ = require('lodash');
+const eventsDTO = require('../model/event');
+const competitorsDTO = require('../model/competitors');
+const FIELD_DAY_EVENT = {
+    "isRunning": false,
+    "interval": null,
+    "inProgressEvent": {},
+    "lastEvent": {}
+}
 
 function getInProgressEvent() {
-    return IN_PROGRESS_EVENT;
+    return FIELD_DAY_EVENT.inProgressEvent;
 }
 
 function getLastEvent() {
-    return LAST_EVENT;
+    return FIELD_DAY_EVENT.lastEvent;
 }
 
 function setInProgressEvent(event) {
-    Object.assign(IN_PROGRESS_EVENT, event);
+    Object.assign(FIELD_DAY_EVENT.inProgressEvent, event);
 }
 
 function setLastEvent(event) {
-    Object.assign(LAST_EVENT, event);
+    Object.assign(FIELD_DAY_EVENT.lastEvent, event);
 }
 
 function runInProgressEvent(event) {
+    Object.assign(FIELD_DAY_EVENT, {
+        "isRunning": true
+    });
     set_inprogress_event(event);
 
-    const modifier = IN_PROGRESS_EVENT.simulationTime/100;
-    const interval = setInterval(() => {
-        IN_PROGRESS_EVENT.progress += modifier
+    const modifier = FIELD_DAY_EVENT.inProgressEvent.simulationTime/100;
+    FIELD_DAY_EVENT.interval = setInterval(() => {
+        FIELD_DAY_EVENT.inProgressEvent.progress += modifier
 
-        if (IN_PROGRESS_EVENT.progress >= 100) {
-            clearInterval(interval);
+        if (FIELD_DAY_EVENT.inProgressEvent.progress >= 100) {
+            clearInterval(FIELD_DAY_EVENT.interval);
 
             const competitorResult = _generateCompetitorsFinisher();
             _updateCompetitorsResult(competitorResult);
@@ -36,11 +44,40 @@ function runInProgressEvent(event) {
     }, 1000);
 }
 
-function resetEvent() {}
+function resetEvent() {
+    clearInterval(FIELD_DAY_EVENT.interval);
+
+    Object.assign(FIELD_DAY_EVENT, {
+        "isRunning": false,
+        "interval": null,
+        "inProgressEvent": {},
+        "lastEvent": {}
+    });
+}
+
+function startEvent() {
+    if (!_.get(FIELD_DAY_EVENT, 'inProgressEvent.id')) {
+        const events = eventsDTO.getEvents();
+        const unfinishedEvent = events.filter(e => e.completed === false);
+        const runEvent = unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
+
+        runInProgressEvent(runEvent);
+    } else {
+        runInProgressEvent(FIELD_DAY_EVENT.inProgressEvent);
+    }
+}
+
+function stopEvent() {
+    clearInterval(FIELD_DAY_EVENT.interval);
+    Object.assign(FIELD_DAY_EVENT, {
+        "isRunning": false,
+        "interval": null,
+    });
+}
 
 function _generateCompetitorsFinisher() {
-    const minFinishedTime = IN_PROGRESS_EVENT.minFinishedTime;
-    const maxFinishedTime = IN_PROGRESS_EVENT.maxFinishedTime;
+    const minFinishedTime = FIELD_DAY_EVENT.inProgressEvent.minFinishedTime;
+    const maxFinishedTime = FIELD_DAY_EVENT.inProgressEvent.maxFinishedTime;
 
     const competitors = competitorsDTO.getCompetitors()
     const competitorsResult = [];
@@ -62,24 +99,23 @@ function _generateCompetitorsFinisher() {
 
 function _updateInProgressEvent(result) {
     const events = eventsDTO.getEvents();
-    const event = events.find(e => e.id === IN_PROGRESS_EVENT.id);
+    const event = events.find(e => e.id === FIELD_DAY_EVENT.inProgressEvent.id);
 
     if (event) {
         event.completed = true;
         event.results = result;
 
         eventsDTO.saveEvents(events, () => {
-            Object.assign(LAST_EVENT, {
+            Object.assign(FIELD_DAY_EVENT.lastEvent, {
                 "name": event.name,
                 "imageUrl": result[0].image
             });
 
             // Reset state
-            Object.assign(IN_PROGRESS_EVENT, {
+            Object.assign(FIELD_DAY_EVENT.inProgressEvent, {
                 "id": "",
                 "name": "",
-                "progress": 0,
-                "inProgress": false
+                "progress": 0
             });
         });
     }
@@ -91,7 +127,7 @@ function _updateCompetitorsResult(result) {
     for (const i in result) {
         const competitor = competitors.find(c => c.name === result[i].name);
         competitor.events.push({
-            "name": IN_PROGRESS_EVENT.name,
+            "name": FIELD_DAY_EVENT.inProgressEvent.name,
             "rank": i,
             "time": result[i].time
         });
@@ -106,5 +142,7 @@ module.exports = {
     setInProgressEvent,
     setLastEvent,
     runInProgressEvent,
-    resetEvent
+    resetEvent,
+    startEvent,
+    stopEvent
 }

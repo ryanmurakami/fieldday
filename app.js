@@ -2,7 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const v1 = require('./routes/routes');
+const loader = require('./loaders/mock');
 
+// Set data
+loader();
 
 // start app
 const app = express();

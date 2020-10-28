@@ -1,9 +1,9 @@
-const eventsDTO = require('../model/event.js');
+const eventsDTO = require('../model/event');
 const {
     getInProgressEvent,
     getLastEvent,
     runInProgressEvent
-} = require('../services/eventTracker.js');
+} = require('../services/eventTracker');
 
 //initialize
 module.exports = function (router) {

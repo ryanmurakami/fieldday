@@ -43,15 +43,15 @@ function HomeContainer(props) {
         );
     });
 
-    let inProgressEvent = _.get(response, 'body.inProgress');
+    const inProgressEvent = _.get(response, 'body.inProgress');
     const lastEvent = _.get(response, 'body.lastEvent');
     _updateFieldDay(event, inProgressEvent, lastEvent);
 
     // Pick a random event from list
     if (!_.get(response, 'body.inProgress.id') && unfinishedEvent.length > 0) {
-        let inProgressEvent = unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
-        postAPI(url, inProgressEvent,() => {
-            _updateFieldDay(event, inProgressEvent, null);
+        const runEvent = unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
+        postAPI(url, runEvent,() => {
+            _updateFieldDay(event, runEvent, null);
         });
     }
 
