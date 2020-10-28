@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import _, { last } from 'lodash';
+import _ from 'lodash';
 import 'grd';
 import styles from './index.scss';
 
@@ -13,13 +13,21 @@ import Divider from '../../component/Divider/index.jsx';
 import Loader from '../../component/Loader/index.jsx';
 
 function HomeContainer(props) {
-    const { event, setFieldDay } = props;
+    const { event } = props;
 
     const [response, setResponse] = useState({"message": "Oops, something went wrong..."})
 
     const url = 'events';
     useEffect(() =>{
-        getAPI(url, setResponse)
+        getAPI(url, setResponse);
+        const interval = setInterval(() => {
+            getAPI(url, setResponse)
+        }, 5000);
+        //component will unmount
+        return () => {
+            // clear interval
+            clearInterval(interval);
+        }
     }, []);
 
     const events = _.get(response, 'body.allEvents') || [];
@@ -35,19 +43,15 @@ function HomeContainer(props) {
         );
     });
 
-    // Set state on refresh
-    // if (!_.get(event, 'current.id') && _.get(response, 'body.inProgress.id')) {
-    //     let inProgressEvent = _.get(response, 'body.inProgress');
-    //     const lastEvent = _.get(response, 'body.lastEvent');
-
-    //     _updateFieldDay(event, inProgressEvent, lastEvent, setFieldDay);
-    // }
+    let inProgressEvent = _.get(response, 'body.inProgress');
+    const lastEvent = _.get(response, 'body.lastEvent');
+    _updateFieldDay(event, inProgressEvent, lastEvent);
 
     // Pick a random event from list
-    if (!_.get(event, 'current.id') && !_.get(response, 'body.inProgress.id') && unfinishedEvent.length > 0) {
+    if (!_.get(response, 'body.inProgress.id') && unfinishedEvent.length > 0) {
         let inProgressEvent = unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
         postAPI(url, inProgressEvent,() => {
-            _updateFieldDay(event, inProgressEvent, null, setFieldDay);
+            _updateFieldDay(event, inProgressEvent, null);
         });
     }
 
@@ -78,23 +82,19 @@ function HomeContainer(props) {
     );
 }
 
-function _updateFieldDay(event, inProgressEvent, lastEvent, setFieldDay) {
-    if (setFieldDay) {
-        const newEvent = {...event};
+function _updateFieldDay(event, inProgressEvent, lastEvent) {
+    const newEvent = {...event};
 
-        if (inProgressEvent) {
-            newEvent.current.id = inProgressEvent.id;
-            newEvent.current.name = inProgressEvent.name;
-            newEvent.current.progress = inProgressEvent.progress;
-            newEvent.current.inProgress = inProgressEvent.inProgress;
-        }
-        
-        if (lastEvent) {
-            newEvent.last = lastEvent.name;
-            newEvent.imageUrl = lastEvent.imageUrl;
-        }
-
-        setFieldDay(newEvent);
+    if (inProgressEvent) {
+        newEvent.current.id = inProgressEvent.id;
+        newEvent.current.name = inProgressEvent.name;
+        newEvent.current.progress = inProgressEvent.progress;
+        newEvent.current.inProgress = inProgressEvent.inProgress;
+    }
+    
+    if (lastEvent) {
+        newEvent.last.name = lastEvent.name;
+        newEvent.last.imageUrl = lastEvent.imageUrl;
     }
 }
 
