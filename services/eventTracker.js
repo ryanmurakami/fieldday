@@ -8,6 +8,10 @@ const FIELD_DAY_EVENT = {
     "lastEvent": {}
 }
 
+function getIsRunning() {
+    return FIELD_DAY_EVENT.isRunning;
+}
+
 function getInProgressEvent() {
     return FIELD_DAY_EVENT.inProgressEvent;
 }
@@ -28,7 +32,7 @@ function runInProgressEvent(event) {
     Object.assign(FIELD_DAY_EVENT, {
         "isRunning": true
     });
-    set_inprogress_event(event);
+    setInProgressEvent(event);
 
     const modifier = FIELD_DAY_EVENT.inProgressEvent.simulationTime/100;
     FIELD_DAY_EVENT.interval = setInterval(() => {
@@ -137,6 +141,7 @@ function _updateCompetitorsResult(result) {
 }
 
 module.exports = {
+    getIsRunning,
     getInProgressEvent,
     getLastEvent,
     setInProgressEvent,

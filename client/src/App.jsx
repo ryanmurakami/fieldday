@@ -21,11 +21,11 @@ import './base.css';
 
 function App() {
     const [fieldDay] = useState({
+        "isRunning": false,
         "current": {
             "id": "",
             "name": "",
-            "progress": 0,
-            "inProgress": false
+            "progress": 0
         },
         "last": {
             "name": "",

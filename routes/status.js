@@ -1,3 +1,5 @@
+const { getIsRunning } = require('../services/eventTracker');
+
 //initialize
 module.exports = function (router) {
     router.get('/status', status );
@@ -6,6 +8,8 @@ module.exports = function (router) {
 //APIs
 function status (req, res) {   
     return res.status(200).json({
-        status: "Get all status."
+        status: {
+            "isRunning": getIsRunning()
+        }
     }); 
 }

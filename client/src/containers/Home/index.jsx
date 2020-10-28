@@ -48,7 +48,10 @@ function HomeContainer(props) {
     _updateFieldDay(event, inProgressEvent, lastEvent);
 
     // Pick a random event from list
-    if (!_.get(response, 'body.inProgress.id') && unfinishedEvent.length > 0) {
+    if (!_.get(response, 'body.inProgress.id') &&
+            _.get(response, 'body.isRunning') &&
+            unfinishedEvent.length > 0) {
+                
         const runEvent = unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
         postAPI(url, runEvent,() => {
             _updateFieldDay(event, runEvent, null);

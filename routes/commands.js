@@ -46,6 +46,6 @@ function start(res) {
     startEvent();
 
     return res.status(200).json({
-        status: `State has been stopped`
+        status: `State has been started`
     });
 }
