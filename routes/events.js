@@ -13,8 +13,8 @@ module.exports = function (router) {
 }
 
 //APIs
-function getAllEvents(req, res) {
-    const events = eventsDTO.getEvents();
+async function getAllEvents(req, res) {
+    const events = await eventsDTO.getEvents();
     const result = {
         "allEvents": events,
         "inProgress": getInProgressEvent(),
@@ -26,8 +26,8 @@ function getAllEvents(req, res) {
     });
 }
 
-function getEvents(req, res) {
-    const events = eventsDTO.getEvents();
+async function getEvents(req, res) {
+    const events = await eventsDTO.getEvents();
     const event = events.find(e => e.id === req.params.event_id);
 
     if (event) {

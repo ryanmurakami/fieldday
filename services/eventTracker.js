@@ -78,11 +78,11 @@ function stopEvent() {
     });
 }
 
-function _generateCompetitorsFinisher() {
+async function _generateCompetitorsFinisher() {
     const minFinishedTime = FIELD_DAY_EVENT.inProgressEvent.minFinishedTime;
     const maxFinishedTime = FIELD_DAY_EVENT.inProgressEvent.maxFinishedTime;
 
-    const competitors = competitorsDTO.getCompetitors()
+    const competitors = await competitorsDTO.getCompetitors()
     const competitorsResult = [];
 
     for (const i in competitors) {
@@ -100,15 +100,15 @@ function _generateCompetitorsFinisher() {
     return competitorsResult;
 }
 
-function _updateInProgressEvent(result) {
-    const events = eventsDTO.getEvents();
+async function _updateInProgressEvent(result) {
+    const events = await eventsDTO.getEvents();
     const event = events.find(e => e.id === FIELD_DAY_EVENT.inProgressEvent.id);
 
     if (event) {
         event.completed = true;
         event.results = result;
 
-        eventsDTO.saveEvents(events, () => {
+        eventsDTO.saveEvents(events).then(() => {
             Object.assign(FIELD_DAY_EVENT.lastEvent, {
                 "name": event.name,
                 "imageUrl": result[0].image
@@ -131,8 +131,8 @@ function _updateInProgressEvent(result) {
     }
 }
 
-function _updateCompetitorsResult(result) {
-    const competitors = competitorsDTO.getCompetitors();
+async function _updateCompetitorsResult(result) {
+    const competitors = await competitorsDTO.getCompetitors();
 
     for (const i in result) {
         const competitor = competitors.find(c => c.name === result[i].name);
@@ -143,11 +143,11 @@ function _updateCompetitorsResult(result) {
         });
     }
 
-    competitorsDTO.saveCompetitors(competitors, () => {});
+    competitorsDTO.saveCompetitors(competitors).then(() => {});
 }
 
-function _selectRandomEvent() {
-    const events = eventsDTO.getEvents();
+async function _selectRandomEvent() {
+    const events = await eventsDTO.getEvents();
     const unfinishedEvent = events.filter(e => e.completed === false);
     if (unfinishedEvent.length > 0) {
         return unfinishedEvent[unfinishedEvent.length * Math.random() | 0];

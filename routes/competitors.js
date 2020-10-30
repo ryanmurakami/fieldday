@@ -7,16 +7,16 @@ module.exports = function (router) {
 }
 
 //APIs
-function getAllCompetitors(req, res) {
-    const competitors = competitorsDTO.getCompetitors();
+async function getAllCompetitors(req, res) {
+    const competitors = await competitorsDTO.getCompetitors();
 
     return res.status(200).json({
         body: competitors
     });
 }
 
-function getCompetitors(req, res) {
-    const competitors = competitorsDTO.getCompetitors();
+async function getCompetitors(req, res) {
+    const competitors = await competitorsDTO.getCompetitors();
     const competitor = competitors.find(comp => comp.id === req.params.competitor_id);
 
     if (competitor) {
