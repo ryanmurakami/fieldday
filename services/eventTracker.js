@@ -61,11 +61,10 @@ function resetEvent() {
 
 function startEvent() {
     if (!_.get(FIELD_DAY_EVENT, 'inProgressEvent.id')) {
-        const events = eventsDTO.getEvents();
-        const unfinishedEvent = events.filter(e => e.completed === false);
-        const runEvent = unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
-
-        runInProgressEvent(runEvent);
+        const runEvent = _selectRandomEvent();
+        if (runEvent) {
+            runInProgressEvent(runEvent);
+        } 
     } else {
         runInProgressEvent(FIELD_DAY_EVENT.inProgressEvent);
     }
@@ -121,6 +120,13 @@ function _updateInProgressEvent(result) {
                 "name": "",
                 "progress": 0
             });
+
+            const runEvent = _selectRandomEvent();
+            if (runEvent) {
+                runInProgressEvent(runEvent);
+            } else {
+                console.log('No More Event to run!');
+            }
         });
     }
 }
@@ -138,6 +144,16 @@ function _updateCompetitorsResult(result) {
     }
 
     competitorsDTO.saveCompetitors(competitors, () => {});
+}
+
+function _selectRandomEvent() {
+    const events = eventsDTO.getEvents();
+    const unfinishedEvent = events.filter(e => e.completed === false);
+    if (unfinishedEvent.length > 0) {
+        return unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
+    }
+
+    return null;
 }
 
 module.exports = {

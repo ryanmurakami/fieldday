@@ -9,12 +9,12 @@ import Heading from '../../component/Heading/index.jsx';
 import styles from './index.scss';
 
 function Setting() {
-    const [response, setResponse] = useState({ 'status': {} });
+    const [response, setResponse] = useState({'status': {}});
 
     let url = 'status';
     useEffect(() =>{
         getAPI(url, setResponse)
-    }, [])
+    }, [response.status])
 
     let runButton = <Button text="Start" action={_startSimulator}/>;
 
@@ -48,23 +48,20 @@ function _startSimulator() {
     const url = 'commands/start';
     getAPI(url, (res) => {
         console.log(res);
-        // TODO: update state
     });
 }
 
-function _stopSimulator() {
+function _stopSimulator(setResponse) {
     const url = 'commands/stop';
     getAPI(url, (res) => {
         console.log(res);
-        // TODO: update state
     });
 }
 
-function _resetSimulator() {
+function _resetSimulator(setResponse) {
     const url = 'commands/reset';
     getAPI(url, (res) => {
         console.log(res);
-        // TODO: update state
     });
 }
 
