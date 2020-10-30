@@ -1,0 +1,235 @@
+[
+    {
+        "id": "1",
+        "name": "EC2",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 4
+            },
+            {
+                "key": "Speed",
+                "value": 5
+            },
+            {
+                "key": "Agility",
+                "value": 7
+            },
+            {
+                "key": "Endurance",
+                "value": 2
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }, {
+        "id": "2",
+        "name": "S3",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 3
+            },
+            {
+                "key": "Speed",
+                "value": 8
+            },
+            {
+                "key": "Agility",
+                "value": 4
+            },
+            {
+                "key": "Endurance",
+                "value": 5
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }, {
+        "id": "3",
+        "name": "Cloudy",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 5
+            },
+            {
+                "key": "Speed",
+                "value": 4
+            },
+            {
+                "key": "Agility",
+                "value": 10
+            },
+            {
+                "key": "Endurance",
+                "value": 6
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }, {
+        "id": "4",
+        "name": "DynamoDB",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 3
+            },
+            {
+                "key": "Speed",
+                "value": 5
+            },
+            {
+                "key": "Agility",
+                "value": 4
+            },
+            {
+                "key": "Endurance",
+                "value": 7
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }, {
+        "id": "5",
+        "name": "CloudWatch",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 7
+            },
+            {
+                "key": "Speed",
+                "value": 2
+            },
+            {
+                "key": "Agility",
+                "value": 4
+            },
+            {
+                "key": "Endurance",
+                "value": 3
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }, {
+        "id": "6",
+        "name": "Elasticache",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 6
+            },
+            {
+                "key": "Speed",
+                "value": 4
+            },
+            {
+                "key": "Agility",
+                "value": 2
+            },
+            {
+                "key": "Endurance",
+                "value": 9
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }, {
+        "id": "7",
+        "name": "IAM",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 3
+            },
+            {
+                "key": "Speed",
+                "value": 2
+            },
+            {
+                "key": "Agility",
+                "value": 7
+            },
+            {
+                "key": "Endurance",
+                "value": 6
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }, {
+        "id": "8",
+        "name": "ECR",
+        "image": "https://via.placeholder.com/150",
+        "stats": [
+            {
+                "key": "Strength",
+                "value": 3
+            },
+            {
+                "key": "Speed",
+                "value": 5
+            },
+            {
+                "key": "Agility",
+                "value": 8
+            },
+            {
+                "key": "Endurance",
+                "value": 4
+            }
+        ],
+        "events": [
+            {
+                "name": "Event Name",
+                "rank": "1st place",
+                "time": "5:30"
+            }
+        ]
+    }
+]

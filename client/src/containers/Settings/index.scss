@@ -1,0 +1,31 @@
+.wrapper {
+    padding-top: 5em;
+}
+
+.p {
+    padding-top: 2em;
+    padding-bottom: 3em;
+}
+.dl {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+
+    font-style: italic;
+    font-weight: 900;
+    font-size: 32px;
+    color: #364F6B;
+}
+.dt {
+    float: left;
+    width: 10%;
+    padding: 0;
+    margin: 0
+}
+.dd {
+    float: left;
+    width: 90%;
+    padding: 0;
+    margin: 0
+}

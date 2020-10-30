@@ -17,7 +17,33 @@ module.exports = {
               loader: "html-loader"
             }
           ]
-        }
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.scss$/,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  localIdentName: "[name]__[local]___[hash:base64:5]",
+                }
+              },
+            },
+            'sass-loader',
+          ],
+        },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            'file-loader'
+          ]
+       }
       ]
     },
     devServer: {

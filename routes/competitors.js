@@ -1,18 +1,35 @@
+const fs = require('fs');
+const path = require('path');
+
 //initialize
 module.exports = function (router) {
-    router.get('/competitors', competitor);
-    router.get('/competitors/:competitor_id', competitor);
+    router.get('/competitors', get_all_competitor);
+    router.get('/competitors/:competitor_id', get_competitor);
 }
 
 //APIs
-function competitor(req, res) {    
-    if (req.params.competitor_id) {
-        return res.status(200).json({
-            status: `get ${req.params.competitor_id}`
-        });
-    }
+function get_all_competitor(req, res) {
+    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
+    const competitors = JSON.parse(rawdata);
 
     return res.status(200).json({
-        status: "Get all competitors."
+        body: competitors
     });
+}
+
+function get_competitor(req, res) {
+    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'));
+    const competitors = JSON.parse(rawdata);
+    const competitor = competitors.find(comp => comp.id == req.params.competitor_id);
+
+    if (competitor) {
+        return res.status(200).json({
+            body: competitor
+        });
+    } else {
+        return res.status(404).json({
+            message: 'Invalid competitor id'
+        });
+    }
+    
 }
