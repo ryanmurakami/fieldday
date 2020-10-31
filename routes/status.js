@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const { getIsRunning } = require('../services/eventTracker');
-const dynamoDB = new AWS.DynamoDB();
+const dynamoDB = new AWS.DynamoDB({ 'region': 'us-west-2' });
 
 //initialize
 module.exports = function (router) {
@@ -22,7 +22,7 @@ async function status (req, res) {
 function _checkDynamoConnection() {
     return new Promise(resolve => {
         const params = {
-            TableName: "ec2fielddaydemo",
+            TableName: "fieldDayDemo_event",
             Limit : 1
         };
     

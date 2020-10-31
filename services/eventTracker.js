@@ -35,13 +35,13 @@ function runInProgressEvent(event) {
     setInProgressEvent(event);
 
     const modifier = FIELD_DAY_EVENT.inProgressEvent.simulationTime/100;
-    FIELD_DAY_EVENT.interval = setInterval(() => {
+    FIELD_DAY_EVENT.interval = setInterval(async function() {
         FIELD_DAY_EVENT.inProgressEvent.progress += modifier
 
         if (FIELD_DAY_EVENT.inProgressEvent.progress >= 100) {
             clearInterval(FIELD_DAY_EVENT.interval);
 
-            const competitorResult = _generateCompetitorsFinisher();
+            const competitorResult = await _generateCompetitorsFinisher();
             _updateCompetitorsResult(competitorResult);
             _updateInProgressEvent(competitorResult);
         }
@@ -59,9 +59,9 @@ function resetEvent() {
     });
 }
 
-function startEvent() {
+async function startEvent() {
     if (!_.get(FIELD_DAY_EVENT, 'inProgressEvent.id')) {
-        const runEvent = _selectRandomEvent();
+        const runEvent = await _selectRandomEvent();
         if (runEvent) {
             runInProgressEvent(runEvent);
         } 
@@ -79,25 +79,27 @@ function stopEvent() {
 }
 
 async function _generateCompetitorsFinisher() {
-    const minFinishedTime = FIELD_DAY_EVENT.inProgressEvent.minFinishedTime;
-    const maxFinishedTime = FIELD_DAY_EVENT.inProgressEvent.maxFinishedTime;
+    return new Promise(async function(resolve) {
+        const minFinishedTime = FIELD_DAY_EVENT.inProgressEvent.minFinishedTime;
+        const maxFinishedTime = FIELD_DAY_EVENT.inProgressEvent.maxFinishedTime;
 
-    const competitors = await competitorsDTO.getCompetitors()
-    const competitorsResult = [];
+        const competitors = await competitorsDTO.getCompetitors()
+        const competitorsResult = [];
 
-    for (const i in competitors) {
-        const result = {
-            "name": competitors[i].name,
-            "image": competitors[i].image,
-            "time": Math.floor(Math.random() * maxFinishedTime) + minFinishedTime
+        for (const i in competitors) {
+            const result = {
+                "name": competitors[i].name,
+                "image": competitors[i].image,
+                "time": Math.floor(Math.random() * maxFinishedTime) + minFinishedTime
+            }
+
+            competitorsResult.push(result);
         }
 
-        competitorsResult.push(result);
-    }
+        competitorsResult.sort((a, b) => a.time - b.time);
 
-    competitorsResult.sort((a, b) => a.time - b.time);
-
-    return competitorsResult;
+        resolve(competitorsResult);
+    });
 }
 
 async function _updateInProgressEvent(result) {
@@ -108,7 +110,7 @@ async function _updateInProgressEvent(result) {
         event.completed = true;
         event.results = result;
 
-        eventsDTO.saveEvents(events).then(() => {
+        eventsDTO.saveEvents(events).then(async function() {
             Object.assign(FIELD_DAY_EVENT.lastEvent, {
                 "name": event.name,
                 "imageUrl": result[0].image
@@ -121,7 +123,7 @@ async function _updateInProgressEvent(result) {
                 "progress": 0
             });
 
-            const runEvent = _selectRandomEvent();
+            const runEvent = await _selectRandomEvent();
             if (runEvent) {
                 runInProgressEvent(runEvent);
             } else {
@@ -147,13 +149,15 @@ async function _updateCompetitorsResult(result) {
 }
 
 async function _selectRandomEvent() {
-    const events = await eventsDTO.getEvents();
-    const unfinishedEvent = events.filter(e => e.completed === false);
-    if (unfinishedEvent.length > 0) {
-        return unfinishedEvent[unfinishedEvent.length * Math.random() | 0];
-    }
+    return new Promise(async function(resolve) {
+        const events = await eventsDTO.getEvents();
+        const unfinishedEvent = events.filter(e => e.completed === false);
+        if (unfinishedEvent.length > 0) {
+            resolve(unfinishedEvent[unfinishedEvent.length * Math.random() | 0]);
+        }
 
-    return null;
+        resolve(null);
+    });   
 }
 
 module.exports = {
