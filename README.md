@@ -26,14 +26,16 @@ Install dependencies with
 npm run install-all
 ```
 
-### server development
+### running the application
 
 ```
 npm run start-all
 ```
-Access in `localhost:5000`
+modify the `.env` file to use configured table name.
 
-### client development
+Access in `localhost:8080`
+
+### server & client development
 for client development with active API, the Express server needs to be activated separately. Using two terminal run
 
 ```
@@ -42,6 +44,5 @@ npm run start
 on both the `root` folder and the `client` folder. Any new dependencies needed for the client will need to be installed from the `client` folder.
 
 server will be `localhost:5000`
-
 
 client will be `localhost:8080`

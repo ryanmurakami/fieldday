@@ -8,7 +8,7 @@ const unmarshallArray = require('../services/helper');
 function getEvents() {
     return new Promise(resolve => {
         const params = {
-            TableName: "fieldDayDemo_event"
+            TableName: process.env.EVENTS_DATABASE
         }
 
         dynamoDB.scan(params, (err, result) => {
@@ -41,7 +41,7 @@ function saveEvents(events) {
 
     const params = {
         RequestItems: {
-            "fieldDayDemo_event": putRequest
+            [process.env.EVENTS_DATABASE]: putRequest
         }
     }
 

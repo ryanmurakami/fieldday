@@ -7,8 +7,8 @@ const competitors = require('../data/default/competitors.json');
 const dynamoDB = new AWS.DynamoDB({ 'region': 'us-west-2' });
 
 async function resetLocalData() {
-    await _uploadToDynamo('fieldDayDemo_event', events);
-    await _uploadToDynamo('fielddaydemo_competitors', competitors);
+    await _uploadToDynamo(process.env.EVENTS_DATABASE, events);
+    await _uploadToDynamo(process.env.COMPETITORS_DATABASE, competitors);
 
     // setup default file to live file
     const source = path.join(__dirname, '../', 'data', 'default');

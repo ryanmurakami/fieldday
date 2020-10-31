@@ -8,7 +8,7 @@ const unmarshallArray = require('../services/helper');
 function getCompetitors() {
     return new Promise(resolve => {
         const params = {
-            TableName: "fielddaydemo_competitors"
+            TableName: process.env.COMPETITORS_DATABASE
         }
 
         dynamoDB.scan(params, (err, result) => {
@@ -41,7 +41,7 @@ function saveCompetitors(competitors) {
 
     const params = {
         RequestItems: {
-            "fielddaydemo_competitors": putRequest
+            [process.env.COMPETITORS_DATABASE]: putRequest
         }
     }
 
