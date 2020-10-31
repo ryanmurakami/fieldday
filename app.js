@@ -1,33 +1,33 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const v1 = require('./routes/routes');
-const loader = require('./loaders/mock');
+const express = require('express')
+const cors = require('cors')
+const path = require('path')
+const v1 = require('./routes/routes')
+const loader = require('./loaders/mock')
 
 // Set data
-loader();
+loader()
 
 // start app
-const app = express();
+const app = express()
 
 // port
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json())
+app.use(cors())
 
 // Serve static client files
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
+app.use(express.static(path.join(__dirname, 'client', 'dist')))
 
 app.use('/api', v1.router)
 
 // Default if no match
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/dist", "index.html"))
-});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'))
+})
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`)
-});
+  console.log(`Listening on port ${port}`)
+})
