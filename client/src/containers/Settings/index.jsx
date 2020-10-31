@@ -28,11 +28,11 @@ function Setting() {
 
             <div className={styles.p}>
                 <dl className={styles.dl}>
-                    <dt className={styles.dt}>ICON</dt>
+                    <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.dynamoDB'))}</dt>
                     <dd className={styles.dd}>DynamoDB Connection</dd>
                     <dt className={styles.dt}>ICON</dt>
                     <dd className={styles.dd}>ElastiCache Connection</dd>
-                    <dt className={styles.dt}>ICON</dt>
+                    <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.internet'))}</dt>
                     <dd className={styles.dd}>Outside Internet Connection</dd>
                 </dl> 
             </div>
@@ -42,6 +42,14 @@ function Setting() {
             <Button text="Reset" action={_resetSimulator}/>
         </div>
     );
+}
+
+function _connectionRender(type) {
+    if (type) {
+        return <span>TRUE</span>
+    }
+
+    return <span>FALSE</span>
 }
 
 function _startSimulator() {

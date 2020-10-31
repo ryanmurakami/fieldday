@@ -1,14 +1,14 @@
-const AWS = require('aws-sdk');
+const AWS = require('aws-sdk')
 
-function unmarshallArray(items) {
-    const docConvert = AWS.DynamoDB.Converter;
-    const result = [];
+function unmarshallArray (items) {
+    const docConvert = AWS.DynamoDB.Converter
+    const result = []
 
     for (const i in items) {
-        result.push(docConvert.unmarshall(items[i]));
+        result.push(docConvert.unmarshall(items[i]))
     }
 
-    return result;
+    return result
 }
 
-module.exports = unmarshallArray;
+module.exports = unmarshallArray
