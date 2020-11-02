@@ -10,33 +10,38 @@ module.exports = function (router) {
 
 // APIs
 async function status (req, res) {
-  const dynamoConnection = await _checkDynamoConnection()
-  const internetConnection = await _checkInternetConnection()
+  try {
+    const dynamoConnection = await _checkDynamoConnection()
+    const internetConnection = await _checkInternetConnection()
 
-  return res.status(200).json({
-    status: {
-      dynamoDB: dynamoConnection,
-      internet: internetConnection,
-      isRunning: getIsRunning()
-    }
-  })
+    return res.status(200).json({
+      status: {
+        dynamoDB: dynamoConnection,
+        internet: internetConnection,
+        isRunning: getIsRunning()
+      }
+    })
+  } catch (err) {
+    return res.status(502).json({
+      msg: err
+    })
+  }
 }
 
 function _checkDynamoConnection () {
-  return new Promise(resolve => {
+  return new Promise(async function (resolve) {
     const params = {
       TableName: 'fieldDayDemo_event',
       Limit: 1
     }
 
-    dynamoDB.scan(params, (err, data) => {
-      if (err) {
-        console.log(err, err.stack)
-        resolve(false)
-      }
-
+    try {
+      await dynamoDB.scan(params).promise()
       resolve(true)
-    })
+    } catch (err) {
+      console.log(err, err.stack)
+      resolve(false)
+    }
   })
 }
 

@@ -7,9 +7,13 @@ const competitors = require('../data/default/competitors.json')
 const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
 
 async function resetLocalData () {
-  await _uploadToDynamo(process.env.EVENTS_DATABASE, events)
-  await _uploadToDynamo(process.env.COMPETITORS_DATABASE, competitors)
-
+  try {
+    await _uploadToDynamo(process.env.EVENTS_DATABASE, events)
+    await _uploadToDynamo(process.env.COMPETITORS_DATABASE, competitors)
+  } catch (err) {
+    console.log(err, err.stack) // an error occurred
+  }
+  
   // setup default file to live file
   const source = path.join(__dirname, '../', 'data', 'default')
   const destination = path.join(__dirname, '../', 'data', 'modified')
@@ -22,8 +26,8 @@ async function resetLocalData () {
   })
 }
 
-function _uploadToDynamo (tableName, items) {
-  return new Promise(resolve => {
+async function _uploadToDynamo (tableName, items) {
+  return new Promise(async function (resolve) {
     const docConvert = AWS.DynamoDB.Converter
     const putRequest = []
 
@@ -41,13 +45,12 @@ function _uploadToDynamo (tableName, items) {
       }
     }
 
-    dynamoDB.batchWriteItem(params, function (err, data) {
-      if (err) {
-        console.log(err, err.stack) // an error occurred
-      }
-
+    try {
+      await dynamoDB.batchWriteItem(params).promise();
       resolve()
-    })
+    } catch (err) {
+      throw(err)
+    }
   })
 }
 
