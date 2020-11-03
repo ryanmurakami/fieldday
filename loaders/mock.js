@@ -27,31 +27,29 @@ async function resetLocalData () {
 }
 
 async function _uploadToDynamo (tableName, items) {
-  return new Promise(async function (resolve) {
-    const docConvert = AWS.DynamoDB.Converter
-    const putRequest = []
+  const docConvert = AWS.DynamoDB.Converter
+  const putRequest = []
 
-    for (const i in items) {
-      putRequest.push({
-        PutRequest: {
-          Item: docConvert.marshall(items[i])
-        }
-      })
-    };
-
-    const params = {
-      RequestItems: {
-        [tableName]: putRequest
+  for (const i in items) {
+    putRequest.push({
+      PutRequest: {
+        Item: docConvert.marshall(items[i])
       }
-    }
+    })
+  };
 
-    try {
-      await dynamoDB.batchWriteItem(params).promise();
-      resolve()
-    } catch (err) {
-      throw(err)
+  const params = {
+    RequestItems: {
+      [tableName]: putRequest
     }
-  })
+  }
+
+  try {
+    await dynamoDB.batchWriteItem(params).promise();
+    return null
+  } catch (err) {
+    throw(err)
+  }
 }
 
 module.exports = resetLocalData

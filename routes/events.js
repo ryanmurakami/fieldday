@@ -14,29 +14,41 @@ module.exports = function (router) {
 
 // APIs
 async function getAllEvents (req, res) {
-  const events = await eventsDTO.getEvents()
-  const result = {
-    allEvents: events,
-    inProgress: getInProgressEvent(),
-    lastEvent: getLastEvent()
+  try {
+    const events = await eventsDTO.getEvents()
+    const result = {
+      allEvents: events,
+      inProgress: getInProgressEvent(),
+      lastEvent: getLastEvent()
+    }
+  
+    return res.status(200).json({
+      body: result
+    })
+  } catch (err) {
+    return res.status(502).json({
+      message: 'something went wrong'
+    })
   }
-
-  return res.status(200).json({
-    body: result
-  })
 }
 
 async function getEvents (req, res) {
-  const events = await eventsDTO.getEvents()
-  const event = events.find(e => e.id === req.params.event_id)
-
-  if (event) {
-    return res.status(200).json({
-      body: event
-    })
-  } else {
-    return res.status(404).json({
-      message: 'Invalid event id'
+  try {
+    const events = await eventsDTO.getEvents()
+    const event = events.find(e => e.id === req.params.event_id)
+  
+    if (event) {
+      return res.status(200).json({
+        body: event
+      })
+    } else {
+      return res.status(404).json({
+        message: 'Invalid event id'
+      })
+    }
+  } catch (err) {
+    return res.status(502).json({
+      message: 'something went wrong'
     })
   }
 }

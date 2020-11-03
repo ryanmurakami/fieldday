@@ -87,104 +87,97 @@ function stopEvent () {
 }
 
 async function _generateCompetitorsFinisher () {
-  return new Promise(async function (resolve) {
-    const minFinishedTime = FIELD_DAY_EVENT.inProgressEvent.minFinishedTime
-    const maxFinishedTime = FIELD_DAY_EVENT.inProgressEvent.maxFinishedTime
-    try {
-      const competitors = await competitorsDTO.getCompetitors()
-      const competitorsResult = []
-  
-      for (const i in competitors) {
-        const result = {
-          name: competitors[i].name,
-          image: competitors[i].image,
-          time: Math.floor(Math.random() * maxFinishedTime) + minFinishedTime
-        }
-  
-        competitorsResult.push(result)
+  const minFinishedTime = FIELD_DAY_EVENT.inProgressEvent.minFinishedTime
+  const maxFinishedTime = FIELD_DAY_EVENT.inProgressEvent.maxFinishedTime
+
+  try {
+    const competitors = await competitorsDTO.getCompetitors()
+    const competitorsResult = []
+
+    for (const i in competitors) {
+      const result = {
+        name: competitors[i].name,
+        image: competitors[i].image,
+        time: Math.floor(Math.random() * maxFinishedTime) + minFinishedTime
       }
-  
-      competitorsResult.sort((a, b) => a.time - b.time)
-  
-      resolve(competitorsResult)
-    } catch (err) {
-      console.log(err)
-      resolve([])
+
+      competitorsResult.push(result)
     }
-  })
+
+    competitorsResult.sort((a, b) => a.time - b.time)
+
+    return competitorsResult
+  } catch (err) {
+      console.log(err)
+      return []
+  }
 }
 
 async function _updateInProgressEvent (result) {
-  return new Promise(async function (resolve) {
-    try {
-      const events = await eventsDTO.getEvents()
-      const event = events.find(e => e.id === FIELD_DAY_EVENT.inProgressEvent.id)
-    
-      if (event) {
-        event.completed = true
-        event.results = result
+  try {
+    const events = await eventsDTO.getEvents()
+    const event = events.find(e => e.id === FIELD_DAY_EVENT.inProgressEvent.id)
+  
+    if (event) {
+      event.completed = true
+      event.results = result
 
-        Object.assign(FIELD_DAY_EVENT.lastEvent, {
-          name: event.name,
-          imageUrl: result[0].image
-        })
-  
-        // Reset state
-        Object.assign(FIELD_DAY_EVENT.inProgressEvent, {
-          id: '',
-          name: '',
-          progress: 0
-        })
-  
-        await eventsDTO.saveEvents(events)
-        const runEvent = await _selectRandomEvent()
-        if (runEvent) {
-          runInProgressEvent(runEvent)
-        } else {
-          console.log('No More Event to run!')
-        }
+      Object.assign(FIELD_DAY_EVENT.lastEvent, {
+        name: event.name,
+        imageUrl: result[0].image
+      })
+
+      // Reset state
+      Object.assign(FIELD_DAY_EVENT.inProgressEvent, {
+        id: '',
+        name: '',
+        progress: 0
+      })
+
+      await eventsDTO.saveEvents(events)
+      const runEvent = await _selectRandomEvent()
+      if (runEvent) {
+        runInProgressEvent(runEvent)
+      } else {
+        console.log('No More Event to run!')
       }
-    } catch (err) {
-      console.log(err)
-    } finally {
-      resolve()
     }
-  })
+  } catch (err) {
+    console.log(err)
+  } finally {
+    return null
+  }
 }
 
 async function _updateCompetitorsResult (result) {
-  return new Promise(async function (resolve) {
-    try {
-      const competitors = await competitorsDTO.getCompetitors()
-  
-      for (const i in result) {
-        const competitor = competitors.find(c => c.name === result[i].name)
-        competitor.events.push({
-          name: FIELD_DAY_EVENT.inProgressEvent.name,
-          rank: i,
-          time: result[i].time
-        })
-      }
-  
-      await competitorsDTO.saveCompetitors(competitors)
-    } catch (err) {
-      console.log(err)
-    } finally {
-      resolve()
+  try {
+    const competitors = await competitorsDTO.getCompetitors()
+
+    for (const i in result) {
+      const competitor = competitors.find(c => c.name === result[i].name)
+      competitor.events.push({
+        name: FIELD_DAY_EVENT.inProgressEvent.name,
+        rank: i,
+        time: result[i].time
+      })
     }
-  })
+
+    await competitorsDTO.saveCompetitors(competitors)
+  } catch (err) {
+    console.log(err)
+  } finally {
+    return null
+  }
 }
 
 async function _selectRandomEvent () {
-  return new Promise(async function (resolve) {
-    const events = await eventsDTO.getEvents()
-    const unfinishedEvent = events.filter(e => e.completed === false)
-    if (unfinishedEvent.length > 0) {
-      resolve(unfinishedEvent[unfinishedEvent.length * Math.random() | 0])
-    }
+  const events = await eventsDTO.getEvents()
+  const unfinishedEvent = events.filter(e => e.completed === false)
+  if (unfinishedEvent.length > 0) {
+    return unfinishedEvent[unfinishedEvent.length * Math.random() | 0]
+  }
 
-    resolve(null)
-  })
+  return null
 }
 
 module.exports = {
