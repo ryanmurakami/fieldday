@@ -1,35 +1,62 @@
-const fs = require('fs');
-const path = require('path');
+const eventsDTO = require('../model/event')
+const {
+  getInProgressEvent,
+  getLastEvent,
+  runInProgressEvent
+} = require('../services/eventTracker')
 
-//initialize
+// initialize
 module.exports = function (router) {
-    router.get('/events', get_all_events);
-    router.get('/events/:event_id', get_events);
+  router.get('/events', getAllEvents)
+  router.get('/events/:event_id', getEvents)
+  router.post('/events', startEvent)
 }
 
-//APIs
-function get_all_events(req, res) {
-    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
-    const competitors = JSON.parse(rawdata);
-
-    return res.status(200).json({
-        body: competitors
-    });
-}
-
-function get_events(req, res) {
-    const rawdata = fs.readFileSync(path.join(__dirname, '../', 'data', 'modified', 'events.json'));
-    const events = JSON.parse(rawdata);
-    const event = events.find(event => event.id == req.params.event_id);
-
-    if (event) {
-        return res.status(200).json({
-            body: event
-        });
-    } else {
-        return res.status(404).json({
-            message: 'Invalid event id'
-        });
+// APIs
+async function getAllEvents (req, res) {
+  try {
+    const events = await eventsDTO.getEvents()
+    const result = {
+      allEvents: events,
+      inProgress: getInProgressEvent(),
+      lastEvent: getLastEvent()
     }
-    
+  
+    return res.status(200).json({
+      body: result
+    })
+  } catch (err) {
+    return res.status(502).json({
+      message: 'something went wrong'
+    })
+  }
+}
+
+async function getEvents (req, res) {
+  try {
+    const events = await eventsDTO.getEvents()
+    const event = events.find(e => e.id === req.params.event_id)
+  
+    if (event) {
+      return res.status(200).json({
+        body: event
+      })
+    } else {
+      return res.status(404).json({
+        message: 'Invalid event id'
+      })
+    }
+  } catch (err) {
+    return res.status(502).json({
+      message: 'something went wrong'
+    })
+  }
+}
+
+function startEvent (req, res) {
+  runInProgressEvent(req.body)
+
+  return res.status(200).json({
+    message: `${req.body.name} has started`
+  })
 }

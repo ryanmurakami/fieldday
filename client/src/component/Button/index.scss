@@ -5,7 +5,7 @@
 }
 
 .button {
-  background-color: #3FC1C9; /* Green */
+  background-color: #3FC1C9;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -14,4 +14,8 @@
   display: inline-block;
   font-style: italic;
   font-size: 16px;
+}
+
+.button-alert {
+  background-color: #c9473f;
 }

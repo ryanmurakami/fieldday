@@ -1,30 +1,76 @@
-import React from 'react';
-import styles from './index.scss';
+import React, { useState, useEffect } from 'react'
+import _ from 'lodash'
 
-import Button from '../../component/Button/index.jsx';
-import Heading from '../../component/Heading/index.jsx';
+import { getAPI } from '../../helper.js'
 
-function Setting(props) {
-    return (
-        <div className={`container ${styles.wrapper}`}>
-            <Heading text="AWS Connection Status"/>
+import Button from '../../component/Button/index.jsx'
+import Heading from '../../component/Heading/index.jsx'
 
-            <div className={styles.p}>
-                <dl className={styles.dl}>
-                    <dt className={styles.dt}>ICON</dt>
-                    <dd className={styles.dd}>DynamoDB Connection</dd>
-                    <dt className={styles.dt}>ICON</dt>
-                    <dd className={styles.dd}>ElastiCache Connection</dd>
-                    <dt className={styles.dt}>ICON</dt>
-                    <dd className={styles.dd}>Outside Internet Connection</dd>
-                </dl> 
-            </div>
+import styles from './index.scss'
 
-            <Heading text="Field Day App Controls"/>
-            <Button />
-            <Button />
-        </div>
-    );
+function Setting () {
+  const [response, setResponse] = useState({ status: {} })
+
+  const url = 'status'
+  useEffect(() => {
+    getAPI(url, setResponse)
+  }, [response.status])
+
+  let runButton = <Button text='Start' action={_startSimulator} />
+
+  if (_.get(response, 'status.isRunning')) {
+    runButton = <Button text='Stop' type='alert' action={_stopSimulator} />
+  }
+
+  return (
+    <div className={`container ${styles.wrapper}`}>
+      <Heading text='AWS Connection Status' />
+
+      <div className={styles.p}>
+        <dl className={styles.dl}>
+          <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.dynamoDB'))}</dt>
+          <dd className={styles.dd}>DynamoDB Connection</dd>
+          <dt className={styles.dt}>ICON</dt>
+          <dd className={styles.dd}>ElastiCache Connection</dd>
+          <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.internet'))}</dt>
+          <dd className={styles.dd}>Outside Internet Connection</dd>
+        </dl>
+      </div>
+
+      <Heading text='Field Day App Controls' />
+      {runButton}
+      <Button text='Reset' action={_resetSimulator} />
+    </div>
+  )
 }
 
-export default Setting;
+function _connectionRender (type) {
+  if (type) {
+    return <span>TRUE</span>
+  }
+
+  return <span>FALSE</span>
+}
+
+function _startSimulator () {
+  const url = 'commands/start'
+  getAPI(url, (res) => {
+    console.log(res)
+  })
+}
+
+function _stopSimulator (setResponse) {
+  const url = 'commands/stop'
+  getAPI(url, (res) => {
+    console.log(res)
+  })
+}
+
+function _resetSimulator (setResponse) {
+  const url = 'commands/reset'
+  getAPI(url, (res) => {
+    console.log(res)
+  })
+}
+
+export default Setting

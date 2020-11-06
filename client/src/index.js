@@ -1,6 +1,6 @@
-import ReactDOM from "react-dom";
-import React from "react";
-import App from "./App.jsx";
+import ReactDOM from 'react-dom'
+import React from 'react'
+import App from './App.jsx'
 
-const wrapper = document.getElementById("container");
-wrapper ? ReactDOM.render(<App />, wrapper) : false;
+const wrapper = document.getElementById('container')
+wrapper ? ReactDOM.render(<App />, wrapper) : false

@@ -6,7 +6,7 @@
   "scripts": {
     "install-all": "npm install && cd client && npm install",
     "start-all": "cd client && npm run build && cd .. && npm run start",
-    "start": "node mock.js && nodemon app.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,15 +20,21 @@
   },
   "homepage": "https://github.com/ryanmurakami/ec2fieldday#readme",
   "dependencies": {
-    "aws-sdk": "^2.771.0",
+    "aws-sdk": "^2.782.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "lodash": "^4.17.20",
     "ncp": "^2.0.0",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.4"
   },
   "nodemonConfig": {
     "ignore": [
       "data/*"
     ]
+  },
+  "devDependencies": {
+    "standard": "^16.0.1"
   }
 }

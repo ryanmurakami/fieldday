@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import 'grd';
+import React, { useState, useEffect } from 'react'
+import 'grd'
 
-import checkAPIRoute from '../../helper.js';
+import { getAPI } from '../../helper.js'
 
-import Image from '../../component/Image/index.jsx';
-import Divider from '../../component/Divider/index.jsx';
+import Image from '../../component/Image/index.jsx'
+import Divider from '../../component/Divider/index.jsx'
 
-import styles from './index.scss';
+import styles from './index.scss'
 
-function CompetitorContainer() {
-    const [response, setResponse] = useState({"message": "Oops, something went wrong..."})
+function CompetitorContainer () {
+  const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
 
-    const url = 'competitors';
-    useEffect(() =>{
-        checkAPIRoute(url, setResponse)
-    }, []);
+  const url = 'competitors'
+  useEffect(() => {
+    getAPI(url, setResponse)
+  }, [])
 
-    const competitors = response.body || [];
-    const renderCompetitors = competitors.map(function(competitor, index){
-        return (
-            <div key={index} className="Cell -3of12">
-                <Image
-                    link={`/competitors/${competitor.id}`}
-                    image={competitor.image}
-                    subtitle={competitor.name}/>
-            </div>
-        );
-    });
-
-
+  const competitors = response.body || []
+  const renderCompetitors = competitors.map(function (competitor, index) {
     return (
-        <div className={styles.container}>
-            <Divider text="Competitors" />
-            <div className="Grid -middle">
-                {renderCompetitors}
-            </div>
-        </div>
-    );
+      <div key={index} className='Cell -3of12'>
+        <Image
+          link={`/competitors/${competitor.id}`}
+          image={competitor.image}
+          subtitle={competitor.name}
+        />
+      </div>
+    )
+  })
+
+  return (
+    <div className={styles.container}>
+      <Divider text='Competitors' />
+      <div className='Grid -middle'>
+        {renderCompetitors}
+      </div>
+    </div>
+  )
 }
 
-export default CompetitorContainer;
+export default CompetitorContainer
