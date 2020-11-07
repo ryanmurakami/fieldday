@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 import 'grd'
 
 import Logo from '../Logo/index.jsx'
@@ -22,7 +24,9 @@ function Header (props) {
           <Link to='/competitors'>Competitors</Link>
         </div>
         <div className={`Cell -3of12 ${styles.end}`}>
-          <Link to='/settings'>Settings</Link>
+          <Link to='/settings'>
+            <FontAwesomeIcon icon={faCog} />
+          </Link>
         </div>
       </div>
     </header>

@@ -1,7 +1,16 @@
-.subtitle {
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 37px;
-    /* identical to box height */
-    padding: 0.5em 0 0.5em 0;
+.wrapper {
+    padding-bottom: 2em;
+
+    a {
+        color: inherit; /* blue colors for links too */
+        text-decoration: none; /* no underline */
+        .subtitle {
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 37px;
+            /* identical to box height */
+            padding: 0.5em 0 0.5em 0;
+        }
+    }
 }
+

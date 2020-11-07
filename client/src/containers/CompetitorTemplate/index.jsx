@@ -35,13 +35,20 @@ function CompetitorTemplate (props) {
                 competitor.events.map(function (result, index) {
                   return (
                     <li key={index}>
-                      {result.name} - {result.rank} - {result.time}
+                      {result.name} - {result.rank} - {_renderTime(result.time)}
                     </li>
                   )
                 })}
       </ol>
     </div>
   )
+}
+
+function _renderTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return <span>{minutes}:{seconds}</span>
 }
 
 export default CompetitorTemplate

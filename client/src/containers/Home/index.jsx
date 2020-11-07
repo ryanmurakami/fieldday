@@ -43,7 +43,7 @@ function HomeContainer (props) {
 
   return (
     <div className={styles.container}>
-      <div className='Grid -middle'>
+      <div className={`Grid -middle ${styles.first}`}>
         <div className='Cell -5of12'>
           <h3 className={styles.title}>Event Progress</h3>
           <p className={styles.subtitle}>{inProgressEvent.name}</p>

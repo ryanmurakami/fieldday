@@ -28,8 +28,13 @@
     position: absolute;
     width: 324px;
     height: 0px;
-    left: -50%;
+    left: -25%;
 
+    background: #364F6B;
     border: 2px solid #364F6B;
     transform: rotate(90deg);
+}
+
+.first {
+    padding: 4em 0em 4em 0em;
 }
