@@ -5,6 +5,8 @@ import { getAPI } from '../../helper.js'
 
 import Heading from '../../component/Heading/index.jsx'
 import Divider from '../../component/Divider/index.jsx'
+import Stats from '../../component/Stats/index.jsx'
+import List from '../../component/List/index.jsx'
 
 import styles from './index.scss'
 
@@ -27,28 +29,16 @@ function CompetitorTemplate (props) {
       <img src={competitor.image} />
       <Divider text='Stats' />
       <div>
-        TODO: create stats component
+        {competitor.stats &&
+          competitor.stats.map((stat, index) => {
+            return (<Stats key={index} name={stat.key} rating={stat.value * 10} />)
+          })
+        }
       </div>
       <Divider text='Participating Event' />
-      <ol className={styles['number-list']}>
-        {competitor.events &&
-                competitor.events.map(function (result, index) {
-                  return (
-                    <li key={index}>
-                      {result.name} - {result.rank} - {_renderTime(result.time)}
-                    </li>
-                  )
-                })}
-      </ol>
+      <List items={competitor.events} />
     </div>
   )
-}
-
-function _renderTime(totalSeconds) {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-
-  return <span>{minutes}:{seconds}</span>
 }
 
 export default CompetitorTemplate

@@ -9,7 +9,9 @@ function Image ({ items }) {
                 items.map(function (result, index) {
                   return (
                     <li key={index}>
-                      {result.name} - {_renderTime(result.time)}
+                      {result.name} {
+                        result.rank && _renderRank(result.rank)
+                      } - {_renderTime(result.time)}
                     </li>
                   )
                 })}
@@ -22,6 +24,24 @@ function _renderTime(totalSeconds) {
   const seconds = totalSeconds % 60;
 
   return <span>{minutes}:{seconds}</span>
+}
+
+function _renderRank(rank) {
+  let text
+  switch (rank) {
+    case "1":
+      text = "st";
+      break;
+    case "2":
+      text = "nd";
+      break;
+    case "3":
+      text = "rd";
+      break;
+    default:
+      text = "th";
+  }
+  return <span>- {rank}{text} place</span>
 }
 
 export default Image

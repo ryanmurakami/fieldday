@@ -28,16 +28,6 @@ function EventTemplate (props) {
       <img src={event.image} />
       <Divider text='Event Result' />
       <List items={event.results} />
-      {/* <ol className={styles['number-list']}>
-        {event.results &&
-                event.results.map(function (result, index) {
-                  return (
-                    <li key={index}>
-                      {result.name} - {_renderTime(result.time)}
-                    </li>
-                  )
-                })}
-      </ol> */}
     </div>
   )
 }

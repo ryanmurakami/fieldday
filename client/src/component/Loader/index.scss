@@ -23,4 +23,14 @@
     position: relative;
     overflow: hidden;
   }
+
+  .alt {
+    background-color: rgb(63,193,201);
+    background-image: linear-gradient(
+      center bottom,
+      rgb(63,193,201) 37%,
+      rgb(63,193,201) 69%
+    );
+  }
 }
+
