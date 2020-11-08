@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import 'grd'
@@ -13,20 +13,30 @@ function Header (props) {
     <header className={styles.header}>
       <div className='container Grid -middle'>
         <div className='Cell -3of12'>
-          <Link to='/'>
+          <NavLink to='/'>
             <Logo />
-          </Link>
+          </NavLink>
         </div>
         <div className='Cell -3of12'>
-          <Link to='/events'>Events</Link>
+          <NavLink 
+            activeClassName={styles.selected}
+            to='/events'>
+              Events
+          </NavLink>
         </div>
         <div className='Cell -3of12'>
-          <Link to='/competitors'>Competitors</Link>
+          <NavLink 
+            activeClassName={styles.selected}
+            to='/competitors'>
+              Competitors
+          </NavLink>
         </div>
         <div className={`Cell -3of12 ${styles.end}`}>
-          <Link to='/settings'>
-            <FontAwesomeIcon icon={faCog} />
-          </Link>
+          <NavLink 
+            activeClassName={styles.selected}
+            to='/settings'>
+              <FontAwesomeIcon icon={faCog} />
+          </NavLink>
         </div>
       </div>
     </header>
