@@ -16,7 +16,15 @@ function CompetitorTemplate (props) {
 
   const url = `competitors/${competitor_id}`
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const competitor = response.body || {}

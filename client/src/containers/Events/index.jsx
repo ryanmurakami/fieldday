@@ -13,7 +13,15 @@ function EventsContainer () {
 
   const url = 'events'
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const events = _.get(response, 'body.allEvents') || []

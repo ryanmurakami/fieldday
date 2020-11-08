@@ -14,13 +14,23 @@ function HomeContainer (props) {
 
   const url = 'events'
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
     const interval = setInterval(() => {
-      getAPI(url, setResponse)
+      getAPI(url, (res) => {
+        if (mounted) {
+          setResponse(res)
+        }
+      })
     }, 5000)
     // component will unmount
     return () => {
       // clear interval
+      mounted = false
       clearInterval(interval)
     }
   }, [])

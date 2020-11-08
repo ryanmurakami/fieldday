@@ -15,7 +15,15 @@ function Setting () {
 
   const url = 'status'
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [response.status])
 
   let runButton = <Button text='Start' action={_startSimulator} />

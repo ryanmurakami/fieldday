@@ -9,9 +9,7 @@ function Image ({ items }) {
                 items.map(function (result, index) {
                   return (
                     <li key={index}>
-                      {result.name} {
-                        result.rank && _renderRank(result.rank)
-                      } - {_renderTime(result.time)}
+                      {result.name} {_renderResult(result.time, result.rank)}
                     </li>
                   )
                 })}
@@ -19,6 +17,17 @@ function Image ({ items }) {
   )
 }
 
+function _renderResult(time, rank) {
+  if (!time && !rank) {
+    return <span>- Not Completed Yet</span>
+  }
+
+return (<span>
+    {rank && _renderRank(rank)} - {_renderTime(time)}
+  </span>)
+}
+
+// TODO: if time and rank is null - replace with 'text'
 function _renderTime (totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60)
   const seconds = totalSeconds % 60

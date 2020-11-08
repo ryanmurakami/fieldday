@@ -3,6 +3,10 @@ import React from 'react'
 import styles from './index.scss'
 
 function Loader ({ progress, isAlt }) {
+  // simple hack for CSS
+  if (progress <= 5) {
+    progress = 7
+  }
   return (
     <div>
       <div className={styles.meter}>

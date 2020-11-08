@@ -155,11 +155,10 @@ async function _updateCompetitorsResult (result) {
 
     for (const i in result) {
       const competitor = competitors.find(c => c.name === result[i].name)
-      competitor.events.push({
-        name: FIELD_DAY_EVENT.inProgressEvent.name,
-        rank: i + 1,
-        time: result[i].time
-      })
+      const event = competitor.events.find(e => e.name === FIELD_DAY_EVENT.inProgressEvent.name)
+      
+      event.rank = parseInt(i) + 1
+      event.time = result[i].time
     }
 
     await competitorsDTO.saveCompetitors(competitors)

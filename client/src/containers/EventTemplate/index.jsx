@@ -15,7 +15,15 @@ function EventTemplate (props) {
 
   const url = `events/${event_id}`
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const event = response.body || {}
