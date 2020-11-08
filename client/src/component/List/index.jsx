@@ -17,14 +17,16 @@ function Image ({ items }) {
   )
 }
 
-function _renderResult(time, rank) {
+function _renderResult (time, rank) {
   if (!time && !rank) {
     return <span>- Not Completed Yet</span>
   }
 
-return (<span>
-    {rank && _renderRank(rank)} - {_renderTime(time)}
-  </span>)
+  return (
+    <span>
+      {rank && _renderRank(rank)} - {_renderTime(time)}
+    </span>
+  )
 }
 
 // TODO: if time and rank is null - replace with 'text'

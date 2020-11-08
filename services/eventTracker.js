@@ -156,7 +156,7 @@ async function _updateCompetitorsResult (result) {
     for (const i in result) {
       const competitor = competitors.find(c => c.name === result[i].name)
       const event = competitor.events.find(e => e.name === FIELD_DAY_EVENT.inProgressEvent.name)
-      
+
       event.rank = parseInt(i) + 1
       event.time = result[i].time
     }

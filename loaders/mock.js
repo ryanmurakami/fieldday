@@ -62,7 +62,7 @@ async function _uploadToDynamo (tableName, items) {
   }
 }
 
-function _addEventsToCompetitors(events, competitors) {
+function _addEventsToCompetitors (events, competitors) {
   for (const i in events) {
     for (const j in competitors) {
       const event = {
