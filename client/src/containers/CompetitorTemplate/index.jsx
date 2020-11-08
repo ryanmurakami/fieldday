@@ -32,8 +32,7 @@ function CompetitorTemplate (props) {
         {competitor.stats &&
           competitor.stats.map((stat, index) => {
             return (<Stats key={index} name={stat.key} rating={stat.value * 10} />)
-          })
-        }
+          })}
       </div>
       <Divider text='Participating Event' />
       <List items={competitor.events} />

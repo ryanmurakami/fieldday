@@ -18,24 +18,27 @@ function Header (props) {
           </NavLink>
         </div>
         <div className='Cell -3of12'>
-          <NavLink 
+          <NavLink
             activeClassName={styles.selected}
-            to='/events'>
-              Events
+            to='/events'
+          >
+            Events
           </NavLink>
         </div>
         <div className='Cell -3of12'>
-          <NavLink 
+          <NavLink
             activeClassName={styles.selected}
-            to='/competitors'>
-              Competitors
+            to='/competitors'
+          >
+            Competitors
           </NavLink>
         </div>
         <div className={`Cell -3of12 ${styles.end}`}>
-          <NavLink 
+          <NavLink
             activeClassName={styles.selected}
-            to='/settings'>
-              <FontAwesomeIcon icon={faCog} />
+            to='/settings'
+          >
+            <FontAwesomeIcon icon={faCog} />
           </NavLink>
         </div>
       </div>

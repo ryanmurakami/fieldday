@@ -52,15 +52,19 @@ function Setting () {
 
 function _connectionRender (type) {
   if (type) {
-    return <div>
-      <FontAwesomeIcon icon={faCheckCircle} color="#3FC1C9" />
-    </div>
+    return (
+      <div>
+        <FontAwesomeIcon icon={faCheckCircle} color='#3FC1C9' />
+      </div>
+    )
   }
 
-  return <div>
+  return (
+    <div>
 
-    <FontAwesomeIcon icon={faTimesCircle} color="#FC5185" />
-  </div>
+      <FontAwesomeIcon icon={faTimesCircle} color='#FC5185' />
+    </div>
+  )
 }
 
 function _startSimulator () {

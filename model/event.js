@@ -51,7 +51,7 @@ async function saveEvents (events) {
         if (error) {
           throw error
         }
-    })
+      })
   } finally {
     return null
   }

@@ -8,7 +8,7 @@ function Stats ({ name, rating }) {
   return (
     <dl className={styles.dl}>
       <dt className={styles.dt}>{name}</dt>
-      <dd className={styles.dd}><Loader progress={rating} isAlt={true}/></dd>
+      <dd className={styles.dd}><Loader progress={rating} isAlt /></dd>
     </dl>
   )
 }

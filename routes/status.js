@@ -12,14 +12,13 @@ module.exports = function (router) {
 async function status (req, res) {
   let dynamoConnection = false
   let internetConnection = false
-  
+
   try {
     dynamoConnection = await _checkDynamoConnection()
     internetConnection = await _checkInternetConnection()
   } catch (err) {
-    console.log(err);
+    console.log(err)
   }
-  
 
   return res.status(200).json({
     status: {

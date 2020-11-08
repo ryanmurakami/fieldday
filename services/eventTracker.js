@@ -108,8 +108,8 @@ async function _generateCompetitorsFinisher () {
 
     return competitorsResult
   } catch (err) {
-      console.log(err)
-      return []
+    console.log(err)
+    return []
   }
 }
 
@@ -117,7 +117,7 @@ async function _updateInProgressEvent (result) {
   try {
     const events = await eventsDTO.getEvents()
     const event = events.find(e => e.id === FIELD_DAY_EVENT.inProgressEvent.id)
-  
+
     if (event) {
       event.completed = true
       event.results = result

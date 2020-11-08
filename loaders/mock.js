@@ -13,7 +13,7 @@ async function resetLocalData () {
   } catch (err) {
     console.log(err, err.stack) // an error occurred
   }
-  
+
   // setup default file to live file
   const source = path.join(__dirname, '../', 'data', 'default')
   const destination = path.join(__dirname, '../', 'data', 'modified')
@@ -45,10 +45,10 @@ async function _uploadToDynamo (tableName, items) {
   }
 
   try {
-    await dynamoDB.batchWriteItem(params).promise();
+    await dynamoDB.batchWriteItem(params).promise()
     return null
   } catch (err) {
-    throw(err)
+    throw (err)
   }
 }
 

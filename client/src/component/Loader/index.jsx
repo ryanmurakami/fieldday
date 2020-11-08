@@ -6,7 +6,7 @@ function Loader ({ progress, isAlt }) {
   return (
     <div>
       <div className={styles.meter}>
-        <span className={isAlt ? styles.alt : ''} style={{ width: progress + "%" }}></span>
+        <span className={isAlt ? styles.alt : ''} style={{ width: progress + '%' }} />
       </div>
     </div>
   )

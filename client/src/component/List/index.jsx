@@ -5,7 +5,7 @@ import styles from './index.scss'
 function Image ({ items }) {
   return (
     <ol className={styles['number-list']}>
-        {items &&
+      {items &&
                 items.map(function (result, index) {
                   return (
                     <li key={index}>
@@ -15,31 +15,31 @@ function Image ({ items }) {
                     </li>
                   )
                 })}
-      </ol>
+    </ol>
   )
 }
 
-function _renderTime(totalSeconds) {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
+function _renderTime (totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
 
   return <span>{minutes}:{seconds}</span>
 }
 
-function _renderRank(rank) {
+function _renderRank (rank) {
   let text
   switch (rank) {
-    case "1":
-      text = "st";
-      break;
-    case "2":
-      text = "nd";
-      break;
-    case "3":
-      text = "rd";
-      break;
+    case '1':
+      text = 'st'
+      break
+    case '2':
+      text = 'nd'
+      break
+    case '3':
+      text = 'rd'
+      break
     default:
-      text = "th";
+      text = 'th'
   }
   return <span>- {rank}{text} place</span>
 }

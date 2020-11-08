@@ -21,7 +21,7 @@ async function getAllEvents (req, res) {
       inProgress: getInProgressEvent(),
       lastEvent: getLastEvent()
     }
-  
+
     return res.status(200).json({
       body: result
     })
@@ -36,7 +36,7 @@ async function getEvents (req, res) {
   try {
     const events = await eventsDTO.getEvents()
     const event = events.find(e => e.id === req.params.event_id)
-  
+
     if (event) {
       return res.status(200).json({
         body: event
