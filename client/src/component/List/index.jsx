@@ -1,4 +1,5 @@
 import React from 'react'
+import dayjs from 'dayjs'
 
 import styles from './index.scss'
 
@@ -29,12 +30,11 @@ function _renderResult (time, rank) {
   )
 }
 
-// TODO: if time and rank is null - replace with 'text'
-function _renderTime (totalSeconds) {
-  const minutes = Math.floor(totalSeconds / 60)
-  const seconds = totalSeconds % 60
 
-  return <span>{minutes}:{seconds}</span>
+function _renderTime (totalSeconds) {
+  // Date does not matter since we only take the minutes and seconds
+  const day = dayjs("2019-06-06").second(totalSeconds);
+  return <span>{day.format("MM:ss")}</span>
 }
 
 function _renderRank (rank) {
