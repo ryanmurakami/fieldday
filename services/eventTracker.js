@@ -35,7 +35,7 @@ function runInProgressEvent (event) {
   })
   setInProgressEvent(event)
 
-  const modifier = FIELD_DAY_EVENT.inProgressEvent.simulationTime / 100
+  const modifier =  100 / FIELD_DAY_EVENT.inProgressEvent.simulationTime
   FIELD_DAY_EVENT.interval = setInterval(async function () {
     FIELD_DAY_EVENT.inProgressEvent.progress += modifier
 
