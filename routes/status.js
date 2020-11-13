@@ -17,7 +17,7 @@ async function status (req, res) {
     dynamoConnection = await _checkDynamoConnection()
     internetConnection = await _checkInternetConnection()
   } catch (err) {
-    console.log(err)
+    console.log('error in fetching status')
   }
 
   return res.status(200).json({
@@ -31,7 +31,7 @@ async function status (req, res) {
 
 async function _checkDynamoConnection () {
   const params = {
-    TableName: 'fieldDayDemo_event',
+    TableName: process.env.EVENTS_DATABASE,
     Limit: 1
   }
 
@@ -39,7 +39,7 @@ async function _checkDynamoConnection () {
     await dynamoDB.scan(params).promise()
     return true
   } catch (err) {
-    console.log(err, err.stack)
+    console.log(`DynamoDB failed to connect due to ${err.code}`)
     return false
   }
 }

@@ -7,10 +7,14 @@ function Loader ({ progress, isAlt }) {
   if (progress <= 5) {
     progress = 7
   }
+
+  // {isAlt ? styles.alt : ''}
   return (
     <div>
       <div className={styles.meter}>
-        <span className={isAlt ? styles.alt : ''} style={{ width: progress + '%' }} />
+        <div className={isAlt ? styles.alt : ''} style={{ width: progress + '%' }}>
+          <div className={`${styles['progress-bar-animated']} ${styles['progress-bar-striped']}`} />
+        </div>
       </div>
     </div>
   )

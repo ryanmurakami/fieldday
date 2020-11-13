@@ -40,13 +40,13 @@ function _renderTime (totalSeconds) {
 function _renderRank (rank) {
   let text
   switch (rank) {
-    case '1':
+    case 1:
       text = 'st'
       break
-    case '2':
+    case 2:
       text = 'nd'
       break
-    case '3':
+    case 3:
       text = 'rd'
       break
     default:
