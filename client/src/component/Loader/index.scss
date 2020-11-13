@@ -48,7 +48,31 @@
         hsla(0,0%,100%,.15) 75%,
         transparent 0,
         transparent);
-      animation: 1s linear infinite;
       background-size: 1rem 1rem;
+  }
+
+  @-webkit-keyframes progress-bar-stripes {
+    from {
+      background-position: 40px 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+  @-o-keyframes progress-bar-stripes {
+    from {
+      background-position: 40px 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+  @keyframes progress-bar-stripes {
+    from {
+      background-position: 40px 0;
+    }
+    to {
+      background-position: 0 0;
+    }
   }
 }

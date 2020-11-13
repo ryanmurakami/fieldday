@@ -8,13 +8,13 @@ function Loader ({ progress, isAlt }) {
     progress = 7
   }
 
-  // {isAlt ? styles.alt : ''}
+  // {isAlt ? styles.alt : `${styles['progress-bar-animated']} ${styles['progress-bar-striped']}`}
   return (
     <div>
       <div className={styles.meter}>
-        <div className={isAlt ? styles.alt : ''} style={{ width: progress + '%' }}>
-          <div className={`${styles['progress-bar-animated']} ${styles['progress-bar-striped']}`} />
-        </div>
+        <div 
+          className={isAlt ? styles.alt : `${styles['progress-bar-animated']} ${styles['progress-bar-striped']}`} 
+          style={{ width: progress + '%' }} />
       </div>
     </div>
   )
