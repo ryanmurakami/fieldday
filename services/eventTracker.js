@@ -102,6 +102,7 @@ async function _generateCompetitorsFinisher () {
 
     for (const i in competitors) {
       const result = {
+        id: competitors[i].id,
         name: competitors[i].name,
         image: competitors[i].image,
         time: Math.floor(Math.random() * maxFinishedTime) + minFinishedTime
@@ -129,8 +130,10 @@ async function _updateInProgressEvent (result) {
       event.results = result
 
       Object.assign(FIELD_DAY_EVENT.lastEvent, {
+        eventId: event.id,
         name: event.name,
-        imageUrl: result[0].image
+        imageUrl: result[0].image,
+        competitorId: result[0].id
       })
 
       // Reset state

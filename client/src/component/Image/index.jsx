@@ -1,15 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import styles from './index.scss'
 
 function Image (props) {
   return (
     <div className={styles.wrapper}>
-      <Link to={props.link}>
+      <NavLink to={props.link}>
         <img src={props.image} />
+      </NavLink>
+      <NavLink to={props.secondaryLink || props.link}>
         <p className={styles.subtitle}>{props.subtitle}</p>
-      </Link>
+      </NavLink>
     </div>
   )
 }

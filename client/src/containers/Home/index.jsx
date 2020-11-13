@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 import _ from 'lodash'
 import 'grd'
 import styles from './index.scss'
@@ -63,7 +64,8 @@ function HomeContainer (props) {
         <div className='Cell -5of12'>
           <h3 className={styles.title}>Recent Event Winner</h3>
           <Image
-            link='/'
+            link={`/competitors/${lastEvent.competitorId}`}
+            secondaryLink={`/events/${lastEvent.eventId}`}
             image={lastEvent.imageUrl}
             subtitle={lastEvent.name}
           />
@@ -81,7 +83,11 @@ function _renderProgressBar(inProgressEvent) {
   if (inProgressEvent.name) {
     return (<div>
       <h3 className={styles.title}>Event Progress</h3>
-      <p className={styles.subtitle}>{inProgressEvent.name}</p>
+      <p className={styles.subtitle}>
+        <NavLink to={`/events/${inProgressEvent.id}`}>
+          {inProgressEvent.name}
+        </NavLink>
+      </p>
       <Loader progress={inProgressEvent.progress} />
     </div>)
   }
