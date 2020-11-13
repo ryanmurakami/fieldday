@@ -37,10 +37,15 @@ async function _checkDynamoConnection () {
 
   try {
     await dynamoDB.scan(params).promise()
-    return true
+    return {
+      status: true,
+      msg: null
+    }
   } catch (err) {
-    console.log(`DynamoDB failed to connect due to ${err.code}`)
-    return false
+    return {
+      status: false,
+      msg: `Failed to connect to DynamoDB with ${err.code}`
+    }
   }
 }
 
@@ -52,7 +57,6 @@ async function _checkInternetConnection () {
       return true
     }
   } catch (err) {
-    console.log(err)
     return false
   }
 }
