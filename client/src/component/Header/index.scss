@@ -7,9 +7,17 @@
         font-size: 32px;
         color: #FFFFFF;
         text-decoration:none;
+        text-transform: uppercase;
+        font-style: italic;
     }
 
     .end {
         text-align: end;
+    }
+
+    .selected {
+        color: rgba(255,255,255,1);
+        text-shadow: 0 0 15px rgba(255,255,255,.5), 
+            0 0 10px rgba(255,255,255,.5);
     }
 }

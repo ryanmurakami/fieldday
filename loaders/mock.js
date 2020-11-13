@@ -1,29 +1,39 @@
 const AWS = require('aws-sdk')
 const path = require('path')
-const ncp = require('ncp').ncp
+const fs = require('fs')
 const events = require('../data/default/events.json')
 const competitors = require('../data/default/competitors.json')
 
 const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
 
 async function resetLocalData () {
+  _addEventsToCompetitors(events, competitors)
+  // Problem - this is in memory, but we are trying to save it to local
   try {
     await _uploadToDynamo(process.env.EVENTS_DATABASE, events)
     await _uploadToDynamo(process.env.COMPETITORS_DATABASE, competitors)
   } catch (err) {
     console.log(err, err.stack) // an error occurred
   }
-  
-  // setup default file to live file
-  const source = path.join(__dirname, '../', 'data', 'default')
-  const destination = path.join(__dirname, '../', 'data', 'modified')
-  ncp(source, destination, function (err) {
-    if (err) {
-      return console.error(err)
-    }
 
-    console.log('Live file prepared')
-  })
+  // setup default file to live file
+  fs.writeFile(
+    path.join(__dirname, '../', 'data', 'modified', 'events.json'),
+    JSON.stringify(events), (error) => {
+      // In case of a error throw err exception.
+      if (error) {
+        throw error
+      }
+    })
+
+  fs.writeFile(
+    path.join(__dirname, '../', 'data', 'modified', 'competitors.json'),
+    JSON.stringify(competitors), (error) => {
+      // In case of a error throw err exception.
+      if (error) {
+        throw error
+      }
+    })
 }
 
 async function _uploadToDynamo (tableName, items) {
@@ -45,10 +55,24 @@ async function _uploadToDynamo (tableName, items) {
   }
 
   try {
-    await dynamoDB.batchWriteItem(params).promise();
+    await dynamoDB.batchWriteItem(params).promise()
     return null
   } catch (err) {
-    throw(err)
+    throw (err)
+  }
+}
+
+function _addEventsToCompetitors (events, competitors) {
+  for (const i in events) {
+    for (const j in competitors) {
+      const event = {
+        name: events[i].name,
+        rank: null,
+        time: null
+      }
+
+      competitors[j].events.push(event)
+    }
   }
 }
 

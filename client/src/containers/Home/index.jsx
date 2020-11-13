@@ -14,13 +14,23 @@ function HomeContainer (props) {
 
   const url = 'events'
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
     const interval = setInterval(() => {
-      getAPI(url, setResponse)
+      getAPI(url, (res) => {
+        if (mounted) {
+          setResponse(res)
+        }
+      })
     }, 5000)
     // component will unmount
     return () => {
       // clear interval
+      mounted = false
       clearInterval(interval)
     }
   }, [])
@@ -43,7 +53,7 @@ function HomeContainer (props) {
 
   return (
     <div className={styles.container}>
-      <div className='Grid -middle'>
+      <div className={`Grid -middle ${styles.first}`}>
         <div className='Cell -5of12'>
           <h3 className={styles.title}>Event Progress</h3>
           <p className={styles.subtitle}>{inProgressEvent.name}</p>

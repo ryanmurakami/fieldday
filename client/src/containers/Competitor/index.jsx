@@ -13,7 +13,15 @@ function CompetitorContainer () {
 
   const url = 'competitors'
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const competitors = response.body || []

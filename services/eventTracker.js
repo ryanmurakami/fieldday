@@ -108,8 +108,8 @@ async function _generateCompetitorsFinisher () {
 
     return competitorsResult
   } catch (err) {
-      console.log(err)
-      return []
+    console.log(err)
+    return []
   }
 }
 
@@ -117,7 +117,7 @@ async function _updateInProgressEvent (result) {
   try {
     const events = await eventsDTO.getEvents()
     const event = events.find(e => e.id === FIELD_DAY_EVENT.inProgressEvent.id)
-  
+
     if (event) {
       event.completed = true
       event.results = result
@@ -155,11 +155,10 @@ async function _updateCompetitorsResult (result) {
 
     for (const i in result) {
       const competitor = competitors.find(c => c.name === result[i].name)
-      competitor.events.push({
-        name: FIELD_DAY_EVENT.inProgressEvent.name,
-        rank: i,
-        time: result[i].time
-      })
+      const event = competitor.events.find(e => e.name === FIELD_DAY_EVENT.inProgressEvent.name)
+
+      event.rank = parseInt(i) + 1
+      event.time = result[i].time
     }
 
     await competitorsDTO.saveCompetitors(competitors)

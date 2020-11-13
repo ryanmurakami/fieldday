@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 import { getAPI } from '../../helper.js'
 
@@ -13,7 +15,15 @@ function Setting () {
 
   const url = 'status'
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [response.status])
 
   let runButton = <Button text='Start' action={_startSimulator} />
@@ -30,8 +40,12 @@ function Setting () {
         <dl className={styles.dl}>
           <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.dynamoDB'))}</dt>
           <dd className={styles.dd}>DynamoDB Connection</dd>
-          <dt className={styles.dt}>ICON</dt>
+        </dl>
+        <dl className={styles.dl}>
+          <dt className={styles.dt}>{_connectionRender(false)}</dt>
           <dd className={styles.dd}>ElastiCache Connection</dd>
+        </dl>
+        <dl className={styles.dl}>
           <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.internet'))}</dt>
           <dd className={styles.dd}>Outside Internet Connection</dd>
         </dl>
@@ -46,10 +60,19 @@ function Setting () {
 
 function _connectionRender (type) {
   if (type) {
-    return <span>TRUE</span>
+    return (
+      <div>
+        <FontAwesomeIcon icon={faCheckCircle} color='#3FC1C9' />
+      </div>
+    )
   }
 
-  return <span>FALSE</span>
+  return (
+    <div>
+
+      <FontAwesomeIcon icon={faTimesCircle} color='#FC5185' />
+    </div>
+  )
 }
 
 function _startSimulator () {

@@ -5,6 +5,8 @@ import { getAPI } from '../../helper.js'
 
 import Heading from '../../component/Heading/index.jsx'
 import Divider from '../../component/Divider/index.jsx'
+import Stats from '../../component/Stats/index.jsx'
+import List from '../../component/List/index.jsx'
 
 import styles from './index.scss'
 
@@ -14,7 +16,15 @@ function CompetitorTemplate (props) {
 
   const url = `competitors/${competitor_id}`
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const competitor = response.body || {}
@@ -27,19 +37,13 @@ function CompetitorTemplate (props) {
       <img src={competitor.image} />
       <Divider text='Stats' />
       <div>
-        TODO: create stats component
+        {competitor.stats &&
+          competitor.stats.map((stat, index) => {
+            return (<Stats key={index} name={stat.key} rating={stat.value * 10} />)
+          })}
       </div>
       <Divider text='Participating Event' />
-      <ol className={styles['number-list']}>
-        {competitor.events &&
-                competitor.events.map(function (result, index) {
-                  return (
-                    <li key={index}>
-                      {result.name} - {result.rank} - {result.time}
-                    </li>
-                  )
-                })}
-      </ol>
+      <List items={competitor.events} />
     </div>
   )
 }

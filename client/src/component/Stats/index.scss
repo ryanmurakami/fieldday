@@ -1,0 +1,25 @@
+.dl {
+    width: 75%;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 0em 0.5em 0px;
+
+    font-style: italic;
+    font-weight: 900;
+    font-size: 32px;
+    color: #364F6B;
+}
+.dt {
+    float: left;
+    width: 40%;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    text-transform: uppercase;
+}
+.dd {
+    float: left;
+    width: 60%;
+    padding: 0;
+    margin: 0
+}

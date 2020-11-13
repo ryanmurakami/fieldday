@@ -5,6 +5,7 @@ import { getAPI } from '../../helper.js'
 
 import Heading from '../../component/Heading/index.jsx'
 import Divider from '../../component/Divider/index.jsx'
+import List from '../../component/List/index.jsx'
 
 import styles from './index.scss'
 
@@ -14,7 +15,15 @@ function EventTemplate (props) {
 
   const url = `events/${event_id}`
   useEffect(() => {
-    getAPI(url, setResponse)
+    let mounted = true
+    getAPI(url, (res) => {
+      if (mounted) {
+        setResponse(res)
+      }
+    })
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const event = response.body || {}
@@ -26,16 +35,7 @@ function EventTemplate (props) {
       />
       <img src={event.image} />
       <Divider text='Event Result' />
-      <ol className={styles['number-list']}>
-        {event.results &&
-                event.results.map(function (result, index) {
-                  return (
-                    <li key={index}>
-                      {result.name} - {result.time}
-                    </li>
-                  )
-                })}
-      </ol>
+      <List items={event.results} />
     </div>
   )
 }

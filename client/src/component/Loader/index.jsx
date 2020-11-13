@@ -1,18 +1,17 @@
 import React from 'react'
-import '../../static/loading-bar.min.css'
-import '../../static/loading-bar.min.js'
 
-import './overwrite.css'
+import styles from './index.scss'
 
-function Loader ({ progress }) {
+function Loader ({ progress, isAlt }) {
+  // simple hack for CSS
+  if (progress <= 5) {
+    progress = 7
+  }
   return (
     <div>
-      <div
-        className='ldBar'
-        data-value={progress}
-        style={{ width: '75%', height: '36px' }}
-      />
-      <div>{progress}</div>
+      <div className={styles.meter}>
+        <span className={isAlt ? styles.alt : ''} style={{ width: progress + '%' }} />
+      </div>
     </div>
   )
 }

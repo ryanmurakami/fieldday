@@ -38,6 +38,10 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.12",
+    "dayjs": "^1.9.5",
     "grd": "^1.4.0",
     "lodash": "^4.17.20",
     "react-router-dom": "^5.2.0",

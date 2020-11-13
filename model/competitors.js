@@ -51,9 +51,9 @@ async function saveCompetitors (competitors) {
       JSON.stringify(competitors), (error) => {
         // In case of a error throw err exception.
         if (error) {
-          throw(error)
+          throw error
         }
-    })
+      })
   } finally {
     return null
   }

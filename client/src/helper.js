@@ -1,4 +1,4 @@
-export async function getAPI (endpoint, setResponse) {
+export async function getAPI (endpoint, callback) {
   try {
     const host = process.env.REACT_APP_HOST || 'http://localhost:5000'
     const response = await fetch(
@@ -6,11 +6,11 @@ export async function getAPI (endpoint, setResponse) {
     )
     if (response.status === 200) {
       const res = await response.json()
-      setResponse(res)
+      callback(res)
     }
   } catch (err) {
     console.log(err)
-    setResponse({ message: 'Oops, something went wrong...' })
+    callback({ message: 'Oops, something went wrong...' })
   }
 }
 

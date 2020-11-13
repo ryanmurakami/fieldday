@@ -1,0 +1,36 @@
+.meter { 
+	height: 36px;
+	position: relative;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+  border-radius: 25px;
+  border: 4px solid #364F6B;
+  box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+  
+  & > span {
+    display: block;
+    height: 100%;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: rgb(252,81,133);
+    background-image: linear-gradient(
+      center bottom,
+      rgb(252,81,133) 37%,
+      rgb(252,81,133) 69%
+    );
+    position: relative;
+    overflow: hidden;
+  }
+
+  .alt {
+    background-color: rgb(63,193,201);
+    background-image: linear-gradient(
+      center bottom,
+      rgb(63,193,201) 37%,
+      rgb(63,193,201) 69%
+    );
+  }
+}
+

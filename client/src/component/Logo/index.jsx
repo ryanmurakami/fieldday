@@ -5,7 +5,7 @@ import logo from '../../static/logo.svg'
 
 import styles from './index.scss'
 
-function Header (props) {
+function Logo (props) {
   return (
     <div className={styles.wrapper}>
       <ReactSVG
@@ -19,4 +19,4 @@ function Header (props) {
   )
 }
 
-export default Header
+export default Logo
