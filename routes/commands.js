@@ -4,6 +4,7 @@ const {
   startEvent
 } = require('../services/eventTracker')
 const fileLoader = require('../loaders/mock')
+const { logger } = require('../services/helper')
 
 // initialize
 module.exports = function (router) {
@@ -26,6 +27,7 @@ function command (req, res) {
 }
 
 function reset (res) {
+  logger.info('reseting simulation')
   resetEvent()
   fileLoader()
 
@@ -35,6 +37,7 @@ function reset (res) {
 }
 
 function stop (res) {
+  logger.info('stopping simulation')
   stopEvent()
 
   return res.status(200).json({
@@ -43,6 +46,7 @@ function stop (res) {
 }
 
 function start (res) {
+  logger.info('starting simulation')
   startEvent()
 
   return res.status(200).json({
