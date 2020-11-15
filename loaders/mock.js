@@ -13,7 +13,7 @@ async function resetLocalData () {
     await _uploadToDynamo(process.env.EVENTS_DATABASE, events)
     await _uploadToDynamo(process.env.COMPETITORS_DATABASE, competitors)
   } catch (err) {
-    console.log(err, err.stack) // an error occurred
+    console.log(`Failed to connect to DynamoDB with ${err.code}`)
   }
 
   // setup default file to live file

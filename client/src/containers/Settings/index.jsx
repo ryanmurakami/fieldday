@@ -38,8 +38,12 @@ function Setting () {
 
       <div className={styles.p}>
         <dl className={styles.dl}>
-          <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.dynamoDB'))}</dt>
-          <dd className={styles.dd}>DynamoDB Connection</dd>
+          <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.dynamoDB.status'))}</dt>
+          <dd className={styles.dd}>
+            DynamoDB Connection
+            {_.get(response, 'status.dynamoDB.msg') &&
+              <div>{_.get(response, 'status.dynamoDB.msg')}</div>}  
+          </dd>
         </dl>
         <dl className={styles.dl}>
           <dt className={styles.dt}>{_connectionRender(false)}</dt>

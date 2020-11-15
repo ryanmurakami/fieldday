@@ -13,8 +13,6 @@ async function getEvents () {
     const result = await dynamoDB.scan(params).promise()
     return unmarshallArray(result.Items)
   } catch (err) {
-    console.log(err, err.stack)
-
     const rawdata = fs.readFileSync(
       path.join(__dirname, '../', 'data', 'modified', 'events.json'))
     const events = JSON.parse(rawdata)

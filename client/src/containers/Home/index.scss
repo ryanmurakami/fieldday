@@ -18,6 +18,11 @@
     line-height: 37px;
     /* identical to box height */
     padding: 0.5em 0 0.5em 0;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 }
 
 .relative {

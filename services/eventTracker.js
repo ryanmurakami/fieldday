@@ -1,6 +1,7 @@
 const _ = require('lodash')
 const eventsDTO = require('../model/event')
 const competitorsDTO = require('../model/competitors')
+const fileLoader = require('../loaders/mock')
 const FIELD_DAY_EVENT = {
   isRunning: false,
   interval: null,
@@ -34,7 +35,7 @@ function runInProgressEvent (event) {
   })
   setInProgressEvent(event)
 
-  const modifier = FIELD_DAY_EVENT.inProgressEvent.simulationTime / 100
+  const modifier =  100 / FIELD_DAY_EVENT.inProgressEvent.simulationTime
   FIELD_DAY_EVENT.interval = setInterval(async function () {
     FIELD_DAY_EVENT.inProgressEvent.progress += modifier
 
@@ -46,7 +47,7 @@ function runInProgressEvent (event) {
         await _updateCompetitorsResult(competitorResult)
         await _updateInProgressEvent(competitorResult)
       } catch (err) {
-        console.log(`fail to update database with: ${err}`)
+        console.log('fail to update database')
       }
     }
   }, 1000)
@@ -69,12 +70,17 @@ async function startEvent () {
       const runEvent = await _selectRandomEvent()
       if (runEvent) {
         runInProgressEvent(runEvent)
+      } else {
+        // In case where we "start" on a finished state
+        resetEvent()
+        await fileLoader()
+        startEvent()
       }
     } else {
       runInProgressEvent(FIELD_DAY_EVENT.inProgressEvent)
     }
   } catch (err) {
-    console.log(err)
+    console.log('failed to start event')
   }
 }
 
@@ -96,6 +102,7 @@ async function _generateCompetitorsFinisher () {
 
     for (const i in competitors) {
       const result = {
+        id: competitors[i].id,
         name: competitors[i].name,
         image: competitors[i].image,
         time: Math.floor(Math.random() * maxFinishedTime) + minFinishedTime
@@ -108,7 +115,7 @@ async function _generateCompetitorsFinisher () {
 
     return competitorsResult
   } catch (err) {
-    console.log(err)
+    console.log('failed to generate finishers')
     return []
   }
 }
@@ -123,8 +130,10 @@ async function _updateInProgressEvent (result) {
       event.results = result
 
       Object.assign(FIELD_DAY_EVENT.lastEvent, {
+        eventId: event.id,
         name: event.name,
-        imageUrl: result[0].image
+        imageUrl: result[0].image,
+        competitorId: result[0].id
       })
 
       // Reset state
@@ -140,10 +149,13 @@ async function _updateInProgressEvent (result) {
         runInProgressEvent(runEvent)
       } else {
         console.log('No More Event to run!')
+        Object.assign(FIELD_DAY_EVENT, {
+          isRunning: false
+        })
       }
     }
   } catch (err) {
-    console.log(err)
+    console.log('error updating inprogress event')
   } finally {
     return null
   }
@@ -163,7 +175,7 @@ async function _updateCompetitorsResult (result) {
 
     await competitorsDTO.saveCompetitors(competitors)
   } catch (err) {
-    console.log(err)
+    console.log('error updating competitors result')
   } finally {
     return null
   }

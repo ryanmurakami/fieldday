@@ -13,8 +13,6 @@ async function getCompetitors () {
     const result = await dynamoDB.scan(params).promise()
     return unmarshallArray(result.Items)
   } catch (err) {
-    console.log(err, err.stack)
-
     const rawdata = fs.readFileSync(
       path.join(__dirname, '../', 'data', 'modified', 'competitors.json'))
     const competitors = JSON.parse(rawdata)
@@ -44,8 +42,6 @@ async function saveCompetitors (competitors) {
   try {
     await dynamoDB.batchWriteItem(params).promise()
   } catch (err) {
-    console.log(err, err.stack)
-
     fs.writeFile(
       path.join(__dirname, '../', 'data', 'modified', 'competitors.json'),
       JSON.stringify(competitors), (error) => {
