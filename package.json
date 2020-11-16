@@ -4,10 +4,10 @@
   "description": "This demo app is for the EC2 Field Day course. The app is called _Field Day_ and simulates field day events for a group of characters representing AWS Services.",
   "main": "index.js",
   "scripts": {
-    "install-all": "npm install && cd client && npm install",
+    "preinstall": "cd client && npm install",
     "start-all": "cd client && npm run build && cd .. && npm run start-debug",
     "start-debug": "nodemon app.js",
-    "start": "npm run install-all && npm run start-all",
+    "start": "npm run start-all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,7 +27,8 @@
     "express": "^4.17.1",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "winston": "^3.3.3"
   },
   "nodemonConfig": {
     "ignore": [

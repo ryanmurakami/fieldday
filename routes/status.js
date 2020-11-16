@@ -2,6 +2,7 @@ const AWS = require('aws-sdk')
 const fetch = require('node-fetch')
 const { getIsRunning } = require('../services/eventTracker')
 const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
+const { logger } = require('../services/helper')
 
 // initialize
 module.exports = function (router) {
@@ -17,7 +18,7 @@ async function status (req, res) {
     dynamoConnection = await _checkDynamoConnection()
     internetConnection = await _checkInternetConnection()
   } catch (err) {
-    console.log('error in fetching status')
+    logger.error('error in fetching status')
   }
 
   return res.status(200).json({

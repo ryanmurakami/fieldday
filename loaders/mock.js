@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const events = require('../data/default/events.json')
 const competitors = require('../data/default/competitors.json')
+const { logger } = require('../services/helper')
 
 const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
 
@@ -13,7 +14,7 @@ async function resetLocalData () {
     await _uploadToDynamo(process.env.EVENTS_DATABASE, events)
     await _uploadToDynamo(process.env.COMPETITORS_DATABASE, competitors)
   } catch (err) {
-    console.log(`Failed to connect to DynamoDB with ${err.code}`)
+    logger.error(`Failed to connect to DynamoDB with ${err.code}`)
   }
 
   // setup default file to live file

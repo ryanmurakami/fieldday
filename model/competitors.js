@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const AWS = require('aws-sdk')
 const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
-const unmarshallArray = require('../services/helper')
+const { unmarshallArray } = require('../services/helper')
 
 async function getCompetitors () {
   const params = {

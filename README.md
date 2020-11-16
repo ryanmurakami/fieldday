@@ -29,11 +29,11 @@ npm run install-all
 ### running the application
 
 ```
-npm run start-all
+npm run start
 ```
 modify the `.env` file to use configured table name.
 
-Access in `localhost:8080`
+Access in `localhost:5000`
 
 ### server & client development
 for client development with active API, the Express server needs to be activated separately. Using two terminal run

@@ -5,6 +5,7 @@ const cors = require('cors')
 const path = require('path')
 const v1 = require('./routes/routes')
 const loader = require('./loaders/mock')
+const { logger } = require('./services/helper')
 
 // Set data
 loader()
@@ -29,5 +30,5 @@ app.get('*', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
+  logger.info(`Listening on port ${port}`)
 })

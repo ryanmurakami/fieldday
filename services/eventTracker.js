@@ -2,6 +2,7 @@ const _ = require('lodash')
 const eventsDTO = require('../model/event')
 const competitorsDTO = require('../model/competitors')
 const fileLoader = require('../loaders/mock')
+const { logger } = require('../services/helper')
 const FIELD_DAY_EVENT = {
   isRunning: false,
   interval: null,
@@ -30,6 +31,7 @@ function setLastEvent (event) {
 }
 
 function runInProgressEvent (event) {
+  logger.info(`Starting ${event.name}`)
   Object.assign(FIELD_DAY_EVENT, {
     isRunning: true
   })
@@ -40,6 +42,7 @@ function runInProgressEvent (event) {
     FIELD_DAY_EVENT.inProgressEvent.progress += modifier
 
     if (FIELD_DAY_EVENT.inProgressEvent.progress >= 100) {
+      logger.info(`${event.image} ended`)
       clearInterval(FIELD_DAY_EVENT.interval)
 
       try {
@@ -47,7 +50,7 @@ function runInProgressEvent (event) {
         await _updateCompetitorsResult(competitorResult)
         await _updateInProgressEvent(competitorResult)
       } catch (err) {
-        console.log('fail to update database')
+        logger.error('fail to update database')
       }
     }
   }, 1000)
@@ -80,7 +83,7 @@ async function startEvent () {
       runInProgressEvent(FIELD_DAY_EVENT.inProgressEvent)
     }
   } catch (err) {
-    console.log('failed to start event')
+    logger.error('failed to start event')
   }
 }
 
@@ -115,7 +118,6 @@ async function _generateCompetitorsFinisher () {
 
     return competitorsResult
   } catch (err) {
-    console.log('failed to generate finishers')
     return []
   }
 }
@@ -148,14 +150,14 @@ async function _updateInProgressEvent (result) {
       if (runEvent) {
         runInProgressEvent(runEvent)
       } else {
-        console.log('No More Event to run!')
+        logger.info('No More Event to run!')
         Object.assign(FIELD_DAY_EVENT, {
           isRunning: false
         })
       }
     }
   } catch (err) {
-    console.log('error updating inprogress event')
+    logger.error('error updating inprogress event')
   } finally {
     return null
   }
@@ -175,7 +177,7 @@ async function _updateCompetitorsResult (result) {
 
     await competitorsDTO.saveCompetitors(competitors)
   } catch (err) {
-    console.log('error updating competitors result')
+    // do nothing
   } finally {
     return null
   }

@@ -34,7 +34,7 @@ function _renderResult (time, rank) {
 function _renderTime (totalSeconds) {
   // Date does not matter since we only take the minutes and seconds
   const day = dayjs("2019-06-06").second(totalSeconds);
-  return <span>{day.format("MM:ss")}</span>
+  return <span>{day.format("mm:ss")}</span>
 }
 
 function _renderRank (rank) {
