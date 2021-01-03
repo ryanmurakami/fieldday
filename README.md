@@ -3,10 +3,6 @@
 ## Overview
 This demo app is for the EC2 Field Day course. The app is called _Field Day_ and simulates field day events for a group of characters representing AWS Services.
 
-## Project Designs
-
-https://www.figma.com/file/bvoQxBRtVDSvbH44qLOCHv/Site-Design?node-id=0%3A1
-
 ## Project explanation
 The course is going to be teaching learners how to use EC2. To do that, I want to have a fun app that they can deploy and work with. They won't be modifying the app at all, so it will need to be done.
 
