@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './index.scss'
 
 function Button (props) {
-  const { text, type, action } = props
+  const { text, type, action, wrapper = true } = props
   let alertStyle = ''
 
   if (type === 'alert') {
@@ -10,8 +10,13 @@ function Button (props) {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <button className={`${styles.button} ${alertStyle}`} onClick={action}>{text}</button>
+    <div className={wrapper ? styles.wrapper : ''}>
+      {
+        action ?
+          <button className={`${styles.button} ${alertStyle}`} onClick={action}>{text}</button>
+        :
+        <button className={`${styles.button} ${alertStyle}`} type="submit">{text}</button>
+      }
     </div>
   )
 }

@@ -12,5 +12,6 @@ require('./events')(router)
 require('./competitors')(router)
 require('./status')(router)
 require('./commands')(router)
+require('./authentication')(router)
 
 module.exports.router = router
