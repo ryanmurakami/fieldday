@@ -2,7 +2,7 @@
     {
         "id": "1",
         "name": "Egg and Spoon Race",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Egg_And_Spoon.png",
         "simulationTime": 60,
         "minFinishedTime": 240,
         "maxFinishedTime": 720,
@@ -13,7 +13,7 @@
     {
         "id": "2",
         "name": "Capture the Flag",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Capture_The_Flag.png",
         "simulationTime": 60,
         "minFinishedTime": 240,
         "maxFinishedTime": 720,
@@ -24,7 +24,7 @@
     {
         "id": "3",
         "name": "Tug-of-War",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Tug_Of_War.png",
         "simulationTime": 60,
         "minFinishedTime": 240,
         "maxFinishedTime": 720,

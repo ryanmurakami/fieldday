@@ -10,7 +10,7 @@ import List from '../../component/List/index.jsx'
 
 import styles from './index.scss'
 
-function CompetitorTemplate (props) {
+function CompetitorTemplate () {
   const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
   const { competitor_id } = useParams()
 
@@ -34,7 +34,7 @@ function CompetitorTemplate (props) {
       <Heading
         text={competitor.name}
       />
-      <img src={competitor.image} />
+      <img className={styles.image} src={competitor.image} />
       <Divider text='Stats' />
       <div>
         {competitor.stats &&

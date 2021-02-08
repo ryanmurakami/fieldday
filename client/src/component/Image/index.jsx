@@ -7,7 +7,7 @@ function Image (props) {
   return (
     <div className={styles.wrapper}>
       <NavLink to={props.link}>
-        <img src={props.image} />
+        <img className={props.className} src={props.image} />
       </NavLink>
       <NavLink to={props.secondaryLink || props.link}>
         <p className={styles.subtitle}>{props.subtitle}</p>

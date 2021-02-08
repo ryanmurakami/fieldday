@@ -29,8 +29,9 @@ function CompetitorContainer () {
     return (
       <div key={index} className='Cell -3of12'>
         <Image
-          link={`/competitors/${competitor.id}`}
+          className={styles.image}
           image={competitor.image}
+          link={`/competitors/${competitor.id}`}
           subtitle={competitor.name}
         />
       </div>

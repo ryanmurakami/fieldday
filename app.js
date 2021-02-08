@@ -21,6 +21,7 @@ app.use(cors())
 
 // Serve static client files
 app.use(express.static(path.join(__dirname, 'client', 'dist')))
+app.use(express.static(path.join(__dirname, 'client', 'src', 'static')))
 
 app.use('/api', v1.router)
 

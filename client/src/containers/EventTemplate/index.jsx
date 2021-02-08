@@ -33,8 +33,8 @@ function EventTemplate (props) {
       <Heading
         text={event.name}
       />
-      <img src={event.image} />
-      <Divider text='Event Result' />
+      <img className={styles.image} src={event.image} />
+      <Divider text='Event Results' />
       <List items={event.results} />
     </div>
   )

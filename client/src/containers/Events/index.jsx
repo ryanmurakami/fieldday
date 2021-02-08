@@ -29,6 +29,7 @@ function EventsContainer () {
     return (
       <div key={index} className='Cell -3of12'>
         <Image
+          className={styles.image}
           image={event.image}
           link={`/events/${event.id}`}
           subtitle={event.name}
@@ -39,7 +40,7 @@ function EventsContainer () {
 
   return (
     <div className={styles.container}>
-      <Divider text="Today's Event" />
+      <Divider text="Events" />
       <div className='Grid -middle'>
         {renderevents}
       </div>
