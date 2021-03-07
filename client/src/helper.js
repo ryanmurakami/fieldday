@@ -1,8 +1,7 @@
 export async function getAPI (endpoint, callback) {
   try {
-    const host = 'http://localhost:3000'
     const response = await fetch(
-      `${host}/api/${endpoint}`
+      `/api/${endpoint}`
     )
     if (response.status === 200) {
       const res = await response.json()
@@ -16,9 +15,8 @@ export async function getAPI (endpoint, callback) {
 
 export async function postAPI (endpoint, data, callback) {
   try {
-    const host = 'http://localhost:3000'
     const response = await fetch(
-      `${host}/api/${endpoint}`,
+      `/api/${endpoint}`,
       {
         method: 'POST',
         headers: {
