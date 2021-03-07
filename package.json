@@ -4,12 +4,12 @@
   "description": "This demo app is for the EC2 Field Day course. The app is called _Field Day_ and simulates field day events for a group of characters representing AWS Services.",
   "main": "index.js",
   "scripts": {
-    "build": "cd client && npm run build",
-    "preinstall": "cd client && npm install",
-    "start-all": "cd client && npm run build && cd .. && npm run start-debug",
-    "start-debug": "nodemon app.js",
-    "start": "npm run start-all",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production --config ./client/webpack.config.js",
+    "start-debug": "npm run start:client-debug && nodemon app.js",
+    "start": "npm run build && npm run start:server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:client-debug": "webpack serve --mode development",
+    "start:server": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -22,21 +22,45 @@
   },
   "homepage": "https://github.com/ryanmurakami/ec2fieldday#readme",
   "dependencies": {
-    "aws-sdk": "^2.782.0",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "lodash": "^4.17.20",
-    "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.4",
-    "winston": "^3.3.3"
+    "aws-sdk": "2.858.0",
+    "cors": "2.8.5",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "node-fetch": "2.6.1",
+    "winston": "3.3.3"
+  },
+  "devDependencies": {
+    "@babel/core": "7.13.8",
+    "@babel/plugin-transform-runtime": "7.13.9",
+    "@babel/preset-env": "7.13.9",
+    "@babel/preset-react": "7.12.13",
+    "@fortawesome/fontawesome-svg-core": "1.2.34",
+    "@fortawesome/free-solid-svg-icons": "5.15.2",
+    "@fortawesome/react-fontawesome": "0.1.12",
+    "babel-loader": "8.2.2",
+    "css-loader": "5.1.1",
+    "dayjs": "1.10.4",
+    "file-loader": "6.2.0",
+    "grd": "1.4.0",
+    "html-loader": "2.1.1",
+    "html-webpack-plugin": "5.3.0",
+    "lodash": "4.17.21",
+    "nodemon": "2.0.7",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-router-dom": "5.2.0",
+    "react-svg": "12.1.0",
+    "sass": "1.32.8",
+    "sass-loader": "11.0.1",
+    "standard": "16.0.3",
+    "style-loader": "2.0.0",
+    "webpack": "5.24.3",
+    "webpack-cli": "4.5.0",
+    "webpack-dev-server": "3.11.2"
   },
   "nodemonConfig": {
     "ignore": [
       "data/*"
     ]
-  },
-  "devDependencies": {
-    "standard": "^16.0.1"
   }
 }

@@ -1,6 +1,6 @@
 export async function getAPI (endpoint, callback) {
   try {
-    const host = process.env.REACT_APP_HOST || 'http://localhost:5000'
+    const host = 'http://localhost:3000'
     const response = await fetch(
       `${host}/api/${endpoint}`
     )
@@ -16,7 +16,7 @@ export async function getAPI (endpoint, callback) {
 
 export async function postAPI (endpoint, data, callback) {
   try {
-    const host = process.env.REACT_APP_HOST || 'http://localhost:5000'
+    const host = 'http://localhost:3000'
     const response = await fetch(
       `${host}/api/${endpoint}`,
       {

@@ -14,7 +14,7 @@ loader()
 const app = express()
 
 // port
-const port = process.env.PORT || 5000
+const port = 3000
 
 app.use(express.json())
 app.use(cors())
