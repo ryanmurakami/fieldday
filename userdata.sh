@@ -18,8 +18,8 @@ Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment; filename="userdata.txt"
 
 #!/bin/bash
-echo "starting ec2 field day"
-git clone https://github.com/ryanmurakami/ec2fieldday.git
-cd ~/ec2fieldday
+echo "starting field day"
+git clone https://github.com/ryanmurakami/fieldday.git
+cd ~/fieldday
 npm ci
 npm start
