@@ -29,7 +29,7 @@ function command (req, res) {
 function reset (res) {
   logger.info('reseting simulation')
   resetEvent()
-  fileLoader()
+  fileLoader(res.app)
 
   return res.status(200).json({
     status: 'State has been reset'

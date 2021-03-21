@@ -9,12 +9,12 @@ export default function render () {
       <div className='Grid -center'>
         <div className='Cell -6of12'>
           <div className={styles["login-form"]}>
-            <h1>Login</h1>
+            <h1>LOGIN</h1>
             <form method="POST" action="/api/login">
-              <label htmlFor="username">Username</label>
-              <input type="text" title="username" name="username" placeholder="username" />
-              <label htmlFor="password">Password</label>
-              <input type="password" title="password" name="password" placeholder="password" />
+              <label htmlFor="username">USERNAME</label>
+              <input type="text" title="username" name="username" placeholder="Username" />
+              <label htmlFor="password">PASSWORD</label>
+              <input type="password" title="password" name="password" placeholder="Password" />
               <div className="text-right">
                 <Button text="submit" type="alert" wrapper={false}/>
               </div>

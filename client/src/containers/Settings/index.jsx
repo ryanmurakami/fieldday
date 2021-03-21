@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import _ from 'lodash'
+import { get, isEmpty } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -28,7 +28,7 @@ function Setting () {
 
   let runButton = <Button text='Start' action={_startSimulator} />
 
-  if (_.get(response, 'status.isRunning')) {
+  if (get(response, 'status.isRunning')) {
     runButton = <Button text='Stop' type='alert' action={_stopSimulator} />
   }
 
@@ -38,11 +38,11 @@ function Setting () {
 
       <div className={styles.p}>
         <dl className={styles.dl}>
-          <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.dynamoDB.status'))}</dt>
+          <dt className={styles.dt}>{_connectionRender(get(response, 'status.dynamoDB.status'))}</dt>
           <dd className={styles.dd}>
             DynamoDB Connection
-            {_.get(response, 'status.dynamoDB.msg') &&
-              <div>{_.get(response, 'status.dynamoDB.msg')}</div>}  
+            {get(response, 'status.dynamoDB.msg') &&
+              <div>{get(response, 'status.dynamoDB.msg')}</div>}
           </dd>
         </dl>
         <dl className={styles.dl}>
@@ -50,7 +50,7 @@ function Setting () {
           <dd className={styles.dd}>ElastiCache Connection</dd>
         </dl>
         <dl className={styles.dl}>
-          <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.internet'))}</dt>
+          <dt className={styles.dt}>{_connectionRender(get(response, 'status.internet'))}</dt>
           <dd className={styles.dd}>Outside Internet Connection</dd>
         </dl>
       </div>

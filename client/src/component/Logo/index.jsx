@@ -1,5 +1,4 @@
 import React from 'react'
-import { ReactSVG } from 'react-svg'
 
 import logo from '../../static/logo.svg'
 
@@ -8,13 +7,12 @@ import styles from './index.scss'
 function Logo (props) {
   return (
     <div className={styles.wrapper}>
-      <ReactSVG
+      <img
+        alt="Field Day Logo"
+        className="svg-logo"
         src={logo}
-        beforeInjection={(svg) => {
-          svg.classList.add('svg-logo')
-          svg.setAttribute('style', 'height: 125px; width: 250px')
-        }}
-      />
+        style={{ width: '18vw' }}
+        />
     </div>
   )
 }

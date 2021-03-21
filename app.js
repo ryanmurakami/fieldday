@@ -9,10 +9,8 @@ const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const v1 = require('./routes/routes')
 const loader = require('./loaders/mock')
+const { load: loadRegion } = require('./loaders/region')
 const { logger } = require('./services/helper')
-
-// Set data
-loader()
 
 // start app
 const app = express()
@@ -58,9 +56,15 @@ app.use('/api', v1.router)
 
 // Default if no match
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'))
+  res.redirect('/')
 })
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  // set AWS region info
+  await loadRegion(app)
+
+  // Set data
+  loader(app)
+
   logger.info(`Listening on port ${port}`)
 })

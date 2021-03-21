@@ -10,7 +10,7 @@
   h1 {
     text-align: center;
     color: #FFFFFF;
-    font-size: 32px;
+    font-size: 2.2vw;
     font-style: italic;
     font-weight: 900;
     padding-top: 1em;
@@ -20,33 +20,39 @@
     padding: 2em;
 
     label {
-      display: block;
-      font-weight: 700;
-      font-style: italic;
-      font-size: 22px;
       color: #FFFFFF;
+      display: block;
+      font-size: 1.5vw;
+      font-style: italic;
+      font-weight: 600;
       padding-bottom: 0.25em;
     }
 
     input {
-      display: block;
-      margin: auto auto;
-      width: 95%;
-      margin-bottom: 2em;
       border: none;
       border-bottom: 1px solid #eaeaea;
-      box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
       border-radius: 5px;
-      padding: 1em;
+      box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
       color: #757575;
+      display: block;
+      margin: auto auto 2em;
+      padding: 1em;
+      width: 95%;
+
       &:focus {
         outline: none;
+      }
+
+      &::placeholder {
+        opacity: .7;
       }
     }
 
     button {
       background: #FC5185;
       border-radius: 5px;
+      font-weight: 900;
+      text-transform: uppercase;
     }
   }
 }
