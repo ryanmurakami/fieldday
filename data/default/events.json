@@ -35,7 +35,7 @@
     {
         "id": "4",
         "name": "Three Legged Race",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Three_Legged_Race.png",
         "simulationTime": 15,
         "minFinishedTime": 240,
         "maxFinishedTime": 720,
@@ -46,7 +46,7 @@
     {
         "id": "5",
         "name": "Dodgeball",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Dodgeball.png",
         "simulationTime": 15,
         "minFinishedTime": 240,
         "maxFinishedTime": 720,
@@ -57,7 +57,7 @@
     {
         "id": "6",
         "name": "Bouncy Ball Race",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Bouncy_Ball_Race.png",
         "simulationTime": 15,
         "minFinishedTime": 240,
         "maxFinishedTime": 720,
@@ -68,7 +68,7 @@
     {
         "id": "7",
         "name": "Potato Sack Race",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Potato_Sack_Race.png",
         "simulationTime": 15,
         "minFinishedTime": 240,
         "maxFinishedTime": 720,
@@ -79,7 +79,7 @@
     {
         "id": "8",
         "name": "Tire Race",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Tire_Race.png",
         "simulationTime": 15,
         "minFinishedTime": 240,
         "maxFinishedTime": 720,
