@@ -44,6 +44,7 @@ function HomeContainer (props) {
     return (
       <div key={index} className='Cell -3of12'>
         <Image
+          className={styles.events}
           image={event.image}
           link={`/events/${event.id}`}
           subtitle={event.name}
@@ -64,14 +65,15 @@ function HomeContainer (props) {
         <div className='Cell -5of12'>
           <h3 className={styles.title}>Recent Event Winner</h3>
           <Image
+            className={styles.image}
+            image={lastEvent.imageUrl}
             link={`/competitors/${lastEvent.competitorId}`}
             secondaryLink={`/events/${lastEvent.eventId}`}
-            image={lastEvent.imageUrl}
             subtitle={lastEvent.name}
           />
         </div>
       </div>
-      <Divider text="Today's Event" />
+      <Divider text="Today's Events" />
       <div className='Grid -middle'>
         {renderEvents}
       </div>

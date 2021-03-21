@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk')
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs').promises
 const events = require('../data/default/events.json')
 const competitors = require('../data/default/competitors.json')
 const { logger } = require('../services/helper')
@@ -17,24 +17,14 @@ async function resetLocalData () {
     logger.error(`Failed to connect to DynamoDB with ${err.code}`)
   }
 
-  // setup default file to live file
-  fs.writeFile(
-    path.join(__dirname, '../', 'data', 'modified', 'events.json'),
-    JSON.stringify(events), (error) => {
-      // In case of a error throw err exception.
-      if (error) {
-        throw error
-      }
-    })
-
-  fs.writeFile(
-    path.join(__dirname, '../', 'data', 'modified', 'competitors.json'),
-    JSON.stringify(competitors), (error) => {
-      // In case of a error throw err exception.
-      if (error) {
-        throw error
-      }
-    })
+  try {
+    // setup default file to live file
+    await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'events.json'), JSON.stringify(events))
+    await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'), JSON.stringify(competitors))
+  } catch (err) {
+    console.error('Error creating live files.', err)
+    throw err
+  }
 }
 
 async function _uploadToDynamo (tableName, items) {

@@ -3,3 +3,4 @@ dist/
 data/modified/*.json
 .DS_Store
 *.log
+package.zip

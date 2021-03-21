@@ -2,7 +2,7 @@
     {
         "id": "1",
         "name": "EC2",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/EC2.png",
         "stats": [
             {
                 "key": "Strength",
@@ -25,7 +25,7 @@
     }, {
         "id": "2",
         "name": "S3",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/S3.png",
         "stats": [
             {
                 "key": "Strength",
@@ -48,7 +48,7 @@
     }, {
         "id": "3",
         "name": "Cloudy",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/Cloudy.png",
         "stats": [
             {
                 "key": "Strength",
@@ -71,7 +71,7 @@
     }, {
         "id": "4",
         "name": "DynamoDB",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/DynamoDB.png",
         "stats": [
             {
                 "key": "Strength",
@@ -94,7 +94,7 @@
     }, {
         "id": "5",
         "name": "CloudWatch",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/CloudWatch.png",
         "stats": [
             {
                 "key": "Strength",
@@ -116,8 +116,8 @@
         "events": []
     }, {
         "id": "6",
-        "name": "Elasticache",
-        "image": "https://via.placeholder.com/150",
+        "name": "ElastiCache",
+        "image": "/images/ElastiCache.png",
         "stats": [
             {
                 "key": "Strength",
@@ -140,7 +140,7 @@
     }, {
         "id": "7",
         "name": "IAM",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/IAM.png",
         "stats": [
             {
                 "key": "Strength",
@@ -163,7 +163,7 @@
     }, {
         "id": "8",
         "name": "ECR",
-        "image": "https://via.placeholder.com/150",
+        "image": "/images/ECR.png",
         "stats": [
             {
                 "key": "Strength",

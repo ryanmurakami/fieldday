@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+files:
+  - source: .
+    destination: home/bitnami/fieldday
+hooks:
+  AfterInstall:
+    - location: scripts/installDependencies.sh
+      timeout: 3600
+  ApplicationStart:
+    - location: scripts/runApp.sh
+      timeout: 3600

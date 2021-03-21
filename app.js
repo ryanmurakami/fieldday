@@ -45,13 +45,14 @@ app.use(passport.session())
 app.use(require('flash')());
 
 // port
-const port = process.env.PORT || 5000
+const port = 3000
 
 app.use(express.json())
 app.use(cors())
 
 // Serve static client files
 app.use(express.static(path.join(__dirname, 'client', 'dist')))
+app.use(express.static(path.join(__dirname, 'client', 'src', 'static')))
 
 app.use('/api', v1.router)
 

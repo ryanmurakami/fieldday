@@ -1,6 +1,10 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+  entry: './client/src/index.js',
+  output: {
+    path: __dirname + '/dist'
+  },
   module: {
     rules: [
       {
@@ -51,8 +55,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './src/index.html',
-      filename: './index.html'
+      template: 'client/src/index.html',
+      filename: 'index.html'
     })
   ]
 }
