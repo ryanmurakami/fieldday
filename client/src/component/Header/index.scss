@@ -4,20 +4,25 @@
     background-color: #364F6B;
 
     a {
-        font-size: 32px;
         color: #FFFFFF;
+        font-size: 2.2vw;
+        font-style: italic;
+        font-weight: 900;
         text-decoration:none;
         text-transform: uppercase;
-        font-style: italic;
     }
 
     .end {
         text-align: end;
     }
 
+    .icon {
+        width: 10px;
+    }
+
     .selected {
         color: rgba(255,255,255,1);
-        text-shadow: 0 0 15px rgba(255,255,255,.5), 
+        text-shadow: 0 0 15px rgba(255,255,255,.5),
             0 0 10px rgba(255,255,255,.5);
     }
 }

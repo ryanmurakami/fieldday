@@ -1,21 +1,20 @@
 .wrapper {
+    padding: 5em 0;
     text-align: center;
-    padding-top: 5em;
 }
 
 .number-list {
-    width: 50%;
+    color: #364F6B;
+    font-size: 2.2vw;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    line-height: 49px;
+    list-style: decimal;
     margin: auto;
     padding-left: 3em;
     text-align: left;
-
-    color: #364F6B;
-    list-style: decimal;
-    font-style: italic;
-    font-weight: 900;
-    font-size: 32px;
-    line-height: 49px;
-    letter-spacing: 0.15em;
+    width: 50%;
 }
 
 .image {

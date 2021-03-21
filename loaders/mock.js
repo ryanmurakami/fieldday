@@ -5,14 +5,13 @@ const events = require('../data/default/events.json')
 const competitors = require('../data/default/competitors.json')
 const { logger } = require('../services/helper')
 
-const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
-
-async function resetLocalData () {
+async function resetLocalData (app) {
+  const dynamoDB = new AWS.DynamoDB({ region: app.get('awsRegion') })
   _addEventsToCompetitors(events, competitors)
   // Problem - this is in memory, but we are trying to save it to local
   try {
-    await _uploadToDynamo(process.env.EVENTS_DATABASE, events)
-    await _uploadToDynamo(process.env.COMPETITORS_DATABASE, competitors)
+    await _uploadToDynamo(dynamoDB, process.env.EVENTS_DATABASE, events)
+    await _uploadToDynamo(dynamoDB, process.env.COMPETITORS_DATABASE, competitors)
   } catch (err) {
     logger.error(`Failed to connect to DynamoDB with ${err.code}`)
   }
@@ -27,7 +26,7 @@ async function resetLocalData () {
   }
 }
 
-async function _uploadToDynamo (tableName, items) {
+async function _uploadToDynamo (dynamoDB, tableName, items) {
   const docConvert = AWS.DynamoDB.Converter
   const putRequest = []
 

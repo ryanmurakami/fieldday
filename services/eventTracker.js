@@ -1,4 +1,4 @@
-const _ = require('lodash')
+const { get } = require('lodash')
 const eventsDTO = require('../model/event')
 const competitorsDTO = require('../model/competitors')
 const fileLoader = require('../loaders/mock')
@@ -38,11 +38,12 @@ function runInProgressEvent (event) {
   setInProgressEvent(event)
 
   const modifier =  100 / FIELD_DAY_EVENT.inProgressEvent.simulationTime
+  clearInterval(FIELD_DAY_EVENT.interval)
   FIELD_DAY_EVENT.interval = setInterval(async function () {
     FIELD_DAY_EVENT.inProgressEvent.progress += modifier
 
     if (FIELD_DAY_EVENT.inProgressEvent.progress >= 100) {
-      logger.info(`${event.image} ended`)
+      logger.info(`${event.name} ended`)
       clearInterval(FIELD_DAY_EVENT.interval)
 
       try {
@@ -69,7 +70,7 @@ function resetEvent () {
 
 async function startEvent () {
   try {
-    if (!_.get(FIELD_DAY_EVENT, 'inProgressEvent.id')) {
+    if (!get(FIELD_DAY_EVENT, 'inProgressEvent.id')) {
       const runEvent = await _selectRandomEvent()
       if (runEvent) {
         runInProgressEvent(runEvent)
@@ -135,7 +136,8 @@ async function _updateInProgressEvent (result) {
         eventId: event.id,
         name: event.name,
         imageUrl: result[0].image,
-        competitorId: result[0].id
+        competitorId: result[0].id,
+        competitorName: result[0].name
       })
 
       // Reset state
@@ -150,7 +152,7 @@ async function _updateInProgressEvent (result) {
       if (runEvent) {
         runInProgressEvent(runEvent)
       } else {
-        logger.info('No More Event to run!')
+        logger.info('No More Events to run!')
         Object.assign(FIELD_DAY_EVENT, {
           isRunning: false
         })

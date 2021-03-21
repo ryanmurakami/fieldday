@@ -1,8 +1,11 @@
 const AWS = require('aws-sdk')
 const fetch = require('node-fetch')
+
 const { getIsRunning } = require('../services/eventTracker')
-const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
 const { logger } = require('../services/helper')
+const { get: getRegion } = require('../loaders/region')
+
+const dynamoDB = new AWS.DynamoDB({ region: getRegion() })
 
 // initialize
 module.exports = function (router) {

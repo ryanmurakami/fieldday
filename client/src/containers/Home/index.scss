@@ -4,24 +4,24 @@
 }
 
 .title {
+    font-size: 2.2vw;
     font-style: italic;
     font-weight: 600;
-    font-size: 32px;
     line-height: 49px;
     /* identical to box height */
     padding: 0.5em 0 0.5em 0;
 }
 
 .subtitle {
+    font-size: 1.6vw;
     font-weight: 300;
-    font-size: 24px;
     line-height: 37px;
     /* identical to box height */
     padding: 0.5em 0 0.5em 0;
 
     a {
-        text-decoration: none;
         color: inherit;
+        text-decoration: none;
     }
 }
 
@@ -50,4 +50,15 @@
 
 .events {
     max-height: 150px;
+}
+
+.eventSubtitle {
+    font-size: 1.6vw;
+    font-style: italic;
+
+    a {
+        color: inherit;
+        font-weight: 900;
+        text-decoration: none;
+    }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import _ from 'lodash'
+import { get } from 'lodash'
 import 'grd'
 import styles from './index.scss'
 
@@ -36,9 +36,9 @@ function HomeContainer (props) {
     }
   }, [])
 
-  const events = _.get(response, 'body.allEvents') || []
-  const inProgressEvent = _.get(response, 'body.inProgress') || {}
-  const lastEvent = _.get(response, 'body.lastEvent') || {}
+  const events = get(response, 'body.allEvents') || []
+  const inProgressEvent = get(response, 'body.inProgress') || {}
+  const lastEvent = get(response, 'body.lastEvent') || {}
   const unfinishedEvent = events.filter(e => e.completed === false)
   const renderEvents = unfinishedEvent.map(function (event, index) {
     return (
@@ -68,9 +68,18 @@ function HomeContainer (props) {
             className={styles.image}
             image={lastEvent.imageUrl}
             link={`/competitors/${lastEvent.competitorId}`}
-            secondaryLink={`/events/${lastEvent.eventId}`}
-            subtitle={lastEvent.name}
           />
+          {lastEvent.competitorId &&
+            <div className={styles.eventSubtitle}>
+              <NavLink to={`/competitors/${lastEvent.competitorId}`}>
+                {lastEvent.competitorName}
+              </NavLink>
+                &nbsp;won at&nbsp;
+              <NavLink to={`/events/${lastEvent.eventId}`}>
+                {lastEvent.name}
+              </NavLink>
+            </div>
+          }
         </div>
       </div>
       <Divider text="Today's Events" />
