@@ -3,7 +3,7 @@ import { get } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { getAPI } from '../../helper.js'
+import { getAPI, postAPI } from '../../helper.js'
 
 import Button from '../../component/Button/index.jsx'
 import Heading from '../../component/Heading/index.jsx'
@@ -120,7 +120,7 @@ function _resetSimulator (setResponse) {
 }
 
 async function _persistRedisEndpoint () {
-  const res = await postAPI('commands/saveEndpoint')
+  const res = await postAPI('commands/saveEndpoint', {})
 }
 
 export default Setting
