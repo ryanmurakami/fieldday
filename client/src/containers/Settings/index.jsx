@@ -48,7 +48,7 @@ function Setting () {
             ElastiCache Connection
             <span className={styles.endpoint}>endpoint:</span>
             <input type="text" title="endpoint" name="endpoint" placeholder="fieldday.iotaqp.0001.usw2.cache.amazonaws.com:6379" />
-            <Button text='Update' action={_persistRedisEndpoint} />
+            <Button text='Update' action={() => _persistRedisEndpoint()} />
           </dd>
         </dl>
         <dl className={styles.dl}>
@@ -92,24 +92,30 @@ function _checkStatus (setResponse) {
   }
 }
 
-async function _startSimulator (setResponse) {
+function _startSimulator (setResponse) {
   return async () => {
-    const res = await getAPI('commands/start')
-    setResponse({ isRunning: true })
+    await getAPI('commands/start')
+    setResponse(prev => {
+      return { status: { ...prev.status, isRunning: true } }
+    })
   }
 }
 
-async function _stopSimulator () {
+function _stopSimulator (setResponse) {
   return async () => {
-    const res = await getAPI('commands/stop')
-    setResponse({ isRunning: false })
+    await getAPI('commands/stop')
+    setResponse(prev => {
+      return { status: { ...prev.status, isRunning: false } }
+    })
   }
 }
 
-async function _resetSimulator () {
+function _resetSimulator (setResponse) {
   return async () => {
-    const res = await getAPI('commands/reset')
-    setResponse({ isRunning: false })
+    await getAPI('commands/reset')
+    setResponse(prev => {
+      return { status: { ...prev.status, isRunning: false } }
+    })
   }
 }
 
