@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { get, isEmpty } from 'lodash'
+import { get } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -14,22 +14,19 @@ function Setting () {
   const [response, setResponse] = useState({ status: {} })
 
   const url = 'status'
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
-    getAPI(url, (res) => {
-      if (mounted) {
-        setResponse(res)
-      }
-    })
-    return () => {
-      mounted = false
-    }
-  }, [response.status])
 
-  let runButton = <Button text='Start' action={_startSimulator} />
+    const res = await getAPI(url)
+    if (mounted) setResponse(res)
+
+    return () => mounted = false
+  }, [])
+
+  let runButton = <Button text='Start' action={_startSimulator(setResponse)} />
 
   if (get(response, 'status.isRunning')) {
-    runButton = <Button text='Stop' type='alert' action={_stopSimulator} />
+    runButton = <Button text='Stop' type='alert' action={_stopSimulator(setResponse)} />
   }
 
   return (
@@ -47,17 +44,27 @@ function Setting () {
         </dl>
         <dl className={styles.dl}>
           <dt className={styles.dt}>{_connectionRender(false)}</dt>
-          <dd className={styles.dd}>ElastiCache Connection</dd>
+          <dd className={styles.dd}>
+            ElastiCache Connection
+            <span className={styles.endpoint}>endpoint:</span>
+            <input type="text" title="endpoint" name="endpoint" placeholder="fieldday.iotaqp.0001.usw2.cache.amazonaws.com:6379" />
+            <Button text='Update' action={_persistRedisEndpoint} />
+          </dd>
         </dl>
         <dl className={styles.dl}>
           <dt className={styles.dt}>{_connectionRender(get(response, 'status.internet'))}</dt>
           <dd className={styles.dd}>Outside Internet Connection</dd>
         </dl>
+        <dl className={styles.dl}>
+          <dd className={styles.dd}>
+            <Button text="Check Connections" action={_checkStatus(setResponse)} />
+          </dd>
+        </dl>
       </div>
 
       <Heading text='Field Day App Controls' />
       {runButton}
-      <Button text='Reset' action={_resetSimulator} />
+      <Button text='Reset' action={_resetSimulator(setResponse)} />
     </div>
   )
 }
@@ -73,31 +80,41 @@ function _connectionRender (type) {
 
   return (
     <div>
-
       <FontAwesomeIcon icon={faTimesCircle} color='#FC5185' />
     </div>
   )
 }
 
-function _startSimulator () {
-  const url = 'commands/start'
-  getAPI(url, (res) => {
-    console.log(res)
-  })
+function _checkStatus (setResponse) {
+  return async () => {
+    const res = await getAPI('status')
+    setResponse(res)
+  }
 }
 
-function _stopSimulator (setResponse) {
-  const url = 'commands/stop'
-  getAPI(url, (res) => {
-    console.log(res)
-  })
+async function _startSimulator (setResponse) {
+  return async () => {
+    const res = await getAPI('commands/start')
+    setResponse({ isRunning: true })
+  }
 }
 
-function _resetSimulator (setResponse) {
-  const url = 'commands/reset'
-  getAPI(url, (res) => {
-    console.log(res)
-  })
+async function _stopSimulator () {
+  return async () => {
+    const res = await getAPI('commands/stop')
+    setResponse({ isRunning: false })
+  }
+}
+
+async function _resetSimulator () {
+  return async () => {
+    const res = await getAPI('commands/reset')
+    setResponse({ isRunning: false })
+  }
+}
+
+async function _persistRedisEndpoint () {
+  const res = await postAPI('commands/saveEndpoint')
 }
 
 export default Setting

@@ -6,12 +6,12 @@ const competitors = require('../data/default/competitors.json')
 const { logger } = require('../services/helper')
 
 async function resetLocalData (app) {
-  const dynamoDB = new AWS.DynamoDB({ region: app.get('awsRegion') })
+  AWS.config.update({ region: app.get('awsRegion') })
   _addEventsToCompetitors(events, competitors)
-  // Problem - this is in memory, but we are trying to save it to local
+
   try {
-    await _uploadToDynamo(dynamoDB, process.env.EVENTS_DATABASE, events)
-    await _uploadToDynamo(dynamoDB, process.env.COMPETITORS_DATABASE, competitors)
+    const obj = { id: '1', competitors, events }
+    await _uploadToDynamo(process.env.DYNAMO_TABLE, obj)
   } catch (err) {
     logger.error(`Failed to connect to DynamoDB with ${err.code}`)
   }
@@ -26,26 +26,31 @@ async function resetLocalData (app) {
   }
 }
 
-async function _uploadToDynamo (dynamoDB, tableName, items) {
-  const docConvert = AWS.DynamoDB.Converter
-  const putRequest = []
-
-  for (const i in items) {
-    putRequest.push({
-      PutRequest: {
-        Item: docConvert.marshall(items[i])
-      }
-    })
-  };
-
+async function _uploadToDynamo (tableName, item) {
+  const dynamoDB = new AWS.DynamoDB.DocumentClient()
   const params = {
-    RequestItems: {
-      [tableName]: putRequest
-    }
+    Key: {
+      id: '1'
+    },
+    TableName: tableName
   }
 
   try {
-    await dynamoDB.batchWriteItem(params).promise()
+    const response = await dynamoDB.get(params).promise()
+    let dynamoItem = item
+    if (response && response.item) {
+      dynamoItem = item
+    }
+
+    const putParams = {
+      Item: {
+        ...dynamoItem,
+        ...item
+      },
+      TableName: tableName
+    }
+
+    await dynamoDB.put(putParams).promise()
     return null
   } catch (err) {
     throw (err)

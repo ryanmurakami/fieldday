@@ -14,17 +14,13 @@ function CompetitorTemplate () {
   const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
   const { competitor_id } = useParams()
 
-  const url = `competitors/${competitor_id}`
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
-    getAPI(url, (res) => {
-      if (mounted) {
-        setResponse(res)
-      }
-    })
-    return () => {
-      mounted = false
-    }
+
+    const res = await getAPI(`competitors/${competitor_id}`)
+    if (mounted) setResponse(res)
+
+    return () => mounted = false
   }, [])
 
   const competitor = response.body || {}

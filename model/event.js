@@ -1,20 +1,12 @@
 const fs = require('fs')
 const path = require('path')
-const AWS = require('aws-sdk')
 
-const { unmarshallArray } = require('../services/helper')
-const { get: getRegion } = require('../loaders/region')
-
-const dynamoDB = new AWS.DynamoDB({ region: getRegion() })
+const { get: getDynamo, update: updateDynamo } = require('../services/dynamo')
 
 async function getEvents () {
-  const params = {
-    TableName: process.env.EVENTS_DATABASE
-  }
-
   try {
-    const result = await dynamoDB.scan(params).promise()
-    return unmarshallArray(result.Items)
+    const data = await getDynamo()
+    return data.events
   } catch (err) {
     const rawdata = fs.readFileSync(
       path.join(__dirname, '../', 'data', 'modified', 'events.json'))
@@ -25,25 +17,8 @@ async function getEvents () {
 }
 
 async function saveEvents (events) {
-  const docConvert = AWS.DynamoDB.Converter
-  const putRequest = []
-
-  for (const i in events) {
-    putRequest.push({
-      PutRequest: {
-        Item: docConvert.marshall(events[i])
-      }
-    })
-  };
-
-  const params = {
-    RequestItems: {
-      [process.env.EVENTS_DATABASE]: putRequest
-    }
-  }
-
   try {
-    await dynamoDB.batchWriteItem(params).promise()
+    await updateDynamo({ events })
   } catch (err) {
     fs.writeFile(
       path.join(__dirname, '../', 'data', 'modified', 'events.json'),

@@ -1,20 +1,12 @@
 const fs = require('fs')
 const path = require('path')
-const AWS = require('aws-sdk')
 
-const { unmarshallArray } = require('../services/helper')
-const { get: getRegion } = require('../loaders/region')
-
-const dynamoDB = new AWS.DynamoDB({ region: getRegion() })
+const { get: getDynamo, update: updateDynamo } = require('../services/dynamo')
 
 async function getCompetitors () {
-  const params = {
-    TableName: process.env.COMPETITORS_DATABASE
-  }
-
   try {
-    const result = await dynamoDB.scan(params).promise()
-    return unmarshallArray(result.Items)
+    const data = await getDynamo()
+    return data.competitors
   } catch (err) {
     const rawdata = fs.readFileSync(
       path.join(__dirname, '../', 'data', 'modified', 'competitors.json'))
@@ -25,26 +17,10 @@ async function getCompetitors () {
 }
 
 async function saveCompetitors (competitors) {
-  const docConvert = AWS.DynamoDB.Converter
-  const putRequest = []
-
-  for (const i in competitors) {
-    putRequest.push({
-      PutRequest: {
-        Item: docConvert.marshall(competitors[i])
-      }
-    })
-  };
-
-  const params = {
-    RequestItems: {
-      [process.env.COMPETITORS_DATABASE]: putRequest
-    }
-  }
-
   try {
-    await dynamoDB.batchWriteItem(params).promise()
+    await updateDynamo({ competitors })
   } catch (err) {
+    console.error('Error updating dynamo', err)
     fs.writeFile(
       path.join(__dirname, '../', 'data', 'modified', 'competitors.json'),
       JSON.stringify(competitors), (error) => {

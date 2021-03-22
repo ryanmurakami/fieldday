@@ -11,17 +11,13 @@ import styles from './index.scss'
 function CompetitorContainer () {
   const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
 
-  const url = 'competitors'
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
-    getAPI(url, (res) => {
-      if (mounted) {
-        setResponse(res)
-      }
-    })
-    return () => {
-      mounted = false
-    }
+
+    const res = await getAPI('competitors')
+    if (mounted) setResponse(res)
+
+    return () => mounted = false
   }, [])
 
   const competitors = response.body || []

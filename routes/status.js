@@ -35,7 +35,7 @@ async function status (req, res) {
 
 async function _checkDynamoConnection () {
   const params = {
-    TableName: process.env.EVENTS_DATABASE,
+    TableName: process.env.DYNAMO_TABLE,
     Limit: 1
   }
 
