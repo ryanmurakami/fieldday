@@ -9,57 +9,69 @@ const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const v1 = require('./routes/routes')
 const loader = require('./loaders/mock')
-const { logger } = require('./services/helper')
+const { 
+  getRedisConfig,
+  logger } = require('./services/helper')
 
 // Set data
-loader()
+loader().then(() => {
+  // start app
+  const app = express()
 
-// start app
-const app = express()
-
-app.use(bodyParser.urlencoded({
-  extended: false
-}))
-
-require('./services/authentication')(passport)
-
-// Setup passport session
-if (process.env.REDISSTORE_URL && process.env.REDISSTORE_SECRET) {
-  app.use(session({
-    store: new RedisStore({
-      url: process.env.REDISSTORE_URL
-    }),
-    secret: process.env.REDISSTORE_SECRET,
-    resave: false,
-    saveUninitialized: false
+  app.use(bodyParser.urlencoded({
+    extended: false
   }))
-} else {
-  app.use(session({ secret: 'some_secret',
-                  saveUninitialized: true,
-                  resave: true }))
-}
 
-app.use(passport.initialize())
-app.use(passport.session())
+  require('./services/authentication')(passport)
 
-app.use(require('flash')());
+  // Top Level await not yet available
+  getRedisConfig().then(redisConfig => {
+    
+    // Setup passport session
+    if (redisConfig.redis_url) {
+      logger.info(`running with redis enabled`)
+      // app.use(session({
+      //   store: new RedisStore({
+      //     url: process.env.REDISSTORE_URL
+      //   }),
+      //   resave: false,
+      //   saveUninitialized: false
+      // }))
+      app.use(session({ secret: 'some_secret',
+                      saveUninitialized: true,
+                      resave: true }))
+    } else {
+      logger.info(`running with redis disabled`)
+      app.use(session({ secret: 'some_secret',
+                      saveUninitialized: true,
+                      resave: true }))
+    }
 
-// port
-const port = process.env.PORT || 5000
+    app.use(passport.initialize())
+    app.use(passport.session())
 
-app.use(express.json())
-app.use(cors())
+    app.use(require('flash')());
 
-// Serve static client files
-app.use(express.static(path.join(__dirname, 'client', 'dist')))
+    // port
+    const port = process.env.PORT || 5000
 
-app.use('/api', v1.router)
+    app.use(express.json())
+    app.use(cors())
 
-// Default if no match
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'))
-})
+    // Serve static client files
+    app.use(express.static(path.join(__dirname, 'client', 'dist')))
 
-app.listen(port, () => {
-  logger.info(`Listening on port ${port}`)
+    app.use('/api', v1.router)
+
+    // Default if no match
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'client/dist', 'index.html'))
+    })
+
+    app.listen(port, () => {
+      logger.info(`Listening on port ${port}`)
+    })
+  })
+}).catch(err => {
+  logger.error(`failed to initualize application data ${err}`)
 })

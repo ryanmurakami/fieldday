@@ -39,3 +39,37 @@
         color: rgb(252, 81, 133);
     }
 }
+
+.button {
+    margin: 0 0 3em 0;
+
+    button {
+        padding: 10px 32px;
+    }
+}
+
+.form {
+    display: inline-block;
+    padding: 0 1em;
+
+    label {
+        color: rgba(54,79,107,0.62);
+        font-size: 18px;
+    }
+
+    input {
+        height: 40px;
+        padding: 0 10px;
+        margin: 0 22px;
+
+        background: #FFFFFF;
+        border: 1px solid #C1C1C1;
+        box-sizing: border-box;
+        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 25px;
+    }
+}

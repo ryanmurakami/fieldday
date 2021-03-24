@@ -5,14 +5,13 @@ const events = require('../data/default/events.json')
 const competitors = require('../data/default/competitors.json')
 const { logger } = require('../services/helper')
 
-const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
+const dynamoDB = new AWS.DynamoDB.DocumentClient({ region: 'us-west-2' })
 
 async function resetLocalData () {
-  _addEventsToCompetitors(events, competitors)
   // Problem - this is in memory, but we are trying to save it to local
   try {
-    await _uploadToDynamo(process.env.EVENTS_DATABASE, events)
-    await _uploadToDynamo(process.env.COMPETITORS_DATABASE, competitors)
+    _addEventsToCompetitors(events, competitors)
+    await _uploadToDynamo(process.env.MAIN_DATABASE, events, competitors)
   } catch (err) {
     logger.error(`Failed to connect to DynamoDB with ${err.code}`)
   }
@@ -37,29 +36,30 @@ async function resetLocalData () {
     })
 }
 
-async function _uploadToDynamo (tableName, items) {
-  const docConvert = AWS.DynamoDB.Converter
-  const putRequest = []
-
-  for (const i in items) {
-    putRequest.push({
-      PutRequest: {
-        Item: docConvert.marshall(items[i])
-      }
-    })
-  };
-
+async function _uploadToDynamo (tableName, events, competitors) {
   const params = {
-    RequestItems: {
-      [tableName]: putRequest
-    }
+    TableName: tableName,
+    Item: {
+      "id": 1,
+      "config": {
+        "redis_url": ""
+      },
+      "competitors": competitors,
+      "events": events
+    },
+    ConditionExpression: 'attribute_not_exists(id)'
   }
 
   try {
-    await dynamoDB.batchWriteItem(params).promise()
+    await dynamoDB.put(params).promise()
     return null
   } catch (err) {
-    throw (err)
+    if (err.code == 'ConditionalCheckFailedException') {
+      logger.info('Data exist, doing nothing')
+      return null
+    }
+
+    throw(err)
   }
 }
 

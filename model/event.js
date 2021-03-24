@@ -2,16 +2,21 @@ const fs = require('fs')
 const path = require('path')
 const AWS = require('aws-sdk')
 const dynamoDB = new AWS.DynamoDB({ region: 'us-west-2' })
-const { unmarshallArray } = require('../services/helper')
+const { unmarshallItem } = require('../services/helper')
 
 async function getEvents () {
   const params = {
-    TableName: process.env.EVENTS_DATABASE
+    Key: {
+      "id": {
+        N: "1"
+      }
+    },
+    TableName: process.env.MAIN_DATABASE
   }
 
   try {
-    const result = await dynamoDB.scan(params).promise()
-    return unmarshallArray(result.Items)
+    const result = await dynamoDB.getItem(params).promise()
+    return unmarshallItem(result.Item).events
   } catch (err) {
     const rawdata = fs.readFileSync(
       path.join(__dirname, '../', 'data', 'modified', 'events.json'))
@@ -22,25 +27,16 @@ async function getEvents () {
 }
 
 async function saveEvents (events) {
-  const docConvert = AWS.DynamoDB.Converter
-  const putRequest = []
-
-  for (const i in events) {
-    putRequest.push({
-      PutRequest: {
-        Item: docConvert.marshall(events[i])
-      }
-    })
-  };
-
   const params = {
-    RequestItems: {
-      [process.env.EVENTS_DATABASE]: putRequest
+    TableName: tableName,
+    Item: {
+      "id": 1,
+      "events": events
     }
   }
 
   try {
-    await dynamoDB.batchWriteItem(params).promise()
+    await dynamoDB.put(params).promise()
   } catch (err) {
     fs.writeFile(
       path.join(__dirname, '../', 'data', 'modified', 'events.json'),

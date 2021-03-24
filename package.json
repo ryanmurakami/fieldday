@@ -6,7 +6,8 @@
   "scripts": {
     "preinstall": "cd client && npm install",
     "start-all": "cd client && npm run build && cd .. && npm run start-debug",
-    "start-debug": "nodemon app.js",
+    "start-debug": "npx forever start -o out.log -e err.log app.js",
+    "stop": "npx forever stop 0",
     "start": "npm run start-all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,6 +29,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "flash": "^1.1.0",
+    "forever": "^3.0.4",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.4",

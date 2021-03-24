@@ -3,13 +3,15 @@ import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { getAPI } from '../../helper.js'
+import { getAPI, postAPI } from '../../helper.js'
 
 import Button from '../../component/Button/index.jsx'
 import Heading from '../../component/Heading/index.jsx'
 
 import styles from './index.scss'
 
+
+// TODO: set loader
 function Setting () {
   const [response, setResponse] = useState({ status: {} })
 
@@ -47,7 +49,18 @@ function Setting () {
         </dl>
         <dl className={styles.dl}>
           <dt className={styles.dt}>{_connectionRender(false)}</dt>
-          <dd className={styles.dd}>ElastiCache Connection</dd>
+          <dd className={styles.dd}>
+            ElastiCache Connection
+            { // TODO: set this to disable if false
+              // TODO: set default value of endpoint if exist
+              !_.get(response, 'status.dynamoDB.status') &&
+              <form className={styles.form} onSubmit={_updateRedux}>
+                <label htmlFor="endpoint">endpoint: </label>
+                <input type="text" title="endpoint" name="endpoint" /> 
+                <Button text="update"/>
+              </form>
+            }
+          </dd>
         </dl>
         <dl className={styles.dl}>
           <dt className={styles.dt}>{_connectionRender(_.get(response, 'status.internet'))}</dt>
@@ -55,6 +68,10 @@ function Setting () {
         </dl>
       </div>
 
+      <div className={styles.button} >
+        <Button text='Refresh Connection' action={_refreshConnection} />
+      </div>
+      
       <Heading text='Field Day App Controls' />
       {runButton}
       <Button text='Reset' action={_resetSimulator} />
@@ -73,10 +90,26 @@ function _connectionRender (type) {
 
   return (
     <div>
-
       <FontAwesomeIcon icon={faTimesCircle} color='#FC5185' />
     </div>
   )
+}
+
+function _updateRedux (e) {
+  e.preventDefault()
+  const url = 'command/update'
+  postAPI(url, { 'redis_url': e.target.endpoint.value }, () => {
+    // TODO: update status 
+  })
+}
+
+function _refreshConnection () {
+  const url = 'command/reset'
+  postAPI(url, {}, () => {})
+  // Server will restart to initialize Redux,
+  // force a reload after 5 second to homepage
+  setTimeout(() => document.location.href="/", 5000);
+  
 }
 
 function _startSimulator () {
