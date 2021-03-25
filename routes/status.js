@@ -3,9 +3,10 @@ const fetch = require('node-fetch')
 
 const { getIsRunning } = require('../services/eventTracker')
 const { logger } = require('../services/helper')
+const { get: getDynamo } = require('../services/dynamo')
 const { get: getRegion } = require('../loaders/region')
 
-const dynamoDB = new AWS.DynamoDB({ region: getRegion() })
+let dynamoDB
 
 // initialize
 module.exports = function (router) {
@@ -14,11 +15,16 @@ module.exports = function (router) {
 
 // APIs
 async function status (req, res) {
+  if (!dynamoDB) {
+    dynamoDB = _generateClient()
+  }
+
   let dynamoConnection = false
   let internetConnection = false
 
   try {
     dynamoConnection = await _checkDynamoConnection()
+    ecConnection = await _checkEcConnection()
     internetConnection = await _checkInternetConnection()
   } catch (err) {
     logger.error('error in fetching status')
@@ -27,6 +33,7 @@ async function status (req, res) {
   return res.status(200).json({
     status: {
       dynamoDB: dynamoConnection,
+      elasticCache: ecConnection,
       internet: internetConnection,
       isRunning: getIsRunning()
     }
@@ -46,9 +53,26 @@ async function _checkDynamoConnection () {
       msg: null
     }
   } catch (err) {
+    console.log(err)
     return {
       status: false,
       msg: `Failed to connect to DynamoDB with ${err.code}`
+    }
+  }
+}
+
+async function _checkEcConnection () {
+  try {
+    const data = await getDynamo()
+
+    return {
+      url: data.ECurl || '',
+      status: data.ECurl ? true : false  // TODO: figure out how to see if this is connected or not
+    }
+  } catch (err) {
+    return {
+      url: '',
+      status: false
     }
   }
 }
@@ -63,4 +87,9 @@ async function _checkInternetConnection () {
   } catch (err) {
     return false
   }
+}
+
+function _generateClient () {
+  AWS.config.update({ region: getRegion('awsRegion') })
+  return new AWS.DynamoDB.DocumentClient()
 }

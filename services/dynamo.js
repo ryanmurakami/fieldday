@@ -2,10 +2,12 @@ const AWS = require('aws-sdk')
 
 const { get: getRegion } = require('../loaders/region')
 
-const dynamoDB = new AWS.DynamoDB.DocumentClient()
+let dynamoDB
 
 async function get () {
-  AWS.config.update({ region: getRegion('awsRegion') })
+  if (!dynamoDB) {
+    dynamoDB = generateClient()
+  }
 
   const params = {
     Key: {
@@ -24,6 +26,10 @@ async function get () {
 }
 
 async function update (data) {
+  if (!dynamoDB) {
+    dynamoDB = generateClient()
+  }
+
   try {
     const item = await get()
     let dynamoItem = {}
@@ -44,6 +50,11 @@ async function update (data) {
   } catch (err) {
     throw (err)
   }
+}
+
+function generateClient () {
+  AWS.config.update({ region: getRegion() })
+  return new AWS.DynamoDB.DocumentClient()
 }
 
 module.exports = {

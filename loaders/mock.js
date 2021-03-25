@@ -5,25 +5,30 @@ const events = require('../data/default/events.json')
 const competitors = require('../data/default/competitors.json')
 const { logger } = require('../services/helper')
 
-async function resetLocalData (app) {
-  AWS.config.update({ region: app.get('awsRegion') })
-  _addEventsToCompetitors(events, competitors)
+function resetLocalData (app) {
+  return new Promise(async (resolve, reject) => {
+    let ecUrl
+    AWS.config.update({ region: app.get('awsRegion') })
+    _addEventsToCompetitors(events, competitors)
 
-  try {
-    const obj = { id: '1', competitors, events }
-    await _uploadToDynamo(process.env.DYNAMO_TABLE, obj)
-  } catch (err) {
-    logger.error(`Failed to connect to DynamoDB with ${err.code}`)
-  }
+    try {
+      const obj = { id: '1', competitors, events }
+      ecUrl = await _uploadToDynamo(process.env.DYNAMO_TABLE, obj)
+    } catch (err) {
+      logger.error(`Failed to connect to DynamoDB with ${err.code}`)
+    }
 
-  try {
-    // setup default file to live file
-    await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'events.json'), JSON.stringify(events))
-    await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'), JSON.stringify(competitors))
-  } catch (err) {
-    console.error('Error creating live files.', err)
-    throw err
-  }
+    try {
+      // setup default file to live file
+      await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'events.json'), JSON.stringify(events))
+      await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'), JSON.stringify(competitors))
+    } catch (err) {
+      console.error('Error creating live files.', err)
+      reject(err)
+    }
+
+    resolve(ecUrl)
+  })
 }
 
 async function _uploadToDynamo (tableName, item) {
@@ -37,9 +42,10 @@ async function _uploadToDynamo (tableName, item) {
 
   try {
     const response = await dynamoDB.get(params).promise()
-    let dynamoItem = item
-    if (response && response.item) {
-      dynamoItem = item
+
+    let dynamoItem = {}
+    if (response && response.Item) {
+      dynamoItem = response.Item
     }
 
     const putParams = {
@@ -51,7 +57,7 @@ async function _uploadToDynamo (tableName, item) {
     }
 
     await dynamoDB.put(putParams).promise()
-    return null
+    return response?.Item?.ECurl || null
   } catch (err) {
     throw (err)
   }

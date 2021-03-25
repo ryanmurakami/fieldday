@@ -20,7 +20,7 @@ function CompetitorContainer () {
     return () => mounted = false
   }, [])
 
-  const competitors = response.body || []
+  const competitors = response?.body || []
   const renderCompetitors = competitors.map(function (competitor, index) {
     return (
       <div key={index} className='Cell -3of12'>

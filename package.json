@@ -8,8 +8,10 @@
     "start-debug": "npm run start:client-debug && nodemon app.js",
     "start": "npm run build && npm run start:server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:client-debug": "webpack serve --mode development",
-    "start:server": "AWS_SDK_LOAD_CONFIG=true node app.js"
+    "start:client-debug": "webpack serve --mode development --config ./client/webpack.config.js",
+    "start:server": "AWS_SDK_LOAD_CONFIG=true node app.js",
+    "start:forever": "AWS_SDK_LOAD_CONFIG=true npx forever start -o out.log -e err.log app.js",
+    "stop": "npx forever stop 0"
   },
   "repository": {
     "type": "git",
@@ -31,10 +33,12 @@
     "express": "4.17.1",
     "express-session": "1.17.1",
     "flash": "1.1.0",
+    "forever": "^3.0.4",
     "lodash": "4.17.21",
     "node-fetch": "2.6.1",
     "passport": "0.4.1",
     "passport-local": "1.0.0",
+    "redis": "^3.0.2",
     "winston": "3.3.3"
   },
   "devDependencies": {

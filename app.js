@@ -5,8 +5,9 @@ const cors = require('cors')
 const path = require('path')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const redis = require('redis')
 const session = require('express-session')
-const RedisStore = require('connect-redis')(session)
+let RedisStore = require('connect-redis')(session)
 const v1 = require('./routes/routes')
 const loader = require('./loaders/mock')
 const { load: loadRegion } = require('./loaders/region')
@@ -19,52 +20,63 @@ app.use(bodyParser.urlencoded({
   extended: false
 }))
 
-require('./services/authentication')(passport)
+// set AWS region info
+loadRegion(app).then(() => {
+// Set data
+loader(app).then((ecUrl) => {
+  require('./services/authentication')(passport)
 
-// Setup passport session
-if (process.env.REDISSTORE_URL && process.env.REDISSTORE_SECRET) {
-  app.use(session({
-    store: new RedisStore({
-      url: process.env.REDISSTORE_URL
-    }),
-    secret: process.env.REDISSTORE_SECRET,
-    resave: false,
-    saveUninitialized: false
-  }))
-} else {
-  app.use(session({ secret: 'some_secret',
-                  saveUninitialized: true,
-                  resave: true }))
-}
+  // Setup passport sessions
+  if (ecUrl && process.env.REDISSTORE_SECRET) {
+    // TODO: if endpoint doesnt work, we need to not use this
+    let redisClient = redis.createClient({
+      host: ecUrl,
+      port: 6123,
+      password: process.env.REDISSTORE_SECRET,
+      db: 1,
+    })
+    redisClient.unref()
+    redisClient.on('error', console.log)
 
-app.use(passport.initialize())
-app.use(passport.session())
+    let store = new RedisStore({ client: redisClient })
 
-app.use(require('flash')());
+    app.use(session({
+      store: store,
+      secret: process.env.REDISSTORE_SECRET,
+      resave: false,
+      saveUninitialized: false
+    }))
+  } else {
+    app.use(session({ secret: 'some_secret',
+                    saveUninitialized: true,
+                    resave: true }))
+  }
 
-// port
-const port = 3000
+  app.use(passport.initialize())
+  app.use(passport.session())
 
-app.use(express.json())
-app.use(cors())
+  app.use(require('flash')());
 
-// Serve static client files
-app.use(express.static(path.join(__dirname, 'client', 'dist')))
-app.use(express.static(path.join(__dirname, 'client', 'src', 'static')))
+  // port
+  const port = 3000
 
-app.use('/api', v1.router)
+  app.use(express.json())
+  app.use(cors())
 
-// Default if no match
-app.get('*', (req, res) => {
-  res.redirect('/')
+  // Serve static client files
+  app.use(express.static(path.join(__dirname, 'client', 'dist')))
+  app.use(express.static(path.join(__dirname, 'client', 'src', 'static')))
+
+  app.use('/api', v1.router)
+
+  // Default if no match
+  app.get('*', (req, res) => {
+    res.redirect('/')
+  })
+
+  app.listen(port, async () => {
+    logger.info(`Listening on port ${port}`)
+  })
 })
 
-app.listen(port, async () => {
-  // set AWS region info
-  await loadRegion(app)
-
-  // Set data
-  loader(app)
-
-  logger.info(`Listening on port ${port}`)
 })

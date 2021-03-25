@@ -12,13 +12,17 @@ import styles from './index.scss'
 
 function Setting () {
   const [response, setResponse] = useState({ status: {} })
+  const [EcUrl, setEcUrl] = useState('')
 
   const url = 'status'
   useEffect(async () => {
     let mounted = true
 
     const res = await getAPI(url)
-    if (mounted) setResponse(res)
+    if (mounted) {
+      setResponse(res)
+      setEcUrl(get(res, 'status.elasticCache.url'))
+    }
 
     return () => mounted = false
   }, [])
@@ -43,12 +47,21 @@ function Setting () {
           </dd>
         </dl>
         <dl className={styles.dl}>
-          <dt className={styles.dt}>{_connectionRender(false)}</dt>
+          <dt className={styles.dt}>{_connectionRender(get(response, 'status.elasticCache.status'))}</dt>
           <dd className={styles.dd}>
             ElastiCache Connection
             <span className={styles.endpoint}>endpoint:</span>
-            <input type="text" title="endpoint" name="endpoint" placeholder="fieldday.iotaqp.0001.usw2.cache.amazonaws.com:6379" />
-            <Button text='Update' action={() => _persistRedisEndpoint()} />
+            <form onSubmit={(e) => {
+              e.preventDefault()
+              _persistRedisEndpoint(EcUrl)
+            }}>
+              <input 
+                type="text" title="endpoint" 
+                name="endpoint" placeholder="fieldday.iotaqp.0001.usw2.cache.amazonaws.com:6379"
+                value={EcUrl}
+                onChange={(e) => _RedisEndpointChange(e, setEcUrl)}/>
+              <Button text='Update' type="submit" />
+            </form>
           </dd>
         </dl>
         <dl className={styles.dl}>
@@ -119,8 +132,16 @@ function _resetSimulator (setResponse) {
   }
 }
 
-async function _persistRedisEndpoint () {
-  const res = await postAPI('commands/saveEndpoint', {})
+async function _persistRedisEndpoint (ecUrl) {
+  const res = await postAPI('commands/saveEndpoint', {
+    ecUrl
+  })
+
+  setTimeout(() => document.location.href="/", 5000);
+}
+
+function _RedisEndpointChange(event, setEcUrl) {
+  setEcUrl(event.target.value)
 }
 
 export default Setting
