@@ -4,7 +4,6 @@ const express = require('express')
 const cors = require('cors')
 const path = require('path')
 const bodyParser = require('body-parser')
-const passport = require('passport')
 
 const v1 = require('./routes/routes')
 const loader = require('./loaders/mock')
@@ -23,7 +22,6 @@ app.use(bodyParser.urlencoded({
 loadRegion(app).then(async () => {
   // Set data
   const ecUrl = await loader(app)
-  require('./services/authentication')(passport)
 
   // initialize session
   try {
@@ -31,11 +29,6 @@ loadRegion(app).then(async () => {
   } catch (err) {
     logger.error('Error initializing session:', err)
   }
-
-  app.use(passport.initialize())
-  app.use(passport.session())
-
-  app.use(require('flash')());
 
   // port
   const port = 3000
@@ -50,7 +43,7 @@ loadRegion(app).then(async () => {
   app.use('/api', v1.router)
 
   // Default if no match
-  app.get('*', (req, res) => {
+  app.get('*', (_, res) => {
     res.redirect('/')
   })
 

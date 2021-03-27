@@ -1,4 +1,3 @@
-const AWS = require('aws-sdk')
 const winston = require('winston')
 
 const logger = winston.createLogger({
@@ -7,10 +6,23 @@ const logger = winston.createLogger({
   defaultMeta: { service: 'ec2fieldday' },
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'combined.log' }),
-  ],
-});
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+})
+
+// used to avoid running middleware on a path
+function unless (path, middleware) {
+  return function(req, res, next) {
+      if (path === req.path) {
+          logger.info('skipping health endpoint')
+          return next()
+      } else {
+          return middleware(req, res, next)
+      }
+  }
+}
 
 module.exports = {
-  logger
+  logger,
+  unless
 }
