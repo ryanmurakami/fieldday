@@ -38,7 +38,7 @@ function CompetitorTemplate () {
             return (<Stats key={index} name={stat.key} rating={stat.value * 10} />)
           })}
       </div>
-      <Divider text='Participating Event' />
+      <Divider text='Participating Events' />
       <List items={competitor.events} />
     </div>
   )

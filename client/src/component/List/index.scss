@@ -1,14 +1,18 @@
 .number-list {
-  width: 75%;
   margin: auto;
   padding-left: 3em;
   text-align: left;
+  width: 75%;
 
   color: #364F6B;
-  list-style: decimal;
+  font-size: 2.2vw;
   font-style: italic;
   font-weight: 900;
-  font-size: 2.2vw;
-  line-height: 49px;
   letter-spacing: 0.15em;
+  line-height: 49px;
+  list-style: decimal;
+}
+
+.results {
+  font-weight: 300;
 }

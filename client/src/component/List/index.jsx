@@ -20,11 +20,11 @@ function Image ({ items }) {
 
 function _renderResult (time, rank) {
   if (!time && !rank) {
-    return <span>- Not Completed Yet</span>
+    return <span className={styles.results}>- Not Completed Yet</span>
   }
 
   return (
-    <span>
+    <span className={styles.results}>
       {rank && _renderRank(rank)} - {_renderTime(time)}
     </span>
   )
