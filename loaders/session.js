@@ -40,10 +40,8 @@ async function _connectRedis (ecUrl) {
       connect_timeout: 5000,
       db: 1,
       host: ecUrl,
-      password: process.env.REDISSTORE_SECRET,
       port: 6379
     })
-    redisClient.unref()
     redisClient.on('error', reject)
     redisClient.on('ready', () => resolve(redisClient))
   })
