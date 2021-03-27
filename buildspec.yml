@@ -12,8 +12,13 @@ phases:
       - echo Building project...
       - echo Build started on `date`
       - npm run build
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+      - docker build -t field-day .
+      - docker tag field-day:latest $CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/field-day:latest
+      - docker push $CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/field-day:latest
   post_build:
     commands:
+      - printf '[{"name":"MyService","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/myservice/app:latest > imagedefinitions.json
       - echo Build completed on `date`
 
 artifacts:
