@@ -9,6 +9,7 @@ async function initializeSessionCache (app, ecUrl) {
     try {
       logger.info('Attempting Redis connection')
       const redisClient = await _connectRedis(ecUrl)
+      logger.info('Connected to Redis')
       const store = new RedisStore({ client: redisClient })
       app.use(session({
         store: store,

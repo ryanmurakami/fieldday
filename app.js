@@ -26,7 +26,11 @@ loadRegion(app).then(async () => {
   require('./services/authentication')(passport)
 
   // initialize session
-  await initializeSessionCache(app, ecUrl)
+  try {
+    await initializeSessionCache(app, ecUrl)
+  } catch (err) {
+    logger.error('Error initializing session:', err)
+  }
 
   app.use(passport.initialize())
   app.use(passport.session())
