@@ -10,4 +10,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:forever"]
+CMD ["npm", "run", "start:server"]
