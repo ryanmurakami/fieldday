@@ -6,12 +6,16 @@ let region
 
 async function load (app) {
   // try getting region from local AWS config file
-  const config = new AWS.Config()
-  if (config.region) {
-    region = config.region
-    app.set('awsRegion', region)
-    logger.info(`AWS region set to ${region} from local config file.`)
-    return
+  try {
+    const config = new AWS.Config()
+    if (config.region) {
+      region = config.region
+      app.set('awsRegion', region)
+      logger.info(`AWS region set to ${region} from local config file.`)
+      return
+    }
+  } catch (err) {
+    // this throws on instances, no need to handle the error
   }
 
   // try getting region from EC2 endpoint
