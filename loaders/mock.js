@@ -57,7 +57,7 @@ async function _uploadToDynamo (tableName, item) {
     }
 
     await dynamoDB.put(putParams).promise()
-    return response?.Item?.ECurl || null
+    return response?.Item?.elastiCacheUrl || null
   } catch (err) {
     throw (err)
   }

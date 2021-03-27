@@ -24,7 +24,7 @@ async function status (req, res) {
 
   try {
     dynamoConnection = await _checkDynamoConnection()
-    ecConnection = await _checkEcConnection()
+    ecConnection = await _checkEcConnection(req)
     internetConnection = await _checkInternetConnection()
   } catch (err) {
     logger.error('error in fetching status')
@@ -33,7 +33,7 @@ async function status (req, res) {
   return res.status(200).json({
     status: {
       dynamoDB: dynamoConnection,
-      elasticCache: ecConnection,
+      elastiCache: ecConnection,
       internet: internetConnection,
       isRunning: getIsRunning()
     }
@@ -61,13 +61,13 @@ async function _checkDynamoConnection () {
   }
 }
 
-async function _checkEcConnection () {
+async function _checkEcConnection (req) {
   try {
     const data = await getDynamo()
 
     return {
-      url: data.ECurl || '',
-      status: data.ECurl ? true : false  // TODO: figure out how to see if this is connected or not
+      url: data.elastiCacheUrl || '',
+      status: (data.elastiCacheUrl && req.session) ? true : false
     }
   } catch (err) {
     return {

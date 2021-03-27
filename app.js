@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 const redis = require('redis')
 const session = require('express-session')
-let RedisStore = require('connect-redis')(session)
+const RedisStore = require('connect-redis')(session)
 const v1 = require('./routes/routes')
 const loader = require('./loaders/mock')
 const { load: loadRegion } = require('./loaders/region')
@@ -31,7 +31,7 @@ loader(app).then((ecUrl) => {
     // TODO: if endpoint doesnt work, we need to not use this
     let redisClient = redis.createClient({
       host: ecUrl,
-      port: 6123,
+      port: 6379 ,
       password: process.env.REDISSTORE_SECRET,
       db: 1,
     })

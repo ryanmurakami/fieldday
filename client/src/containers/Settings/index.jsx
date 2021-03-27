@@ -12,7 +12,7 @@ import styles from './index.scss'
 
 function Setting () {
   const [response, setResponse] = useState({ status: {} })
-  const [EcUrl, setEcUrl] = useState('')
+  const [elastiCacheUrl, setElastiCacheUrl] = useState('')
 
   const url = 'status'
   useEffect(async () => {
@@ -21,7 +21,7 @@ function Setting () {
     const res = await getAPI(url)
     if (mounted) {
       setResponse(res)
-      setEcUrl(get(res, 'status.elasticCache.url'))
+      setElastiCacheUrl(get(res, 'status.elasticCache.url'))
     }
 
     return () => mounted = false
@@ -47,19 +47,19 @@ function Setting () {
           </dd>
         </dl>
         <dl className={styles.dl}>
-          <dt className={styles.dt}>{_connectionRender(get(response, 'status.elasticCache.status'))}</dt>
+          <dt className={styles.dt}>{_connectionRender(get(response, 'status.elastiCache.status'))}</dt>
           <dd className={styles.dd}>
             ElastiCache Connection
             <span className={styles.endpoint}>endpoint:</span>
             <form onSubmit={(e) => {
               e.preventDefault()
-              _persistRedisEndpoint(EcUrl)
+              _persistRedisEndpoint(elastiCacheUrl)
             }}>
               <input 
                 type="text" title="endpoint" 
                 name="endpoint" placeholder="fieldday.iotaqp.0001.usw2.cache.amazonaws.com:6379"
-                value={EcUrl}
-                onChange={(e) => _RedisEndpointChange(e, setEcUrl)}/>
+                value={elastiCacheUrl}
+                onChange={(e) => _RedisEndpointChange(e, setElastiCacheUrl)}/>
               <Button text='Update' type="submit" />
             </form>
           </dd>
@@ -132,16 +132,16 @@ function _resetSimulator (setResponse) {
   }
 }
 
-async function _persistRedisEndpoint (ecUrl) {
+async function _persistRedisEndpoint (elastiCacheUrl) {
   const res = await postAPI('commands/saveEndpoint', {
-    ecUrl
+    elastiCacheUrl
   })
 
   setTimeout(() => document.location.href="/", 5000);
 }
 
-function _RedisEndpointChange(event, setEcUrl) {
-  setEcUrl(event.target.value)
+function _RedisEndpointChange(event, setElastiCacheUrl) {
+  setElastiCacheUrl(event.target.value)
 }
 
 export default Setting
