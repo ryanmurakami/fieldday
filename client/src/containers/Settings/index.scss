@@ -48,13 +48,17 @@
     opacity: .6;
 }
 
+.form {
+    display: inline-block;
+}
+
 input {
     border: none;
     border-bottom: 1px solid #eaeaea;
     border-radius: 5px;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-style: italic;
-    font-weight: 600;
+    font-weight: 300;
     color: inherit;
     margin: 0 1vw;
     padding: 1em;

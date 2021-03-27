@@ -20,11 +20,17 @@ async function status (req, res) {
   }
 
   let dynamoConnection = false
+  let ecConnection = false
   let internetConnection = false
 
   try {
-    dynamoConnection = await _checkDynamoConnection()
-    ecConnection = await _checkEcConnection(req)
+    const data = await getDynamo()
+
+    dynamoConnection = {
+      status: true,
+      msg: null
+    }
+    ecConnection = _checkEcConnection(req, data)
     internetConnection = await _checkInternetConnection()
   } catch (err) {
     logger.error('error in fetching status')
@@ -40,40 +46,10 @@ async function status (req, res) {
   })
 }
 
-async function _checkDynamoConnection () {
-  const params = {
-    TableName: process.env.DYNAMO_TABLE,
-    Limit: 1
-  }
-
-  try {
-    await dynamoDB.scan(params).promise()
-    return {
-      status: true,
-      msg: null
-    }
-  } catch (err) {
-    console.log(err)
-    return {
-      status: false,
-      msg: `Failed to connect to DynamoDB with ${err.code}`
-    }
-  }
-}
-
-async function _checkEcConnection (req) {
-  try {
-    const data = await getDynamo()
-
-    return {
-      url: data.elastiCacheUrl || '',
-      status: (data.elastiCacheUrl && req.session) ? true : false
-    }
-  } catch (err) {
-    return {
-      url: '',
-      status: false
-    }
+function _checkEcConnection (req, data) {
+  return {
+    url: data.elastiCacheUrl || '',
+    status: (data.elastiCacheUrl && (req.app.get('cacheType') === 'redis')) ? true : false
   }
 }
 

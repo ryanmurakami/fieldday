@@ -13,7 +13,6 @@ phases:
       - echo Build started on `date`
       - npm run build
       - echo Tests should happen here
-      - printenv
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
       - docker build -t field-day .
       - docker tag field-day:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/field-day:latest

@@ -21,7 +21,7 @@ function Setting () {
     const res = await getAPI(url)
     if (mounted) {
       setResponse(res)
-      setElastiCacheUrl(get(res, 'status.elasticCache.url'))
+      setElastiCacheUrl(get(res, 'status.elastiCache.url'))
     }
 
     return () => mounted = false
@@ -51,13 +51,15 @@ function Setting () {
           <dd className={styles.dd}>
             ElastiCache Connection
             <span className={styles.endpoint}>endpoint:</span>
-            <form onSubmit={(e) => {
-              e.preventDefault()
-              _persistRedisEndpoint(elastiCacheUrl)
-            }}>
-              <input 
-                type="text" title="endpoint" 
-                name="endpoint" placeholder="fieldday.iotaqp.0001.usw2.cache.amazonaws.com:6379"
+            <form
+              className={styles.form}
+              onSubmit={(e) => {
+                e.preventDefault()
+                _persistRedisEndpoint(elastiCacheUrl)
+              }}>
+              <input
+                type="text" title="endpoint"
+                name="endpoint" placeholder="fieldday.iotaqp.0001.usw2.cache.amazonaws.com"
                 value={elastiCacheUrl}
                 onChange={(e) => _RedisEndpointChange(e, setElastiCacheUrl)}/>
               <Button text='Update' type="submit" />
