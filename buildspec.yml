@@ -19,7 +19,7 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/field-day:latest
   post_build:
     commands:
-      - printf '[{"name":"field-day","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/myservice/app:latest > imagedefinitions.json
+      - printf '[{"name":"field-day","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/field-day:latest > imagedefinitions.json
       - echo Build completed on `date`
 
 artifacts:
