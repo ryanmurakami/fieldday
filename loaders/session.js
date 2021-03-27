@@ -14,7 +14,7 @@ async function initializeSessionCache (app, ecUrl) {
       app.use(session({
         store: store,
         secret: process.env.REDISSTORE_SECRET,
-        resave: false,
+        resave: true,
         saveUninitialized: false
       }))
       app.set('cacheType', 'redis')
