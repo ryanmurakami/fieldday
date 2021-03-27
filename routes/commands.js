@@ -61,7 +61,7 @@ async function saveEndpoint (req, res) {
   
   try {
     await updateDynamo({
-      ECurl: req.body.ecUrl
+      elastiCacheUrl: req.body.elastiCacheUrl
     })
 
     logger.error('Endpoint has been updated, restarting service')

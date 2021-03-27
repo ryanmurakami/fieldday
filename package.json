@@ -9,8 +9,8 @@
     "start": "npm run build && npm run start:server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:client-debug": "webpack serve --mode development --config ./client/webpack.config.js",
-    "start:server": "AWS_SDK_LOAD_CONFIG=true node app.js",
-    "start:forever": "AWS_SDK_LOAD_CONFIG=true npx forever start -o out.log -e err.log app.js",
+    "start:server": "SET AWS_SDK_LOAD_CONFIG=true node app.js",
+    "start:forever": "npx forever start -o out.log -e err.log app.js",
     "stop": "npx forever stop 0"
   },
   "repository": {
