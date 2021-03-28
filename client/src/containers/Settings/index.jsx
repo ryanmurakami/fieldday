@@ -138,8 +138,6 @@ async function _persistRedisEndpoint (elastiCacheUrl) {
   const res = await postAPI('commands/saveEndpoint', {
     elastiCacheUrl
   })
-
-  setTimeout(() => document.location.href='/', 5000);
 }
 
 function _RedisEndpointChange(event, setElastiCacheUrl) {
