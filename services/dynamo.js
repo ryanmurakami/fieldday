@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk')
 
+const { logger } = require('./helper')
 const { get: getRegion } = require('../loaders/region')
 
 let dynamoDB
@@ -20,7 +21,7 @@ async function get () {
     const response = await dynamoDB.get(params).promise()
     return response.Item
   } catch (err) {
-    console.error('Error getting data from dynamo', err)
+    logger.error('Error getting data from Dynamo', err)
     throw err
   }
 }

@@ -23,7 +23,7 @@ function resetLocalData (app) {
       await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'events.json'), JSON.stringify(events))
       await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'), JSON.stringify(competitors))
     } catch (err) {
-      console.error('Error creating live files.', err)
+      logger.error('Error creating live files.', err)
       reject(err)
     }
 

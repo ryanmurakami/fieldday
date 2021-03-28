@@ -20,7 +20,6 @@ function Header () {
     if (mounted) user.setLoggedIn(
       res.isAuthenticated
     )
-    console.log('set user authentication')
 
     return () => mounted = false
   }, [])

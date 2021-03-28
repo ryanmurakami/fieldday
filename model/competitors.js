@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
+const { logger } = require('../services/helper')
 const { get: getDynamo, update: updateDynamo } = require('../services/dynamo')
 
 async function getCompetitors () {
@@ -20,7 +21,7 @@ async function saveCompetitors (competitors) {
   try {
     await updateDynamo({ competitors })
   } catch (err) {
-    console.error('Error updating dynamo', err)
+    logger.error('Error updating Dynamo', err)
     fs.writeFile(
       path.join(__dirname, '../', 'data', 'modified', 'competitors.json'),
       JSON.stringify(competitors), (error) => {

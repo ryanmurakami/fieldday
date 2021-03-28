@@ -22,7 +22,7 @@ async function load (app) {
       }
     }
   } catch (err) {
-    console.error('Could not load EC2 metadata URL. You can change the default region in the .env.')
+    logger.warn('Could not load EC2 metadata URL. You can change the default region in the .env.')
   }
 
   // set default region from .env
