@@ -10,26 +10,25 @@ The app is able to run all alone in EC2 without connecting to any outside servic
 Install dependencies with
 
 ```
-npm run install-all
+npm install
 ```
 
-### running the application
-
-```
-npm run start
-```
-modify the `.env` file to use configured table name.
-
-Access in `localhost:5000`
-
-### server & client development
-for client development with active API, the Express server needs to be activated separately. Using two terminal run
+### Running the Application
 
 ```
 npm run start
 ```
-on both the `root` folder and the `client` folder. Any new dependencies needed for the client will need to be installed from the `client` folder.
 
-server will be `localhost:5000`
+Access in `localhost:3000`
 
-client will be `localhost:8080`
+### Server & Client Development
+For client development with active API, the Express server needs to be activated separately. 
+
+Using two terminals run
+```
+npm run start
+```
+
+Server will be `localhost:3000`
+
+Client will be `localhost:8080`

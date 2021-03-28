@@ -5,15 +5,6 @@ const { logger } = require('../services/helper')
 let region
 
 async function load (app) {
-  // try getting region from local AWS config file
-  const config = new AWS.Config()
-  if (config.region) {
-    region = config.region
-    app.set('awsRegion', region)
-    logger.info(`AWS region set to ${region} from local config file.`)
-    return
-  }
-
   // try getting region from EC2 endpoint
   try {
     const res = await fetch(
@@ -31,7 +22,7 @@ async function load (app) {
       }
     }
   } catch (err) {
-    console.error('Could not load EC2 metadata URL. Are you running locally without a config file?')
+    logger.warn('Could not load EC2 metadata URL. You can change the default region in the .env.')
   }
 
   // set default region from .env

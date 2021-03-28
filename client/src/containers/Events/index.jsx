@@ -11,17 +11,13 @@ import Divider from '../../component/Divider/index.jsx'
 function EventsContainer () {
   const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
 
-  const url = 'events'
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
-    getAPI(url, (res) => {
-      if (mounted) {
-        setResponse(res)
-      }
-    })
-    return () => {
-      mounted = false
-    }
+
+    const res = await getAPI('events')
+    if (mounted) setResponse(res)
+
+    return () => mounted = false
   }, [])
 
   const events = _.get(response, 'body.allEvents') || []

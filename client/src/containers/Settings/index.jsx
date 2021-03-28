@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { get, isEmpty } from 'lodash'
+import { get } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { getAPI } from '../../helper.js'
+import { getAPI, postAPI } from '../../helper.js'
 
 import Button from '../../component/Button/index.jsx'
 import Heading from '../../component/Heading/index.jsx'
@@ -12,24 +12,25 @@ import styles from './index.scss'
 
 function Setting () {
   const [response, setResponse] = useState({ status: {} })
+  const [elastiCacheUrl, setElastiCacheUrl] = useState('')
 
   const url = 'status'
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
-    getAPI(url, (res) => {
-      if (mounted) {
-        setResponse(res)
-      }
-    })
-    return () => {
-      mounted = false
-    }
-  }, [response.status])
 
-  let runButton = <Button text='Start' action={_startSimulator} />
+    const res = await getAPI(url)
+    if (mounted) {
+      setResponse(res)
+      setElastiCacheUrl(get(res, 'status.elastiCache.url'))
+    }
+
+    return () => mounted = false
+  }, [])
+
+  let runButton = <Button text='Start' action={_startSimulator(setResponse)} />
 
   if (get(response, 'status.isRunning')) {
-    runButton = <Button text='Stop' type='alert' action={_stopSimulator} />
+    runButton = <Button text='Stop' type='alert' action={_stopSimulator(setResponse)} />
   }
 
   return (
@@ -46,18 +47,39 @@ function Setting () {
           </dd>
         </dl>
         <dl className={styles.dl}>
-          <dt className={styles.dt}>{_connectionRender(false)}</dt>
-          <dd className={styles.dd}>ElastiCache Connection</dd>
+          <dt className={styles.dt}>{_connectionRender(get(response, 'status.elastiCache.status'))}</dt>
+          <dd className={styles.dd}>
+            ElastiCache Connection
+            <span className={styles.endpoint}>endpoint:</span>
+            <form
+              className={styles.form}
+              onSubmit={(e) => {
+                e.preventDefault()
+                _persistRedisEndpoint(elastiCacheUrl)
+              }}>
+              <input
+                type='text' title='endpoint'
+                name='endpoint' placeholder='fieldday.iotaqp.0001.usw2.cache.amazonaws.com'
+                value={elastiCacheUrl}
+                onChange={(e) => _RedisEndpointChange(e, setElastiCacheUrl)}/>
+              <Button text='Update' type='submit' />
+            </form>
+          </dd>
         </dl>
         <dl className={styles.dl}>
           <dt className={styles.dt}>{_connectionRender(get(response, 'status.internet'))}</dt>
           <dd className={styles.dd}>Outside Internet Connection</dd>
         </dl>
+        <dl className={styles.dl}>
+          <dd className={styles.dd}>
+            <Button text='Check Connections' action={_checkStatus(setResponse)} />
+          </dd>
+        </dl>
       </div>
 
       <Heading text='Field Day App Controls' />
       {runButton}
-      <Button text='Reset' action={_resetSimulator} />
+      <Button text='Reset' action={_resetSimulator(setResponse)} />
     </div>
   )
 }
@@ -73,31 +95,53 @@ function _connectionRender (type) {
 
   return (
     <div>
-
       <FontAwesomeIcon icon={faTimesCircle} color='#FC5185' />
     </div>
   )
 }
 
-function _startSimulator () {
-  const url = 'commands/start'
-  getAPI(url, (res) => {
-    console.log(res)
-  })
+function _checkStatus (setResponse) {
+  return async () => {
+    const res = await getAPI('status')
+    setResponse(res)
+  }
+}
+
+function _startSimulator (setResponse) {
+  return async () => {
+    await getAPI('commands/start')
+    setResponse(prev => {
+      return { status: { ...prev.status, isRunning: true } }
+    })
+  }
 }
 
 function _stopSimulator (setResponse) {
-  const url = 'commands/stop'
-  getAPI(url, (res) => {
-    console.log(res)
-  })
+  return async () => {
+    await getAPI('commands/stop')
+    setResponse(prev => {
+      return { status: { ...prev.status, isRunning: false } }
+    })
+  }
 }
 
 function _resetSimulator (setResponse) {
-  const url = 'commands/reset'
-  getAPI(url, (res) => {
-    console.log(res)
+  return async () => {
+    await getAPI('commands/reset')
+    setResponse(prev => {
+      return { status: { ...prev.status, isRunning: false } }
+    })
+  }
+}
+
+async function _persistRedisEndpoint (elastiCacheUrl) {
+  const res = await postAPI('commands/saveEndpoint', {
+    elastiCacheUrl
   })
+}
+
+function _RedisEndpointChange(event, setElastiCacheUrl) {
+  setElastiCacheUrl(event.target.value)
 }
 
 export default Setting

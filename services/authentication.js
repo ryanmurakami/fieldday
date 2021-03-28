@@ -9,7 +9,7 @@ const user = {
 }
 
 function findUser (username, password, callback) {
-  if (username === user.username && 
+  if (username === user.username &&
       password === user.password) {
     return callback(null, user)
   }
@@ -23,13 +23,13 @@ module.exports = function (passport) {
         if (err) {
           return done(err)
         }
-  
+
         // User not found
         if (!user) {
           logger.error('User not found')
           return done(null, false)
         }
-  
+
         logger.info('User found')
         return done(null, user)
       })
@@ -37,10 +37,10 @@ module.exports = function (passport) {
   ))
 
   passport.serializeUser(function(user, done) {
-    done(null, user);
-  });
-  
+    done(null, user)
+  })
+
   passport.deserializeUser(function(user, done) {
-    done(null, user);
-  });
+    done(null, user)
+  })
 }

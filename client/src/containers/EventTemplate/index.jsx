@@ -13,17 +13,13 @@ function EventTemplate (props) {
   const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
   const { event_id } = useParams()
 
-  const url = `events/${event_id}`
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
-    getAPI(url, (res) => {
-      if (mounted) {
-        setResponse(res)
-      }
-    })
-    return () => {
-      mounted = false
-    }
+
+    const res = await getAPI(`events/${event_id}`)
+    if (mounted) setResponse(res)
+
+    return () => mounted = false
   }, [])
 
   const event = response.body || {}

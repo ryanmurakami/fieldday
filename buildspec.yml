@@ -12,8 +12,14 @@ phases:
       - echo Building project...
       - echo Build started on `date`
       - npm run build
+      - echo Tests should happen here
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+      - docker build -t field-day .
+      - docker tag field-day:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/field-day:latest
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/field-day:latest
   post_build:
     commands:
+      - printf '[{"name":"field-day","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/field-day:latest > imagedefinitions.json
       - echo Build completed on `date`
 
 artifacts:

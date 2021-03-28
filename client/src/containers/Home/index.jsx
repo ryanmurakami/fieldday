@@ -14,19 +14,15 @@ function HomeContainer (props) {
   const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
 
   const url = 'events'
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
-    getAPI(url, (res) => {
-      if (mounted) {
-        setResponse(res)
-      }
-    })
-    const interval = setInterval(() => {
-      getAPI(url, (res) => {
-        if (mounted) {
-          setResponse(res)
-        }
-      })
+
+    const res = await getAPI(url)
+    if (mounted) setResponse(res)
+
+    const interval = setInterval(async () => {
+      const res = await getAPI(url)
+      if (mounted) setResponse(res)
     }, 5000)
     // component will unmount
     return () => {
@@ -55,34 +51,40 @@ function HomeContainer (props) {
 
   return (
     <div className={styles.container}>
-      <div className={`Grid -middle ${styles.first}`}>
-        <div className='Cell -5of12'>
-          {_renderProgressBar(inProgressEvent)}
+      {(lastEvent.name || inProgressEvent.name) ?
+        <div className={`Grid -middle ${styles.first}`}>
+          <div className='Cell -5of12'>
+            {_renderProgressBar(inProgressEvent)}
+          </div>
+          <div className={`Cell -2of12 ${styles.relative}`}>
+            <div className={styles.vl} />
+          </div>
+          <div className='Cell -5of12'>
+            {lastEvent.competitorId &&
+              <>
+                <h3 className={styles.title}>Recent Event Winner</h3>
+                <Image
+                  className={styles.image}
+                  image={lastEvent.imageUrl}
+                  link={`/competitors/${lastEvent.competitorId}`}
+                />
+                <div className={styles.eventSubtitle}>
+                  <NavLink to={`/competitors/${lastEvent.competitorId}`}>
+                    {lastEvent.competitorName}
+                  </NavLink>
+                    &nbsp;&nbsp;won at&nbsp;&nbsp;
+                  <NavLink to={`/events/${lastEvent.eventId}`}>
+                    {lastEvent.name}
+                  </NavLink>
+                </div>
+              </>
+            }
+          </div>
         </div>
-        <div className={`Cell -2of12 ${styles.relative}`}>
-          <div className={styles.vl} />
-        </div>
-        <div className='Cell -5of12'>
-          <h3 className={styles.title}>Recent Event Winner</h3>
-          <Image
-            className={styles.image}
-            image={lastEvent.imageUrl}
-            link={`/competitors/${lastEvent.competitorId}`}
-          />
-          {lastEvent.competitorId &&
-            <div className={styles.eventSubtitle}>
-              <NavLink to={`/competitors/${lastEvent.competitorId}`}>
-                {lastEvent.competitorName}
-              </NavLink>
-                &nbsp;won at&nbsp;
-              <NavLink to={`/events/${lastEvent.eventId}`}>
-                {lastEvent.name}
-              </NavLink>
-            </div>
-          }
-        </div>
-      </div>
-      <Divider text="Today's Events" />
+        :
+        <></>
+      }
+      <Divider text="Upcoming Events" />
       <div className='Grid -middle'>
         {renderEvents}
       </div>

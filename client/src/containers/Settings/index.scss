@@ -1,5 +1,6 @@
 .wrapper {
-    padding-top: 5em;
+    padding-top: 7vw;
+    padding-bottom: 4vw;
 
     h1 {
         text-transform: uppercase;
@@ -39,3 +40,35 @@
         color: rgb(252, 81, 133);
     }
 }
+
+.endpoint {
+    font-size: 1.25vw;
+    font-weight: 600;
+    margin-left: 2.5vw;
+    opacity: .6;
+}
+
+.form {
+    display: inline-block;
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid #eaeaea;
+    border-radius: 5px;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-style: italic;
+    font-weight: 300;
+    color: inherit;
+    margin: 0 1vw;
+    padding: 1em;
+    width: 20vw;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      opacity: .6;
+    }
+  }

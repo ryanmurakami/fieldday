@@ -1,15 +1,15 @@
-export async function getAPI (endpoint, callback) {
+export async function getAPI (endpoint) {
   try {
     const response = await fetch(
       `/api/${endpoint}`
     )
     if (response.status === 200) {
       const res = await response.json()
-      callback(res)
+      return res
     }
   } catch (err) {
     console.log(err)
-    callback({ message: 'Oops, something went wrong...' })
+    return null
   }
 }
 
