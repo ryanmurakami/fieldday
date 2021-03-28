@@ -13,7 +13,6 @@ import styles from './index.scss'
 function Setting () {
   const [response, setResponse] = useState({ status: {} })
   const [elastiCacheUrl, setElastiCacheUrl] = useState('')
-  const origECUrl = `${elastiCacheUrl}`
 
   const url = 'status'
   useEffect(async () => {
@@ -56,16 +55,14 @@ function Setting () {
               className={styles.form}
               onSubmit={(e) => {
                 e.preventDefault()
-                if (origECUrl !== elastiCacheUrl) {
-                  _persistRedisEndpoint(elastiCacheUrl)
-                }
+                _persistRedisEndpoint(elastiCacheUrl)
               }}>
               <input
-                type="text" title="endpoint"
-                name="endpoint" placeholder="fieldday.iotaqp.0001.usw2.cache.amazonaws.com"
+                type='text' title='endpoint'
+                name='endpoint' placeholder='fieldday.iotaqp.0001.usw2.cache.amazonaws.com'
                 value={elastiCacheUrl}
                 onChange={(e) => _RedisEndpointChange(e, setElastiCacheUrl)}/>
-              <Button text='Update' type="submit" />
+              <Button text='Update' type='submit' />
             </form>
           </dd>
         </dl>
@@ -75,7 +72,7 @@ function Setting () {
         </dl>
         <dl className={styles.dl}>
           <dd className={styles.dd}>
-            <Button text="Check Connections" action={_checkStatus(setResponse)} />
+            <Button text='Check Connections' action={_checkStatus(setResponse)} />
           </dd>
         </dl>
       </div>
@@ -142,7 +139,7 @@ async function _persistRedisEndpoint (elastiCacheUrl) {
     elastiCacheUrl
   })
 
-  setTimeout(() => document.location.href="/", 5000);
+  setTimeout(() => document.location.href='/', 5000);
 }
 
 function _RedisEndpointChange(event, setElastiCacheUrl) {
