@@ -5,48 +5,59 @@ const events = require('../data/default/events.json')
 const competitors = require('../data/default/competitors.json')
 const { logger } = require('../services/helper')
 
-async function resetLocalData (app) {
-  const dynamoDB = new AWS.DynamoDB({ region: app.get('awsRegion') })
-  _addEventsToCompetitors(events, competitors)
-  // Problem - this is in memory, but we are trying to save it to local
-  try {
-    await _uploadToDynamo(dynamoDB, process.env.EVENTS_DATABASE, events)
-    await _uploadToDynamo(dynamoDB, process.env.COMPETITORS_DATABASE, competitors)
-  } catch (err) {
-    logger.error(`Failed to connect to DynamoDB with ${err.code}`)
-  }
+function resetLocalData (app) {
+  return new Promise(async (resolve, reject) => {
+    let ecUrl
+    AWS.config.update({ region: app.get('awsRegion') })
+    _addEventsToCompetitors(events, competitors)
 
-  try {
-    // setup default file to live file
-    await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'events.json'), JSON.stringify(events))
-    await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'), JSON.stringify(competitors))
-  } catch (err) {
-    console.error('Error creating live files.', err)
-    throw err
-  }
+    try {
+      const obj = { id: '1', competitors, events }
+      ecUrl = await _uploadToDynamo(process.env.DYNAMO_TABLE, obj)
+    } catch (err) {
+      logger.error(`Failed to connect to DynamoDB with ${err.code}`)
+    }
+
+    try {
+      // setup default file to live file
+      await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'events.json'), JSON.stringify(events))
+      await fs.writeFile(path.join(__dirname, '../', 'data', 'modified', 'competitors.json'), JSON.stringify(competitors))
+    } catch (err) {
+      logger.error('Error creating live files.', err)
+      reject(err)
+    }
+
+    resolve(ecUrl)
+  })
 }
 
-async function _uploadToDynamo (dynamoDB, tableName, items) {
-  const docConvert = AWS.DynamoDB.Converter
-  const putRequest = []
-
-  for (const i in items) {
-    putRequest.push({
-      PutRequest: {
-        Item: docConvert.marshall(items[i])
-      }
-    })
-  };
-
+async function _uploadToDynamo (tableName, item) {
+  const dynamoDB = new AWS.DynamoDB.DocumentClient()
   const params = {
-    RequestItems: {
-      [tableName]: putRequest
-    }
+    Key: {
+      id: '1'
+    },
+    TableName: tableName
   }
 
   try {
-    await dynamoDB.batchWriteItem(params).promise()
-    return null
+    const response = await dynamoDB.get(params).promise()
+
+    let dynamoItem = {}
+    if (response && response.Item) {
+      dynamoItem = response.Item
+    }
+
+    const putParams = {
+      Item: {
+        ...dynamoItem,
+        ...item
+      },
+      TableName: tableName
+    }
+
+    await dynamoDB.put(putParams).promise()
+    return response?.Item?.elastiCacheUrl || null
   } catch (err) {
     throw (err)
   }

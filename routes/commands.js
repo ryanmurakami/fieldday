@@ -3,16 +3,18 @@ const {
   stopEvent,
   startEvent
 } = require('../services/eventTracker')
+const { update: updateDynamo } = require('../services/dynamo')
 const fileLoader = require('../loaders/mock')
 const { logger } = require('../services/helper')
 
 // initialize
 module.exports = function (router) {
   router.get('/commands/:commands', command)
+  router.post('/commands/saveEndpoint', saveEndpoint)
 }
 
 // APIs
-function command (req, res) {
+async function command (req, res) {
   if (req.params.commands === 'reset') {
     return reset(res)
   } else if (req.params.commands === 'stop') {
@@ -52,4 +54,19 @@ function start (res) {
   return res.status(200).json({
     status: 'State has been started'
   })
+}
+
+async function saveEndpoint (req, res) {
+  logger.info('Saving Redis endpoint')
+
+  try {
+    await updateDynamo({
+      elastiCacheUrl: req.body.elastiCacheUrl
+    })
+    logger.info('Redis endpoint has been updated to:', req.body.elastiCacheUrl)
+    return res.sendStatus(200)
+  } catch (err) {
+    logger.error('Failed to update Redis endpoint')
+    return res.sendStatus(503)
+  }
 }

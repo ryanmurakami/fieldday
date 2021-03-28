@@ -14,17 +14,13 @@ function CompetitorTemplate () {
   const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
   const { competitor_id } = useParams()
 
-  const url = `competitors/${competitor_id}`
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true
-    getAPI(url, (res) => {
-      if (mounted) {
-        setResponse(res)
-      }
-    })
-    return () => {
-      mounted = false
-    }
+
+    const res = await getAPI(`competitors/${competitor_id}`)
+    if (mounted) setResponse(res)
+
+    return () => mounted = false
   }, [])
 
   const competitor = response.body || {}
@@ -42,7 +38,7 @@ function CompetitorTemplate () {
             return (<Stats key={index} name={stat.key} rating={stat.value * 10} />)
           })}
       </div>
-      <Divider text='Participating Event' />
+      <Divider text='Participating Events' />
       <List items={competitor.events} />
     </div>
   )

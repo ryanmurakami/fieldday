@@ -3,9 +3,10 @@ const fetch = require('node-fetch')
 
 const { getIsRunning } = require('../services/eventTracker')
 const { logger } = require('../services/helper')
+const { get: getDynamo } = require('../services/dynamo')
 const { get: getRegion } = require('../loaders/region')
 
-const dynamoDB = new AWS.DynamoDB({ region: getRegion() })
+let dynamoDB
 
 // initialize
 module.exports = function (router) {
@@ -14,11 +15,22 @@ module.exports = function (router) {
 
 // APIs
 async function status (req, res) {
+  if (!dynamoDB) {
+    dynamoDB = _generateClient()
+  }
+
   let dynamoConnection = false
+  let ecConnection = false
   let internetConnection = false
 
   try {
-    dynamoConnection = await _checkDynamoConnection()
+    const data = await getDynamo()
+
+    dynamoConnection = {
+      status: true,
+      msg: null
+    }
+    ecConnection = _checkEcConnection(req, data)
     internetConnection = await _checkInternetConnection()
   } catch (err) {
     logger.error('error in fetching status')
@@ -27,29 +39,17 @@ async function status (req, res) {
   return res.status(200).json({
     status: {
       dynamoDB: dynamoConnection,
+      elastiCache: ecConnection,
       internet: internetConnection,
       isRunning: getIsRunning()
     }
   })
 }
 
-async function _checkDynamoConnection () {
-  const params = {
-    TableName: process.env.EVENTS_DATABASE,
-    Limit: 1
-  }
-
-  try {
-    await dynamoDB.scan(params).promise()
-    return {
-      status: true,
-      msg: null
-    }
-  } catch (err) {
-    return {
-      status: false,
-      msg: `Failed to connect to DynamoDB with ${err.code}`
-    }
+function _checkEcConnection (req, data) {
+  return {
+    url: data.elastiCacheUrl || '',
+    status: (data.elastiCacheUrl && (req.app.get('cacheType') === 'redis')) ? true : false
   }
 }
 
@@ -63,4 +63,9 @@ async function _checkInternetConnection () {
   } catch (err) {
     return false
   }
+}
+
+function _generateClient () {
+  AWS.config.update({ region: getRegion('awsRegion') })
+  return new AWS.DynamoDB.DocumentClient()
 }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
@@ -13,22 +13,26 @@ import styles from './index.scss'
 function Header () {
   const user = useContext(UserContext)
 
-  getAPI('isAuthenticated', (res) => {
-    user.setLoggedIn(
+  useEffect(async () => {
+    let mounted = true
+
+    const res = await getAPI('isAuthenticated')
+    if (mounted) user.setLoggedIn(
       res.isAuthenticated
     )
-    console.log('set user authentication')
-  })
+
+    return () => mounted = false
+  }, [])
 
   return (
     <header className={styles.header}>
-      <div className='container Grid -middle'>
-        <div className='Cell -3of12'>
+      <div className={`container Grid -middle ${styles.container}`}>
+        <div className={styles.logo}>
           <NavLink to='/'>
             <Logo />
           </NavLink>
         </div>
-        <div className='Cell -3of12'>
+        <div className={styles.cell}>
           <div className={styles.icon} />
           <NavLink
             activeClassName={styles.selected}
@@ -37,7 +41,7 @@ function Header () {
             Events
           </NavLink>
         </div>
-        <div className='Cell -3of12'>
+        <div className={styles.cell}>
           <NavLink
             activeClassName={styles.selected}
             to='/competitors'
@@ -45,7 +49,7 @@ function Header () {
             Competitors
           </NavLink>
         </div>
-        <div className={`Cell -3of12 ${styles.end}`}>
+        <div className={styles.end}>
           {user.loggedIn ?
             <NavLink
               activeClassName={styles.selected}

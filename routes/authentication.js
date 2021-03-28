@@ -3,11 +3,10 @@ const passport = require('passport')
 // initialize
 module.exports = function (router) {
   router.post('/login',
-    passport.authenticate('local', { successRedirect: '/',
-                                      failureRedirect: '/login',
-                                      failureFlash: "Invalid username or password.",
-                                      successFlash: "Logged In!"
-                                    })
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login'
+    })
   )
 
   router.get('/isAuthenticated', (req, res) => {

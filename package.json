@@ -1,5 +1,5 @@
 {
-  "name": "ec2fieldday",
+  "name": "fieldday",
   "version": "1.0.0",
   "description": "This demo app is for the EC2 Field Day course. The app is called _Field Day_ and simulates field day events for a group of characters representing AWS Services.",
   "main": "index.js",
@@ -8,19 +8,19 @@
     "start-debug": "npm run start:client-debug && nodemon app.js",
     "start": "npm run build && npm run start:server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:client-debug": "webpack serve --mode development",
-    "start:server": "AWS_SDK_LOAD_CONFIG=true node app.js"
+    "start:client-debug": "webpack serve --mode development --config ./client/webpack.config.js",
+    "start:server": "node app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryanmurakami/ec2fieldday.git"
+    "url": "git+https://github.com/ryanmurakami/fieldday.git"
   },
   "author": "Nabil S",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ryanmurakami/ec2fieldday/issues"
+    "url": "https://github.com/ryanmurakami/fieldday/issues"
   },
-  "homepage": "https://github.com/ryanmurakami/ec2fieldday#readme",
+  "homepage": "https://github.com/ryanmurakami/fieldday#readme",
   "dependencies": {
     "@aws-sdk/client-config-service": "3.9.0",
     "@aws-sdk/signature-v4": "3.6.1",
@@ -31,10 +31,12 @@
     "express": "4.17.1",
     "express-session": "1.17.1",
     "flash": "1.1.0",
+    "forever": "3.0.4",
     "lodash": "4.17.21",
     "node-fetch": "2.6.1",
     "passport": "0.4.1",
     "passport-local": "1.0.0",
+    "redis": "3.0.2",
     "winston": "3.3.3"
   },
   "devDependencies": {
