@@ -21,7 +21,7 @@ async function command (req, res) {
     return stop(res)
   } else if (req.params.commands === 'start') {
     return start(res)
-  } 
+  }
 
   return res.status(404).json({
     status: 'invalid command triggered'
@@ -57,17 +57,16 @@ function start (res) {
 }
 
 async function saveEndpoint (req, res) {
-  logger.info('Saving EC endpoint')
-  
+  logger.info('Saving Redis endpoint')
+
   try {
     await updateDynamo({
       elastiCacheUrl: req.body.elastiCacheUrl
     })
-
-    logger.error('Endpoint has been updated, restarting service')
-    // Restart service to allow Redis integration
-    process.exit(1)
+    logger.info('Redis endpoint has been updated to:', req.body.elastiCacheUrl)
+    return res.sendStatus(200)
   } catch (err) {
-    logger.error('Failed to update URL')
+    logger.error('Failed to update Redis endpoint')
+    return res.sendStatus(503)
   }
 }
