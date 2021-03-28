@@ -13,6 +13,7 @@ import styles from './index.scss'
 function Setting () {
   const [response, setResponse] = useState({ status: {} })
   const [elastiCacheUrl, setElastiCacheUrl] = useState('')
+  const origECUrl = `${elastiCacheUrl}`
 
   const url = 'status'
   useEffect(async () => {
@@ -55,7 +56,9 @@ function Setting () {
               className={styles.form}
               onSubmit={(e) => {
                 e.preventDefault()
-                _persistRedisEndpoint(elastiCacheUrl)
+                if (origECUrl !== elastiCacheUrl) {
+                  _persistRedisEndpoint(elastiCacheUrl)
+                }
               }}>
               <input
                 type="text" title="endpoint"
