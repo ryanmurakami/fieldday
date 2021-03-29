@@ -1,4 +1,5 @@
-PROMPT="%B%(?:%{$FG[120]%}➜ :%{$FG[199]%}➜ )"
+NEWLINE=$'\n'
+PROMPT="${NEWLINE}%B%(?:%{$FG[120]%}➜ :%{$FG[199]%}➜ )"
 PROMPT+=' %{$FG[209]%}%c%{$reset_color%} $(git_prompt_info)'
 
 

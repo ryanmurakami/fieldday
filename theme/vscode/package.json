@@ -1,0 +1,20 @@
+{
+  "name": "field-day-vscode-theme",
+  "displayName": "Field Day",
+  "version": "1.0.0",
+  "description": "",
+  "publisher": "ryanmurakami",
+  "engines": {
+		"vscode": "^1.15.0"
+	},
+  "contributes": {
+		"themes": [
+			{
+				"label": "Field Day",
+				"uiTheme": "vs-dark",
+				"path": "./themes/field-day-vscode-theme.json"
+			}
+		]
+	},
+  "keywords": []
+}
