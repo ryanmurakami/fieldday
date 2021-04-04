@@ -1,6 +1,6 @@
 # Field Day Theme Installation
 
-I love colors, so I created themes based on the colors in my EC2 Field Day course. Feel free to install if you want your stuff to look like mine!
+I love colors, so I created themes based on the colors in my [EC2 Field Day course](https://ec2fieldday.com). Feel free to install if you want your stuff to look like mine!
 
 ## Font
 
