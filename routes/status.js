@@ -19,21 +19,28 @@ async function status (req, res) {
     dynamoDB = _generateClient()
   }
 
+  let data = {}
   let dynamoConnection = false
   let ecConnection = false
   let internetConnection = false
 
   try {
-    const data = await getDynamo()
+    data = await getDynamo()
 
     dynamoConnection = {
       status: true,
       msg: null
     }
-    ecConnection = _checkEcConnection(req, data)
+  } catch (err) {
+    logger.error('Error in DynamoDB connection')
+  }
+
+  ecConnection = _checkEcConnection(req, data)
+
+  try {
     internetConnection = await _checkInternetConnection()
   } catch (err) {
-    logger.error('error in fetching status')
+    logger.error('Error in internet connection')
   }
 
   return res.status(200).json({

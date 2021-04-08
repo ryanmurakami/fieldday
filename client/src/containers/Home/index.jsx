@@ -14,16 +14,22 @@ function HomeContainer (props) {
   const [response, setResponse] = useState({ message: 'Oops, something went wrong...' })
 
   const url = 'events'
-  useEffect(async () => {
+  useEffect(() => {
     let mounted = true
+    let interval = null
 
-    const res = await getAPI(url)
-    if (mounted) setResponse(res)
-
-    const interval = setInterval(async () => {
+    async function setEventChecker () {
       const res = await getAPI(url)
       if (mounted) setResponse(res)
-    }, 5000)
+
+      interval = setInterval(async () => {
+        const res = await getAPI(url)
+        if (mounted) setResponse(res)
+      }, 5000)
+    }
+
+    setEventChecker()
+
     // component will unmount
     return () => {
       // clear interval

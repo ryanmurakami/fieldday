@@ -21,7 +21,6 @@ async function get () {
     const response = await dynamoDB.get(params).promise()
     return response.Item
   } catch (err) {
-    logger.error('Error getting data from Dynamo', err)
     throw err
   }
 }
