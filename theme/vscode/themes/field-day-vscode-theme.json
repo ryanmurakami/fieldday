@@ -74,26 +74,26 @@
 		"editorCursor.foreground": "#FC9F58", //  Color of the editor cursor.
 
 		//  The selection color battle starts here.
-		"editor.selectionBackground": "#525252", // Color of the editor selection.
+		"editor.selectionBackground": "#636363", // Color of the editor selection.
 		"editor.inactiveSelectionBackground": "#525252", // Color of the selection in an inactive editor. The color must not be opaque to not hide underlying decorations.
-		"editor.selectionHighlightBackground": "#202020", // Color for regions with the same content as the selection. The color must not be opaque to not hide underlying decorations.
-		"editor.wordHighlightBackground": "#202020", // Same words other places.
-		"editor.wordHighlightStrongBackground": "#202020",
+		"editor.selectionHighlightBackground": "#636363", // Color for regions with the same content as the selection. The color must not be opaque to not hide underlying decorations.
+		"editor.wordHighlightBackground": "#636363", // Same words other places.
+		"editor.wordHighlightStrongBackground": "#525252",
 		"editor.findMatchBackground": "#a56737",
 		"editor.findMatchHighlightBackground": "#a56737", // #FF7200A0 #FFFF0336 #FF730056 Color of the other search matches.The color must not be opaque to not hide underlying decorations.
 		"editor.findRangeHighlightBackground": "#a56737", // #FF730056 No idea. Color the range limiting the search (Enable 'Find in Selection' in the find widget). The color must not be opaque to not hide underlying decorations.
 		"editor.hoverHighlightBackground": "#a56737", // Highlight below the word for which a hover is shown. The color must not be opaque to not hide underlying decorations
-		"editor.lineHighlightBackground": "#525252", // Current line of code. Background color for the highlight of line at the cursor position.
+		"editor.lineHighlightBackground": "#2b2b2b", // Current line of code. Background color for the highlight of line at the cursor position.
 		"editor.lineHighlightBorder": "#525252",
 		"editor.rangeHighlightBackground": "#525252",
 		"editorLink.activeForeground": "#FC9F58",
-		"editorIndentGuide.background": "#202020",
-		"editorIndentGuide.activeBackground": "#202020",
+		"editorIndentGuide.background": "#636363",
+		"editorIndentGuide.activeBackground": "#636363",
 		"editorRuler.foreground": "#202020", // Editor Ruler.
 		"editorOverviewRuler.border": "#202020",
 		"editorCodeLens.foreground": "#FC9F58",
 		"editorBracketMatch.background": "#202020",
-		"editorBracketMatch.border": "#202020",
+		"editorBracketMatch.border": "#636363",
 
 		// Overview ruler is located beneath the scroll bar on the right edge of the editor and gives an overview of the decorations in the editor.
 		"editorOverviewRuler.commonContentForeground": "#FFC60055",
@@ -130,11 +130,11 @@
 		"editorGroupHeader.tabsBorder": "#202020",
 
 		// The tabs
-		"tab.activeBackground": "#202020",
+		"tab.activeBackground": "#525252",
 		"tab.activeForeground": "#FFFFFF",
-		"tab.border": "#525252",
+		"tab.border": "#747474",
 		"tab.activeBorder": "#FC9F58",
-		"tab.inactiveBackground": "#363636",
+		"tab.inactiveBackground": "#202020",
 		"tab.inactiveForeground": "#BCBCBC",
 		"tab.unfocusedActiveForeground": "#BCBCBC",
 		"tab.unfocusedInactiveForeground": "#BCBCBC",
@@ -157,19 +157,19 @@
 
 		// Debug.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_debug
-		"debugToolBar.background": "#1E1E3F",
+		"debugToolBar.background": "#202020",
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_editor-widget-colors
-		"debugExceptionWidget.background": "#1E1E3F",
-		"debugExceptionWidget.border": "#A599E9",
+		"debugExceptionWidget.background": "#202020",
+		"debugExceptionWidget.border": "#525252",
 
 		// The editor marker view shows when navigating to errors and warnings in the editor (Go to Next Error or Warning command).
 		"editorMarkerNavigation.background": "#3B536433",
-		"editorMarkerNavigationError.background": "#EC3A37F5",
+		"editorMarkerNavigationError.background": "#F9528CF5",
 		"editorMarkerNavigationWarning.background": "#F8EA4A",
 
 		// To see the editor white spaces, enable Toggle Render Whitespace.
 		"editorWhitespace.foreground": "#FFFFFF1A",
-		"errorForeground": "#EC3A37F5",
+		"errorForeground": "#F9528CF5",
 
 		// Extensions.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_extensions
@@ -181,49 +181,49 @@
 
 		// Input Control.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_input-control
-		"input.background": "#2D2B55",
-		"input.border": "#1E1E3F",
-		"input.foreground": "#F8EA4A",
-		"input.placeholderForeground": "#A599E9",
-		"inputOption.activeBorder": "#1E1E3F",
-		"inputValidation.errorBackground": "#2D2B55",
-		"inputValidation.errorBorder": "#F8EA4A",
-		"inputValidation.infoBackground": "#2D2B55",
-		"inputValidation.infoBorder": "#2D2B55",
-		"inputValidation.warningBackground": "#2D2B55",
+		"input.background": "#202020",
+		"input.border": "#525252",
+		"input.foreground": "#FC9F58",
+		"input.placeholderForeground": "#fc9f58a7",
+		"inputOption.activeBorder": "#202020",
+		"inputValidation.errorBackground": "#202020",
+		"inputValidation.errorBorder": "#F9528C",
+		"inputValidation.infoBackground": "#202020",
+		"inputValidation.infoBorder": "#202020",
+		"inputValidation.warningBackground": "#202020",
 		"inputValidation.warningBorder": "#F8EA4A",
-		"inputOption.activeBackground": "#5D37F0",
+		"inputOption.activeBackground": "#525252",
 
 		// Lists and Trees.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_lists-and-trees
-		"list.dropBackground": "#2D2B55",
-		"list.activeSelectionBackground": "#2D2B55",
+		"list.dropBackground": "#525252",
+		"list.activeSelectionBackground": "#525252",
 		"list.activeSelectionForeground": "#FFFFFF",
-		"list.focusBackground": "#2D2B55",
+		"list.focusBackground": "#525252",
 		"list.focusForeground": "#FFFFFF",
-		"list.highlightForeground": "#F8EA4A",
-		"list.hoverBackground": "#2D2B55",
-		"list.hoverForeground": "#CEC5FF",
-		"list.inactiveSelectionBackground": "#2D2B55",
-		"list.inactiveSelectionForeground": "#AAA",
+		"list.highlightForeground": "#FC9F58",
+		"list.hoverBackground": "#303030",
+		"list.hoverForeground": "#FFFFFF",
+		"list.inactiveSelectionBackground": "#525252",
+		"list.inactiveSelectionForeground": "#FFFFFF",
 
 		// Merge Conflicts.
 		"merge.border": "#FFFFFF00",
-		"merge.commonContentBackground": "#A599E981",
-		"merge.commonHeaderBackground": "#A599E981",
-		"merge.currentContentBackground": "#3ad90093",
-		"merge.currentHeaderBackground": "#3ad90093",
-		"merge.incomingContentBackground": "#ff730086",
-		"merge.incomingHeaderBackground": "#ff730086",
+		"merge.commonContentBackground": "#52525281",
+		"merge.commonHeaderBackground": "#52525281",
+		"merge.currentContentBackground": "#B6FD5D93",
+		"merge.currentHeaderBackground": "#B6FD5D93",
+		"merge.incomingContentBackground": "#F9528C86",
+		"merge.incomingHeaderBackground": "#F9528C86",
 
 		// Notification Colors.
-		"notificationCenter.border": "#1E1E3F", // Notification Center border color.
+		"notificationCenter.border": "#202020", // Notification Center border color.
 		"notificationCenterHeader.foreground": "#FFFFFF", // Notification Center header foreground color.
-		"notificationCenterHeader.background": "#6943FF", // Notification Center header background color.
-		"notificationToast.border": "#1E1E3F", // Notification toast border color.
-		"notifications.foreground": "#CEC5FF", // Notification foreground color.
-		"notifications.background": "#1E1E3F", // Notification background color.
-		"notifications.border": "#2D2B55", // Notification border color separating from other notifications in the Notification Center.
+		"notificationCenterHeader.background": "#525252", // Notification Center header background color.
+		"notificationToast.border": "#202020", // Notification toast border color.
+		"notifications.foreground": "#92E0F3", // Notification foreground color.
+		"notifications.background": "#202020", // Notification background color.
+		"notifications.border": "#525252", // Notification border color separating from other notifications in the Notification Center.
 		"notificationLink.foreground": "#FFFFFF", // Notification links foreground color.
 
 		// Panel.
@@ -232,32 +232,32 @@
 		"panel.border": "#FC9F58",
 		"panelTitle.activeBorder": "#FC9F58",
 		"panelTitle.activeForeground": "#FC9F58",
-		"panelTitle.inactiveForeground": "#C8A9ED",
+		"panelTitle.inactiveForeground": "#92E0F3",
 
 		// Peek View Colors.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_peek-view-colors
-		"peekView.border": "#F8EA4A",
-		"peekViewEditor.background": "#1E1E3F",
-		"peekViewEditor.matchHighlightBackground": "#19354900",
-		"peekViewEditorGutter.background": "#191935",
-		"peekViewResult.background": "#1E1E3F",
-		"peekViewResult.fileForeground": "#AAA",
+		"peekView.border": "#FC9F58",
+		"peekViewEditor.background": "#202020",
+		"peekViewEditor.matchHighlightBackground": "#20202000",
+		"peekViewEditorGutter.background": "#202020",
+		"peekViewResult.background": "#202020",
+		"peekViewResult.fileForeground": "#BCBCBC",
 		"peekViewResult.lineForeground": "#FFFFFF",
-		"peekViewResult.matchHighlightBackground": "#2D2B55",
-		"peekViewResult.selectionBackground": "#2D2B55",
+		"peekViewResult.matchHighlightBackground": "#202020",
+		"peekViewResult.selectionBackground": "#202020",
 		"peekViewResult.selectionForeground": "#FFFFFF",
-		"peekViewTitle.background": "#1F1F41",
-		"peekViewTitleDescription.foreground": "#AAA",
-		"peekViewTitleLabel.foreground": "#F8EA4A",
+		"peekViewTitle.background": "#202020",
+		"peekViewTitleDescription.foreground": "#BCBCBC",
+		"peekViewTitleLabel.foreground": "#FC9F58",
 
 		// Quick Picker.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_quick-picker
-		"pickerGroup.border": "#1E1E3F",
-		"pickerGroup.foreground": "#A599E9",
+		"pickerGroup.border": "#202020",
+		"pickerGroup.foreground": "#FC9F58",
 
 		// Progress Bar.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_progress-bar
-		"progressBar.background": "#F8EA4A",
+		"progressBar.background": "#92E0F3",
 
 		// Scroll Bar Control.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_scroll-bar-control
@@ -299,28 +299,28 @@
 		"terminal.ansiBrightMagenta": "#F9528C",
 		"terminal.ansiBrightCyan": "#80FCFF",
 		"terminal.ansiBrightWhite": "#FFFFFF",
-		"terminal.background": "#1E1E3F",
+		"terminal.background": "#202020",
 		"terminal.foreground": "#FFFFFF",
-		"terminalCursor.background": "#F8EA4A",
-		"terminalCursor.foreground": "#F8EA4A",
+		"terminalCursor.background": "#FC9F58",
+		"terminalCursor.foreground": "#FC9F58",
 
 		// Git VS Code theme Colors used for file labels and the SCM viewlet.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_git-colors
-		"gitDecoration.modifiedResourceForeground": "#F8EA4A", // Color for modified git resources.
-		"gitDecoration.deletedResourceForeground": "#EC3A37F5", // Color for deleted git resources.
-		"gitDecoration.untrackedResourceForeground": "#3AD900", // Color for untracked git resources.
-		"gitDecoration.ignoredResourceForeground": "#A599E981", // Color for ignored git resources.
-		"gitDecoration.conflictingResourceForeground": "#FF7200", // Color for conflicting git resources.
+		"gitDecoration.modifiedResourceForeground": "#FC9F58", // Color for modified git resources.
+		"gitDecoration.deletedResourceForeground": "#F9528CF5", // Color for deleted git resources.
+		"gitDecoration.untrackedResourceForeground": "#78F7C6", // Color for untracked git resources.
+		"gitDecoration.ignoredResourceForeground": "#92E0F381", // Color for ignored git resources.
+		"gitDecoration.conflictingResourceForeground": "#FC9F58", // Color for conflicting git resources.
 
 		// Text Colors — Colors inside a text document, such as the welcome page.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_text-colors
-		"textBlockQuote.background": "#1E1E3F",
-		"textBlockQuote.border": "#6943FF",
-		"textCodeBlock.background": "#1E1E3F",
-		"textLink.activeForeground": "#B362FF",
-		"textLink.foreground": "#B362FF",
-		"textPreformat.foreground": "#F8EA4A",
-		"textSeparator.foreground": "#1E1E3F",
+		"textBlockQuote.background": "#202020",
+		"textBlockQuote.border": "#525252",
+		"textCodeBlock.background": "#202020",
+		"textLink.activeForeground": "#92E0F3",
+		"textLink.foreground": "#92E0F3",
+		"textPreformat.foreground": "#FC9F58",
+		"textSeparator.foreground": "#202020",
 
 		// Title bar.
 		// https://code.visualstudio.com/docs/getstarted/theme-color-reference#_title-bar-colors
@@ -362,15 +362,15 @@
 		"menu.separatorBackground":"#FC9F58",
 
 		// Tab stops.
-		"editor.snippetTabstopHighlightBackground": "#6943ff62",
-		"editor.snippetTabstopHighlightBorder": "#6943ff62",
-		"editor.snippetFinalTabstopHighlightBackground": "#6943ff62",
-		"editor.snippetFinalTabstopHighlightBorder": "#6943ff62",
+		"editor.snippetTabstopHighlightBackground": "#C8A9ED62",
+		"editor.snippetTabstopHighlightBorder": "#C8A9ED62",
+		"editor.snippetFinalTabstopHighlightBackground": "#C8A9ED62",
+		"editor.snippetFinalTabstopHighlightBorder": "#C8A9ED62",
 
 		// Tree List Filter Colors.
-		"listFilterWidget.background": "#2D2B55",
-		"listFilterWidget.outline": "#2D2B55",
-		"listFilterWidget.noMatchesOutline": "#EC3A37F5",
+		"listFilterWidget.background": "#202020",
+		"listFilterWidget.outline": "#202020",
+		"listFilterWidget.noMatchesOutline": "#F9528CF5",
 
 		// TODO: Colors to be added.
 		// "inputValidation.infoForeground": "#F8EA4A", // Input validation foreground color for information severity.
@@ -898,7 +898,7 @@
 				"markup.heading.setext.2.markdown"
 			],
 			"settings": {
-				"foreground": "#F8EA4A",
+				"foreground": "#F9528C",
 				"fontStyle": "bold"
 			}
 		},
@@ -909,7 +909,7 @@
 				"punctuation.definition.inserted.diff"
 			],
 			"settings": {
-				"foreground": "#8efa00",
+				"foreground": "#B6FD5D",
 			}
 		},
 		{
@@ -945,14 +945,14 @@
 				"meta.diff.header.from-file"
 			],
 			"settings": {
-				"foreground": "#B362FF"
+				"foreground": "#92E0F3"
 			}
 		},
 		{
 			"name": "[MARKDOWN] - Color for Text inside inline code block `code`",
 			"scope": "markup.inline.raw.string.markdown",
 			"settings": {
-				"foreground": "#A599E9"
+				"foreground": "#92E0F3"
 			}
 		},
 		{
@@ -969,14 +969,14 @@
 				"punctuation.definition.quote.begin.markdown"
 			],
 			"settings": {
-				"foreground": "#A599E9"
+				"foreground": "#92E0F3"
 			}
 		},
 		{
 			"name": "[MARKDOWN] - Color for Separator",
 			"scope": "meta.separator.markdown",
 			"settings": {
-				"foreground": "#F8EA4A"
+				"foreground": "#FC9F58"
 			}
 		},
 		{
@@ -1001,7 +1001,7 @@
 				"markup.list.unnumbered.markdown",
 			],
 			"settings": {
-				"foreground": "#F8EA4A"
+				"foreground": "#FC9F58"
 			}
 		},
 		{
@@ -1014,7 +1014,7 @@
 				"meta.image.inline.markdown string.other.link.description.title.markdown"
 			],
 			"settings": {
-				"foreground": "#A5FF90",
+				"foreground": "#B6FD5D",
 				"fontStyle": ""
 			}
 		},
@@ -1025,7 +1025,7 @@
 				"meta.link.reference.def.markdown markup.underline.link.markdown"
 			],
 			"settings": {
-				"foreground": "#F8EA4A",
+				"foreground": "#FC9F58",
 				 "fontStyle": "underline"
 			}
 		},
@@ -1036,7 +1036,7 @@
 				"string.other.link.description.title.markdown"
 			],
 			"settings": {
-				"foreground": "#A599E9"
+				"foreground": "#92E0F3"
 			}
 		},
 		{
@@ -1056,7 +1056,7 @@
 				"punctuation.definition.italic.markdown"
 			],
 			"settings": {
-				"foreground": "#494685"
+				"foreground": "#92E0F3"
 			}
 		},
 		{
@@ -1069,7 +1069,7 @@
 				"string.other.link.description.markdown"
 			],
 			"settings": {
-				"foreground": "#F8EA4A"
+				"foreground": "#FC9F58"
 			}
 		},
 		{
@@ -1095,7 +1095,7 @@
 				"punctuation.definition.constant.end.markdown",
 			],
 			"settings": {
-				"foreground": "#A599E9"
+				"foreground": "#92E0F3"
 			}
 		},
 		{
@@ -1123,7 +1123,7 @@
 			"name": "[PUG] - Imports",
 			"scope": ["variable.control.import.include.pug"],
 			"settings": {
-				"foreground": "#92FC79"
+				"foreground": "#B6FD5D"
 			}
 		},
 		{
@@ -1203,7 +1203,7 @@
 			"name": "[YML] — KEYWORDS",
 			"scope": [ "entity.name.tag.yaml"],
 			"settings": {
-				"foreground": "#F8EA4A"
+				"foreground": "#FC9F58"
 			}
 		},
 		{
