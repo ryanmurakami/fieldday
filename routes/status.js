@@ -5,6 +5,7 @@ const { getIsRunning } = require('../services/eventTracker')
 const { logger } = require('../services/helper')
 const { get: getDynamo } = require('../services/dynamo')
 const { get: getRegion } = require('../loaders/region')
+const initDynamo = require('../loaders/mock')
 
 let dynamoDB
 
@@ -27,15 +28,29 @@ async function status (req, res) {
   try {
     data = await getDynamo()
 
+    // dynamo connection works but hasn't
+    // been initialized
+    if (!data) {
+      data = await initDynamo(req.app)
+    }
+
     dynamoConnection = {
       status: true,
       msg: null
     }
   } catch (err) {
     logger.error('Error in DynamoDB connection')
+    dynamoConnection = {
+      status: false,
+      msg: err
+    }
   }
 
-  ecConnection = _checkEcConnection(req, data)
+  try {
+    ecConnection = _checkEcConnection(req, data)
+  } catch (err) {
+    logger.error('Error in ElastiCache connection')
+  }
 
   try {
     internetConnection = await _checkInternetConnection()
@@ -53,10 +68,10 @@ async function status (req, res) {
   })
 }
 
-function _checkEcConnection (req, data = {}) {
+function _checkEcConnection (req, data) {
   return {
-    url: data.elastiCacheUrl || '',
-    status: (data.elastiCacheUrl && (req.app.get('cacheType') === 'redis')) ? true : false
+    url: data?.elastiCacheUrl || '',
+    status: (data?.elastiCacheUrl && (req.app.get('cacheType') === 'redis')) ? true : false
   }
 }
 

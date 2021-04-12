@@ -21,11 +21,11 @@ app.use(bodyParser.urlencoded({
 // set AWS region info
 loadRegion(app).then(async () => {
   // Set data
-  const ecUrl = await loader(app)
+  const data = await loader(app)
 
   // initialize session
   try {
-    await initializeSessionCache(app, ecUrl)
+    await initializeSessionCache(app, data?.elastiCacheUrl)
   } catch (err) {
     logger.error('Error initializing session:', err)
   }

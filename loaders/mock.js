@@ -7,13 +7,13 @@ const { logger } = require('../services/helper')
 
 function resetLocalData (app) {
   return new Promise(async (resolve, reject) => {
-    let ecUrl
+    let data
     AWS.config.update({ region: app.get('awsRegion') })
     _addEventsToCompetitors(events, competitors)
 
     try {
       const obj = { id: '1', competitors, events }
-      ecUrl = await _uploadToDynamo(process.env.DYNAMO_TABLE, obj)
+      data = await _uploadToDynamo(process.env.DYNAMO_TABLE, obj)
     } catch (err) {
       logger.error(`Failed to connect to DynamoDB with ${err.code}`)
     }
@@ -27,7 +27,7 @@ function resetLocalData (app) {
       reject(err)
     }
 
-    resolve(ecUrl)
+    resolve(data)
   })
 }
 
@@ -57,7 +57,7 @@ async function _uploadToDynamo (tableName, item) {
     }
 
     await dynamoDB.put(putParams).promise()
-    return response?.Item?.elastiCacheUrl || null
+    return response?.Item || null
   } catch (err) {
     throw (err)
   }
