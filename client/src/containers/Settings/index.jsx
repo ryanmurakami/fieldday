@@ -42,8 +42,6 @@ function Setting () {
           <dt className={styles.dt}>{_connectionRender(get(response, 'status.dynamoDB.status'))}</dt>
           <dd className={styles.dd}>
             DynamoDB Connection
-            {get(response, 'status.dynamoDB.msg') &&
-              <div>{get(response, 'status.dynamoDB.msg')}</div>}
           </dd>
         </dl>
         <dl className={styles.dl}>
