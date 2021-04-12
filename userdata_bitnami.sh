@@ -19,7 +19,10 @@ Content-Disposition: attachment; filename="userdata.txt"
 
 #!/bin/bash
 echo "starting field day"
-git clone https://github.com/ryanmurakami/fieldday.git
-cd ~/fieldday
-npm ci
-npm start
+su - bitnami -c '\
+  rm -rf fieldday; \
+  git clone https://github.com/ryanmurakami/fieldday.git; \
+  cd ~/fieldday; \
+  npm ci; \
+  npm start
+'
