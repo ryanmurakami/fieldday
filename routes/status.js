@@ -53,7 +53,7 @@ async function status (req, res) {
   })
 }
 
-function _checkEcConnection (req, data) {
+function _checkEcConnection (req, data = {}) {
   return {
     url: data.elastiCacheUrl || '',
     status: (data.elastiCacheUrl && (req.app.get('cacheType') === 'redis')) ? true : false
