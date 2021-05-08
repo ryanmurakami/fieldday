@@ -50,5 +50,3 @@ Resources:
     Properties:
       Domain: vpc
       InstanceId: !Ref FieldDayInstance
-
-
